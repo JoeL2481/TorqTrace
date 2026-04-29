@@ -1,6 +1,10 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table (name = "workshop")
@@ -26,7 +30,14 @@ public class WorkshopEntity {
     private String state;
     @Column(nullable = false, length = 200)
     private String Country;
-    private String Status;
+    @Column(nullable = false)
+    private boolean status;
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
 
 }
