@@ -1,7 +1,9 @@
 package com.PascuanSilvestre.TorqTrace.features.user.user;
 
+import ch.qos.logback.core.status.Status;
 import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
 import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
+import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +13,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,15 +23,24 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false, length = 100)
     private String lastName;
+    @Column(name = "password_hash", length = 255)
+    private String passwordHash;
+    @Column(name="avatar_url", length = 255)
+    private String avatarUrl;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="Status", nullable = false,length = 255)
+    private UserStatus status;
 
     @Embedded
     @AttributeOverrides({
@@ -44,10 +56,11 @@ public class UserEntity {
             @AttributeOverride(name = "phoneNumber", column = @Column(name = "user_phone")),
             @AttributeOverride(name = "email", column = @Column(name = "user_email"))
     })
-
-
     private ContactInfo userContactInfo;
+
     @OneToMany(mappedBy = "user")
     private List<UserVehicleEntity> userVehicles;
+
+
 
 }
