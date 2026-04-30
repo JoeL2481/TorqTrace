@@ -1,4 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem;
+import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkShopOrderEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -8,6 +10,28 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name="item_work_order")
 public class WorkOrderItemEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name="work_order_id",nullable = false)
+    private WorkShopOrderEntity workShopOrder;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name="spare_part_id",nullable = false)
+    private SparePartEntity sparePartEntity;
+
+    @Column(name = "quantity_requested",nullable = false)
+    private Integer quantityRequested;
+
+    @Column(name = "unit_price_at_time")
+    private Double unitPriceAtTime;
+    @Column(name = "price_at_execution")
+    private Double priceAtExecution;
+    @Column(name = "subtotal")
+    private Double subtotal;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

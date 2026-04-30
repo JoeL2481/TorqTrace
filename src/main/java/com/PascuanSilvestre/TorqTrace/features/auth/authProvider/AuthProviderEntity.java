@@ -12,8 +12,12 @@ public class AuthProviderEntity {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 50)
     private String name;
+    @Column(nullable = false, length = 55)
     private String display_name;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
