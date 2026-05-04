@@ -3,6 +3,10 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.stock;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,6 +14,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table (name="stock_workshop")
+@Getter
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class StockEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

@@ -8,10 +8,13 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
-
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "user_vehicle")
 @Getter
@@ -45,6 +48,13 @@ public class UserVehicleEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name= "vehicle", nullable = false)
     private VehicleEntity vehicle;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
 
 }
