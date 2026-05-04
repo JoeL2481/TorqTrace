@@ -16,10 +16,10 @@ public class StockEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "workshop_id")
+    @JoinColumn(name = "workshop_id")
     private WorkshopEntity workshop;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "spare_part_id")
+    @JoinColumn(name = "spare_part_id")
     private SparePartEntity sparePart;
     @Column(name = "stock_quantity",nullable = false)
     private Integer stockQuantity;

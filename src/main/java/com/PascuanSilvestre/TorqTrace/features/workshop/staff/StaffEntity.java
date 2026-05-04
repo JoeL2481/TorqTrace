@@ -13,10 +13,10 @@ public class StaffEntity {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "workshop_id")
+    @JoinColumn(name = "workshop_id")
     private WorkshopEntity workshop;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "rol_id",nullable = false)
+    @JoinColumn(name = "rol_id",nullable = false)
     private RolEntity rolEntity;
 
     @CreationTimestamp

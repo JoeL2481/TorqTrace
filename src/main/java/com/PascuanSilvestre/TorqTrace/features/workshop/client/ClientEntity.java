@@ -14,10 +14,10 @@ public class ClientEntity {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="workshop_id")
+    @JoinColumn(name="workshop_id")
     private WorkshopEntity workshop;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="user_id")
+    @JoinColumn(name="user_id")
     private UserEntity user;
     @Column(name="description", columnDefinition = "TEXT" )
     private String description;

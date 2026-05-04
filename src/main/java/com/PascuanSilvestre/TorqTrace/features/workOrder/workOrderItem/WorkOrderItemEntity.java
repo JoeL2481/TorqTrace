@@ -16,10 +16,10 @@ public class WorkOrderItemEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="work_order_id",nullable = false)
+    @JoinColumn(name="work_order_id",nullable = false)
     private WorkShopOrderEntity workShopOrder;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="spare_part_id",nullable = false)
+    @JoinColumn(name="spare_part_id",nullable = false)
     private SparePartEntity sparePartEntity;
 
     @Column(name = "quantity_requested",nullable = false)

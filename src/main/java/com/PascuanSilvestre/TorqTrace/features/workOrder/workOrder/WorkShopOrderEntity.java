@@ -20,15 +20,15 @@ public class WorkShopOrderEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="workshop_id",nullable = false)
+    @JoinColumn(name="workshop_id",nullable = false)
     private WorkshopEntity workshop;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="client_id",nullable = false)
+    @JoinColumn(name="client_id",nullable = false)
     private ClientEntity client;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="vehicle_id",nullable = false)
+    @JoinColumn(name="vehicle_id",nullable = false)
     private VehicleEntity vehicle;
     @Column(name="entry_km",nullable = false)
     private double entry_km;
@@ -36,13 +36,13 @@ public class WorkShopOrderEntity {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="status_work_order_id",nullable = false)
+    @JoinColumn(name="status_work_order_id",nullable = false)
     private WorkOrderStatusEntity workOrderStatus;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="workshop_order_type_id",nullable = false)
+    @JoinColumn(name="workshop_order_type_id",nullable = false)
     private WorkOrderStatusEntity workshopOrderType;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="item_work_order_id",nullable = false)
+    @JoinColumn(name="item_work_order_id",nullable = false)
     private WorkOrderItemEntity workOrderItem;
 
     @Column(name="currency",length = 20)

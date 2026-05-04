@@ -27,8 +27,10 @@ public class VehicleEntity {
 @Enumerated(EnumType.STRING)
     @Column(name = "vehicle_body_type", length = 50)
     private VehicleBodyType vehicleBodyType;
+@Enumerated(EnumType.STRING)
     @Column(name = "vehicle_category", length = 50)
     private VehicleCategory vehicleCategory;
+@Enumerated(EnumType.STRING)
     @Column(name = "vehicle_fuel_type", length = 50)
     private VehicleFuelType vehicleFuelType;
 
