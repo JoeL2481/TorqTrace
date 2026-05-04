@@ -1,6 +1,10 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table (name = "workshop")
@@ -10,23 +14,30 @@ public class WorkshopEntity {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 255)
+    @Column(name="name",nullable = false, length = 255)
     private String name;
-    @Column(nullable = false, length = 255)
+    @Column(name="email",nullable = false, length = 255)
     private String email;
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(name="descripcion",nullable = false, columnDefinition = "TEXT")
     private String description;
-    @Column(nullable = false, length = 20)
+    @Column(name="phone",nullable = false, length = 20)
     private long phone;
-    @Column(nullable = false, length = 200)
+    @Column(name="addres",nullable = false, length = 200)
     private String address;
-    @Column(nullable = false, length = 200)
+    @Column(name="city",nullable = false, length = 200)
     private String city;
-    @Column(nullable = false, length = 200)
+    @Column(name="state",nullable = false, length = 200)
     private String state;
-    @Column(nullable = false, length = 200)
+    @Column(name="country",nullable = false, length = 200)
     private String Country;
-    private String Status;
+    @Column(name="status",nullable = false)
+    private boolean status;
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
 
 }
