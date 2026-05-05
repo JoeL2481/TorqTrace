@@ -2,6 +2,10 @@ package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkShopOrderEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,6 +13,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="item_work_order")
+@Getter
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class WorkOrderItemEntity {
 
     @Id

@@ -3,11 +3,21 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.staff;
 import com.PascuanSilvestre.TorqTrace.features.user.rol.RolEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name="staff_workshop")
+@Getter
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class StaffEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

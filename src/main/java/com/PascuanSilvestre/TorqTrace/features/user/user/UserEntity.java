@@ -1,21 +1,20 @@
 package com.PascuanSilvestre.TorqTrace.features.user.user;
 
-import ch.qos.logback.core.status.Status;
 import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
 import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.math.BigDecimal;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -61,6 +60,12 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     private List<UserVehicleEntity> userVehicles;
 
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
 
 }

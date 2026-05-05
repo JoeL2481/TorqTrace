@@ -2,6 +2,10 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.client;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,6 +13,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="client_workshop")
+@Getter
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class ClientEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
