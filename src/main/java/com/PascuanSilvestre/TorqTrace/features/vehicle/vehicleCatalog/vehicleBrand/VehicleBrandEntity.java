@@ -3,19 +3,20 @@ package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBr
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name="vehicle_brand")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name = "vehicle_brand")
 public class VehicleBrandEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "name", length = 255)
+    private long id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+
 }

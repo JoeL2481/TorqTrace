@@ -4,6 +4,10 @@ import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.Vehi
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleCategory;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleFuelType;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.VehicleBrandEntity;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquimentLevel.VehicleEquimentLevelEntity;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.VehicleGenerationEntity;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.VehicleModelEntity;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.VehicleVariantEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,19 +28,34 @@ public class VehicleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-@Enumerated(EnumType.STRING)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="vehicle_brand", nullable = false)
+    private VehicleBrandEntity vehicleBrand;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="vehicle_model", nullable = false)
+    private VehicleModelEntity vehicleModel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="vehicle_variant", nullable = true)
+    private VehicleVariantEntity vehicleVariant;
+
+     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="vehicle_generation", nullable = true)
+    private VehicleGenerationEntity vehicleGeneration;
+
+     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="vehicle_equipment_level", nullable = true)
+    private VehicleEquimentLevelEntity vehicleEquipmentLevel;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "vehicle_body_type", length = 50)
     private VehicleBodyType vehicleBodyType;
-@Enumerated(EnumType.STRING)
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "vehicle_category", length = 50)
     private VehicleCategory vehicleCategory;
-@Enumerated(EnumType.STRING)
-    @Column(name = "vehicle_fuel_type", length = 50)
-    private VehicleFuelType vehicleFuelType;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="brand_id", nullable = false)
-    private VehicleBrandEntity brand;
 
 
 
