@@ -23,16 +23,19 @@ public class StockEntity {
     @Id
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "workshop_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "workshop_id", nullable = false)
     private WorkshopEntity workshop;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "spare_part_id")
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "spare_part_id", nullable = false)
     private SparePartEntity sparePart;
-    @Column(name = "stock_quantity",nullable = false)
+
+    @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;
-    @Column(name="min_stock",nullable = false)
-    private Integer minStock;
+
+    @Column(name = "min_stock_alert", nullable = false)
+    private Integer minStockAlert;
 
 
     @CreationTimestamp
