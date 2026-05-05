@@ -29,31 +29,31 @@ public class VehicleEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="vehicle_brand", nullable = false)
+    @JoinColumn(name="vehicle_brand_id", nullable = false)
     private VehicleBrandEntity vehicleBrand;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="vehicle_model", nullable = false)
+    @JoinColumn(name="vehicle_model_id", nullable = false)
     private VehicleModelEntity vehicleModel;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="vehicle_variant", nullable = true)
+    @JoinColumn(name="vehicle_variant_id", nullable = true)
     private VehicleVariantEntity vehicleVariant;
 
      @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="vehicle_generation", nullable = true)
+    @JoinColumn(name="vehicle_generation_id", nullable = true)
     private VehicleGenerationEntity vehicleGeneration;
 
      @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="vehicle_equipment_level", nullable = true)
+    @JoinColumn(name="vehicle_equipment_level_id", nullable = true)
     private VehicleEquimentLevelEntity vehicleEquipmentLevel;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "vehicle_body_type", length = 50)
+    @Column(name = "vehicle_body_type_id", length = 50)
     private VehicleBodyType vehicleBodyType;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "vehicle_category", length = 50)
+    @Column(name = "vehicle_category_id", length = 50)
     private VehicleCategory vehicleCategory;
 
 
