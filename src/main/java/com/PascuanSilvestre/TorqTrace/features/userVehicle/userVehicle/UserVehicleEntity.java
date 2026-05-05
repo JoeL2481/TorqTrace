@@ -1,5 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle;
 
+import com.PascuanSilvestre.TorqTrace.features.userVehicle.extraMaintenanceItems.ExtraMaintenanceReminderEntity;
+import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.MaintenanceEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -12,6 +14,8 @@ import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 
 
 import java.math.BigDecimal;
+import java.util.List;
+
 @Entity
 @Table(name = "user_vehicle")
 @Getter
@@ -46,5 +50,11 @@ public class UserVehicleEntity {
     @JoinColumn(name= "vehicle", nullable = false)
     private VehicleEntity vehicle;
 
+
+    @OneToMany(mappedBy = "userVehicle")
+    private List<MaintenanceEntity> maintenances;
+
+    @OneToMany(mappedBy = "userVehicle")
+    private List<ExtraMaintenanceReminderEntity> extraMaintenanceReminders;
 
 }
