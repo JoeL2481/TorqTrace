@@ -1,6 +1,5 @@
-package com.PascuanSilvestre.TorqTrace.features.auth.userProvider;
-import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.AuthProviderEntity;
-import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
+package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderStatus;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,26 +11,18 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name=("user_provider"))
+@Table(name="status_work_order")
 @Getter
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class UserProviderEntity {
+public class WorkOrderStatusEntity {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    UserEntity user;
-    @ManyToOne
-    @JoinColumn(name = "provider_id")
-    AuthProviderEntity provider;
-
-    @Column (name="external_id",nullable = false, length = 255)
-    private String external_id;
-
+    @Column(name = "name",nullable = false,length = 50)
+    private String name;
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

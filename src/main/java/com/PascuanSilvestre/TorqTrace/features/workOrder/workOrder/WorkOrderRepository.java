@@ -1,4 +1,8 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder;
 
-public class WorkOrderRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface WorkOrderRepository extends JpaRepository<WorkShopOrderEntity, Long> {
 }

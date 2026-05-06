@@ -2,8 +2,8 @@ package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder;
 
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.WorkOrderItemEntity;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.workStatus.WorkOrderStatusEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.client.ClientEntity;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderStatus.WorkOrderStatusEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,7 +33,7 @@ public class WorkShopOrderEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="client_id",nullable = false)
-    private ClientEntity client;
+    private WorkShopClientEntity client;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="vehicle_id",nullable = false)

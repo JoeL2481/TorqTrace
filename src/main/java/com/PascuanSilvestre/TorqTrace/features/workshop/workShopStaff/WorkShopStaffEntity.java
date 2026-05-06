@@ -1,6 +1,9 @@
-package com.PascuanSilvestre.TorqTrace.features.auth.userProvider;
-import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.AuthProviderEntity;
+package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff;
+
+
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.staff.enums.StaffRole;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,25 +15,28 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name=("user_provider"))
+@Table(name="staff_workshop")
 @Getter
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class UserProviderEntity {
-
+public class WorkShopStaffEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    UserEntity user;
-    @ManyToOne
-    @JoinColumn(name = "provider_id")
-    AuthProviderEntity provider;
 
-    @Column (name="external_id",nullable = false, length = 255)
-    private String external_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "workshop_id")
+    private WorkshopEntity workshop;
+
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false, length = 30)
+    private StaffRole role;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
