@@ -22,12 +22,13 @@ public class UserProviderEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
     @ManyToOne
-    @JoinColumn(name = "provider_id", nullable = false)
-    private AuthProviderEntity provider;
+    @JoinColumn(name = "user_id")
+    UserEntity user;
+    @ManyToOne
+    @JoinColumn(name = "provider_id")
+    AuthProviderEntity provider;
+
     @Column (name="external_id",nullable = false, length = 255)
     private String external_id;
 

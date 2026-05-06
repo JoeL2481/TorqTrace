@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.user.user;
 
 import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
 import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
+import com.PascuanSilvestre.TorqTrace.features.auth.userProvider.UserProviderEntity;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import jakarta.persistence.*;
@@ -59,6 +60,9 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private List<UserVehicleEntity> userVehicles;
+
+    @OneToMany(mappedBy = "user")
+    List<UserProviderEntity> providers;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
