@@ -3,7 +3,6 @@ package com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.MaintenanceType;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkShopOrderEntity;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.workStatus.WorkOrderStatusEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
