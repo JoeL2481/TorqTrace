@@ -2,7 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff;
 
 
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.staff.enums.StaffRole;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.enums.StaffRole;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
