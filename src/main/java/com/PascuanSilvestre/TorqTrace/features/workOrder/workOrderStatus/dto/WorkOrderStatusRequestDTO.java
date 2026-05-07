@@ -1,4 +1,4 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderStatus.dto;
 
-public class WorkStatusDTO {
+public class WorkOrderStatusRequestDTO {
 }
