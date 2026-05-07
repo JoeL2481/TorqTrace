@@ -58,10 +58,10 @@ public class UserEntity {
     })
     private ContactInfo userContactInfo;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<UserVehicleEntity> userVehicles;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     List<UserProviderEntity> providers;
 
     @CreationTimestamp
