@@ -2,9 +2,8 @@ package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle;
 
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleBodyType;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleCategory;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleFuelType;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.VehicleBrandEntity;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquimentLevel.VehicleEquimentLevelEntity;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.VehicleEquipmentLevelEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.VehicleGenerationEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.VehicleModelEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.VehicleVariantEntity;
@@ -16,7 +15,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Entity
@@ -49,7 +47,7 @@ public class VehicleEntity {
 
      @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="vehicle_equipment_level_id", nullable = true)
-    private VehicleEquimentLevelEntity vehicleEquipmentLevel;
+    private VehicleEquipmentLevelEntity vehicleEquipmentLevel;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "vehicle_body_type_id", length = 50)

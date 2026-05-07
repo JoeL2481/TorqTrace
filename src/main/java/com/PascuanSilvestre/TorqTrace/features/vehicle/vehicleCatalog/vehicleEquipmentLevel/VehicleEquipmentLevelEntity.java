@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquimentLevel;
+package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class VehicleEquimentLevelEntity {
+public class VehicleEquipmentLevelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
