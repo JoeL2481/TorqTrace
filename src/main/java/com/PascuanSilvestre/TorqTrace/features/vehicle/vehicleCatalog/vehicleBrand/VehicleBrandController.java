@@ -50,4 +50,5 @@ public class VehicleBrandController {
     public ResponseEntity<VehicleBrandResponseDTO> update(@PathVariable UUID id,  @Valid @RequestBody VehicleBrandRequestDTO request) {
         return ResponseEntity.ok(vehicleBrandService.update(id, request));
     }
+
 }
