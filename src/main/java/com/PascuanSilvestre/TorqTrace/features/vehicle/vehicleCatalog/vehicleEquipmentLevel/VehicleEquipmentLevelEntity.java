@@ -1,16 +1,15 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name= "vehicle_equipment_level")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
+
 @Getter
 public class VehicleEquipmentLevelEntity {
     @Id

@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class WorkShopOrderEntity {
+public class WorkOrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

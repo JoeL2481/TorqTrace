@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkShopOrderEntity;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +25,7 @@ public class WorkOrderItemEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="work_order_id",nullable = false)
-    private WorkShopOrderEntity workShopOrder;
+    private WorkOrderEntity workShopOrder;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="spare_part_id",nullable = false)
     private SparePartEntity sparePartEntity;
