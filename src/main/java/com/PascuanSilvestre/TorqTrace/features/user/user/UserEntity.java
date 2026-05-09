@@ -9,7 +9,9 @@ import jakarta.persistence.*;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 
 import java.time.LocalDateTime;
@@ -29,6 +31,7 @@ public class UserEntity {
     private long id;
 
     @Column(name = "public_id", nullable = false, length = 100, unique = true)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     private UUID publicId;
 
     @Column(name = "first_name", nullable = false, length = 100)

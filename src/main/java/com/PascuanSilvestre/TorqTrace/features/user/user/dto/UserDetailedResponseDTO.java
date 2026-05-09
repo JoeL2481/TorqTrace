@@ -4,9 +4,7 @@ import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
 import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.dto.UserVehicleResponseDTO;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +12,9 @@ import java.util.UUID;
 @Setter
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class UserDetailedResponseDTO {
 
     private UUID publicId;

@@ -1,6 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.user.user;
 
 import com.PascuanSilvestre.TorqTrace.common.ICrudServiceComplete;
+import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserDetailedResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
@@ -28,7 +29,9 @@ public class UserService implements ICrudServiceComplete<UserCreateDTO,UserUpdat
     public UserResponseDTO create(UserCreateDTO request) {
        UserEntity entity = mapper.toEntity(request);
        entity.setPublicId(UUID.randomUUID());
-       UserEntity savedEntity = repository.save(entity);
+        entity.setStatus(UserStatus.ACTIVE);
+
+        UserEntity savedEntity = repository.save(entity);
         return mapper.toResponse(savedEntity);
     }
 

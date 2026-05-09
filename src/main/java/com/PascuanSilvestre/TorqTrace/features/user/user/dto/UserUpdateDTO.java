@@ -32,4 +32,4 @@ import lombok.Setter;
         @Valid
         private ContactInfo userContactInfo;
     }
-}
+

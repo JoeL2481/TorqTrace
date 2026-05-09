@@ -9,14 +9,17 @@ import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserDetailedResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserUpdateDTO;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+
 
 @Component
 @RequiredArgsConstructor
 public class UserMapper implements IMapper<UserEntity, UserCreateDTO, UserResponseDTO> {
-    private ModelMapper mapper;
+    private final ModelMapper mapper;
     @Override
     public UserEntity toEntity(UserCreateDTO request) {
         return mapper.map(request, UserEntity.class);
