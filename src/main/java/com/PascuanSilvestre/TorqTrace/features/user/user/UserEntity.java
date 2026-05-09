@@ -7,20 +7,19 @@ import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import jakarta.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name="user")
 @Getter
+@Setter
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
@@ -28,6 +27,9 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "public_id", nullable = false, length = 100, unique = true)
+    private UUID publicId;
 
     @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
