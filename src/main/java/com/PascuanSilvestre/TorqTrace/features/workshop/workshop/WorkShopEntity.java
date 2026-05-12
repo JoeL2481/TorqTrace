@@ -2,12 +2,17 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
 import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
 import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.WorkShopStaffEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.WorkShopStockEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table (name = "workshop")
@@ -42,6 +47,18 @@ public class WorkShopEntity {
             @AttributeOverride(name = "email", column = @Column(name = "workshop_email"))
     })
     private ContactInfo workshopContactInfo;
+
+    @OneToMany(mappedBy = "workshop")
+    private List<WorkShopStaffEntity> workers;
+
+    @OneToMany(mappedBy = "workshop")
+    private List<WorkShopClientEntity> clients;
+
+    @OneToMany(mappedBy = "workshop", fetch = FetchType.LAZY)
+    private List<WorkShopStockEntity> stockItems;
+
+    @OneToMany(mappedBy = "workshop", fetch = FetchType.LAZY)
+    private List<WorkOrderEntity> orderItems;
 
 
     @Column(name="status",nullable = false)
