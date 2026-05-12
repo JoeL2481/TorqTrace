@@ -8,10 +8,7 @@ import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderType.WorkOrder
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -20,6 +17,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name="work_order")
 @Getter
+@Setter
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
@@ -41,13 +39,14 @@ public class WorkOrderEntity {
     @JoinColumn(name="vehicle_id",nullable = false)
     private VehicleEntity vehicle;
 
+
     @Column(name="entry_km",nullable = false)
     private Double entryKm;
     @Column(name="description", columnDefinition = "TEXT")
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="Status", nullable = false,length = 255)
+    @Column(name="Status", nullable = false)
     private WorkOrderStatus status;
 
 /*

@@ -2,10 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name="client_workshop")
 @Getter
+@Setter
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
@@ -23,11 +21,12 @@ public class WorkShopClientEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="workshop_id")
+    @JoinColumn(name="workshop_id", nullable = false)
+
     private WorkShopEntity workshop;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="user_id", nullable = false)
     private UserEntity user;
 
     @Column(name="description", columnDefinition = "TEXT" )
