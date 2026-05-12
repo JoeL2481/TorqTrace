@@ -1,4 +1,4 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.dto;
 
-public class UserVehicleDTO {
+public class UserVehicleResponseDTO {
 }

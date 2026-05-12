@@ -35,7 +35,6 @@ public class VehicleEquipmentLevelController {
     @DeleteMapping ("/{id}")
     public ResponseEntity<VehicleEquipmentLevelResponseDTO> delete(@PathVariable Long id) {
 
-        service.delete(id);
         return ResponseEntity.ok(service.delete(id));
 
 
