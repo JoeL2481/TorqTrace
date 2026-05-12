@@ -1,7 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock;
 
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +25,7 @@ public class WorkShopStockEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "workshop_id", nullable = false)
-    private WorkshopEntity workshop;
+    private WorkShopEntity workshop;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "spare_part_id", nullable = false)
