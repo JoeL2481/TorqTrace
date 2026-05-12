@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.enums;
 
-public enum workOrderStatus {
+public enum WorkOrderStatus {
     ACTIVE,
     INACTIVE
 }

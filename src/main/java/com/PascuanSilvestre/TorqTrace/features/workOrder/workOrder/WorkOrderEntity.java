@@ -1,7 +1,8 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder;
 
-import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
+
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.enums.WorkOrderStatus;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.WorkOrderItemEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderType.WorkOrderTypeEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
@@ -41,13 +42,20 @@ public class WorkOrderEntity {
     private VehicleEntity vehicle;
 
     @Column(name="entry_km",nullable = false)
-    private double entry_km;
+    private Double entryKm;
     @Column(name="description", columnDefinition = "TEXT")
     private String description;
 
     @Enumerated(EnumType.STRING)
     @Column(name="Status", nullable = false,length = 255)
-    private UserStatus status;
+    private WorkOrderStatus status;
+
+/*
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_vehicle_maitenance_id")
+    private UserVehicleMaitenanceEntity userVehicleMaitenance;
+*/
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="workshop_order_type_id",nullable = false)

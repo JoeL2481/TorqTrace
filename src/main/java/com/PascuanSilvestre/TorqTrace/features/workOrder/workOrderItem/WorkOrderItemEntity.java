@@ -25,10 +25,11 @@ public class WorkOrderItemEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="work_order_id",nullable = false)
-    private WorkOrderEntity workShopOrder;
+    private WorkOrderEntity workOrder;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="spare_part_id",nullable = false)
-    private SparePartEntity sparePartEntity;
+    private SparePartEntity sparePart;
 
     @Column(name = "quantity_requested",nullable = false)
     private Integer quantityRequested;
