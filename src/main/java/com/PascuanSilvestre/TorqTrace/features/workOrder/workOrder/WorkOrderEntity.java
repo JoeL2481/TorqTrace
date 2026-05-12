@@ -4,7 +4,7 @@ import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.WorkOrderItemEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderStatus.WorkOrderStatusEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +29,7 @@ public class WorkOrderEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="workshop_id",nullable = false)
-    private WorkshopEntity workshop;
+    private WorkShopEntity workshop;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="client_id",nullable = false)

@@ -1,10 +1,9 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
+import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
+import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,10 +12,11 @@ import java.time.LocalDateTime;
 @Entity
 @Table (name = "workshop")
 @Getter
+@Setter
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class WorkshopEntity {
+public class WorkShopEntity {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -24,20 +24,26 @@ public class WorkshopEntity {
 
     @Column(name="name",nullable = false, length = 255)
     private String name;
-    @Column(name="email",nullable = false, length = 255)
-    private String email;
     @Column(name="descripcion",nullable = false, columnDefinition = "TEXT")
     private String description;
-    @Column(name="phone",nullable = false, length = 20)
-    private long phone;
-    @Column(name="addres",nullable = false, length = 200)
-    private String address;
-    @Column(name="city",nullable = false, length = 200)
-    private String city;
-    @Column(name="state",nullable = false, length = 200)
-    private String state;
-    @Column(name="country",nullable = false, length = 200)
-    private String Country;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "address", column = @Column(name = "workshop_address")),
+            @AttributeOverride(name = "city", column = @Column(name = "workshop_city")),
+            @AttributeOverride(name = "state", column = @Column(name = "workshop_state")),
+            @AttributeOverride(name = "country", column = @Column(name = "workshop_country"))
+    })
+    private AddressInfo workshopAddress;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "phoneNumber", column = @Column(name = "workshop_phone")),
+            @AttributeOverride(name = "email", column = @Column(name = "workshop_email"))
+    })
+    private ContactInfo workshopContactInfo;
+
+
     @Column(name="status",nullable = false)
     private boolean status;
     @CreationTimestamp
