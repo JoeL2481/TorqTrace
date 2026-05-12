@@ -2,8 +2,8 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff;
 
 
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.staff.enums.StaffRole;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.enums.StaffRole;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +27,7 @@ public class WorkShopStaffEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workshop_id")
-    private WorkshopEntity workshop;
+    private WorkShopEntity workshop;
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

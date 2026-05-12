@@ -2,10 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.auth.userProvider;
 import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.AuthProviderEntity;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name=("user_provider"))
 @Getter
+@Setter
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
@@ -22,10 +20,10 @@ public class UserProviderEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     UserEntity user;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id")
     AuthProviderEntity provider;
 

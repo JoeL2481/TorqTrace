@@ -27,7 +27,7 @@ public class AuthProviderEntity {
     private String name;
     @Column(nullable = false, length = 55)
     private String display_name;
-    @OneToMany(mappedBy = "provider")
+    @OneToMany(mappedBy = "provider",fetch = FetchType.LAZY)
     List<UserProviderEntity> users;
 
     @CreationTimestamp

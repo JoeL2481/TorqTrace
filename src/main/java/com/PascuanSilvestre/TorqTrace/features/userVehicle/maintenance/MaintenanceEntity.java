@@ -2,7 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance;
 
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.MaintenanceType;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkShopOrderEntity;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,7 +25,7 @@ public class MaintenanceEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "workshop_order_id", nullable = false)
-    private WorkShopOrderEntity workshopOrder;
+    private WorkOrderEntity workshopOrder;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "maintenance_type", nullable = false, length = 50)
