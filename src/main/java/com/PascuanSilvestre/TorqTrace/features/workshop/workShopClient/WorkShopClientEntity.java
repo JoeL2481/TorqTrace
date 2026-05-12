@@ -21,12 +21,15 @@ public class WorkShopClientEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="workshop_id")
     private WorkShopEntity workshop;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private UserEntity user;
+
     @Column(name="description", columnDefinition = "TEXT" )
     private String description;
 

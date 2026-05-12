@@ -1,4 +1,0 @@
-package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderStatus;
-
-public class WorkOrderStatusController {
-}

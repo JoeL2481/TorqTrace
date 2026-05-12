@@ -1,8 +1,9 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder;
 
+import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.WorkOrderItemEntity;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderStatus.WorkOrderStatusEntity;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderType.WorkOrderTypeEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
@@ -38,17 +39,19 @@ public class WorkOrderEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="vehicle_id",nullable = false)
     private VehicleEntity vehicle;
+
     @Column(name="entry_km",nullable = false)
     private double entry_km;
     @Column(name="description", columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="status_work_order_id",nullable = false)
-    private WorkOrderStatusEntity workOrderStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(name="Status", nullable = false,length = 255)
+    private UserStatus status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="workshop_order_type_id",nullable = false)
-    private WorkOrderStatusEntity workshopOrderType;
+    private WorkOrderTypeEntity workshopOrderType;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="item_work_order_id",nullable = false)
     private WorkOrderItemEntity workOrderItem;
