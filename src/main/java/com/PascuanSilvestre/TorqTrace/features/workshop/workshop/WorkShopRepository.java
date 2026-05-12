@@ -4,5 +4,6 @@ import org.springframework.data.jpa.repository.support.JpaRepositoryImplementati
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WorkshopRepository extends JpaRepositoryImplementation<WorkshopEntity,Long> {
+public interface WorkShopRepository extends JpaRepositoryImplementation<WorkShopEntity,Long> {
+    boolean existsByName(String name);
 }
