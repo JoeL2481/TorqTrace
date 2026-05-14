@@ -1,12 +1,11 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock;
 
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,13 +14,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table (name="stock_workshop")
 @Getter
+@Setter
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @NoArgsConstructor
-public class WorkShopStockEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Long id;
+public class WorkShopStockEntity extends AuditableBase {
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "workshop_id", nullable = false)
@@ -38,10 +36,5 @@ public class WorkShopStockEntity {
     private Integer minStockAlert;
 
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+
 }

@@ -2,9 +2,8 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.mapper;
 
 import com.PascuanSilvestre.TorqTrace.common.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.WorkShopStockEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto.WorkShopStockRequestDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto.WorkShopStockCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto.WorkShopStockResponseDTO;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +11,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class WorkShopStockMapper implements IMapper<WorkShopStockEntity,WorkShopStockRequestDTO,WorkShopStockResponseDTO> {
+public class WorkShopStockMapper implements IMapper<WorkShopStockEntity, WorkShopStockCreateDTO,WorkShopStockResponseDTO> {
 
     @Autowired
     private final ModelMapper modelMapper;
 
     @Override
-    public WorkShopStockEntity toEntity(WorkShopStockRequestDTO request) {
+    public WorkShopStockEntity toEntity(WorkShopStockCreateDTO request) {
         return  modelMapper.map(request,WorkShopStockEntity.class);
     }
 

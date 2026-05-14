@@ -1,4 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem;
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
 import jakarta.persistence.*;
@@ -6,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,20 +17,19 @@ import java.time.LocalDateTime;
 @Table(name="item_work_order")
 @Getter
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @NoArgsConstructor
-public class WorkOrderItemEntity {
+public class WorkOrderItemEntity  extends AuditableBase {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="work_order_id",nullable = false)
-    private WorkOrderEntity workShopOrder;
+    private WorkOrderEntity workOrder;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="spare_part_id",nullable = false)
-    private SparePartEntity sparePartEntity;
+    private SparePartEntity sparePart;
 
     @Column(name = "quantity_requested",nullable = false)
     private Integer quantityRequested;
@@ -40,10 +41,5 @@ public class WorkOrderItemEntity {
     @Column(name = "subtotal")
     private Double subtotal;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+
 }

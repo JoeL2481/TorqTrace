@@ -1,6 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.user.user;
 
 import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.auth.userProvider.UserProviderEntity;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
@@ -8,6 +9,7 @@ import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehic
 import jakarta.persistence.*;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,12 +25,10 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @NoArgsConstructor
-public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class UserEntity  extends AuditableBase {
+
 
     @Column(name = "public_id", nullable = false, length = 100, unique = true)
     @JdbcTypeCode(SqlTypes.VARCHAR)
@@ -69,12 +69,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     List<UserProviderEntity> providers;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+
 
 
 }

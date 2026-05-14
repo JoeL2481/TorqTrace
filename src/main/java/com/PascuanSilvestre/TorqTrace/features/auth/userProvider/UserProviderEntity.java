@@ -1,8 +1,10 @@
 package com.PascuanSilvestre.TorqTrace.features.auth.userProvider;
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.AuthProviderEntity;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,27 +15,21 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @NoArgsConstructor
-public class UserProviderEntity {
+public class UserProviderEntity extends AuditableBase {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     UserEntity user;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id")
     AuthProviderEntity provider;
 
     @Column (name="external_id",nullable = false, length = 255)
-    private String external_id;
+    private String externalId;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+
 }

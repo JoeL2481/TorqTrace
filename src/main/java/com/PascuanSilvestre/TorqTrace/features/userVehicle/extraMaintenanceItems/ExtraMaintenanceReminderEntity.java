@@ -1,16 +1,15 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.extraMaintenanceItems;
 
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.ExtraMaintenanceReminderType;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "extra_maintenance_reminder")
-public class ExtraMaintenanceReminderEntity {
+public class ExtraMaintenanceReminderEntity  extends AuditableBase {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_vehicle_id", nullable = false)

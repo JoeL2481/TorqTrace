@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility;
 
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.EngineEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission.TransmissionEntity;
@@ -12,11 +13,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "spare_part_compatibility")
-public class SparePartCompatibilityEntity {
+public class SparePartCompatibilityEntity extends AuditableBase {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "spare_part_id", nullable = false)
@@ -37,11 +36,5 @@ public class SparePartCompatibilityEntity {
     @Column(name = "notes", length = 255)
     private String notes;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
 }
