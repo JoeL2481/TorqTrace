@@ -1,6 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
 import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
@@ -8,6 +9,7 @@ import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.WorkShopSt
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.WorkShopStockEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -19,13 +21,11 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @NoArgsConstructor
-public class WorkShopEntity {
+public class WorkShopEntity  extends AuditableBase {
 
-    @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     @Column(name="name",nullable = false, length = 255)
     private String name;
@@ -63,12 +63,7 @@ public class WorkShopEntity {
 
     @Column(name="status",nullable = false)
     private boolean status;
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+
 
 
 }

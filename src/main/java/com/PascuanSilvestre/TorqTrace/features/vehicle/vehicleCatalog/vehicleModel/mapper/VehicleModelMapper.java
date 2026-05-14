@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@AllArgsConstructor
 
 public class VehicleModelMapper implements IMapper<VehicleModelEntity, VehicleModelRequestDTO, VehicleModelResponseDTO> {
    private final ModelMapper mapper;

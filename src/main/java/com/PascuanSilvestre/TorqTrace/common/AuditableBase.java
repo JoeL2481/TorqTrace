@@ -1,8 +1,8 @@
 package com.PascuanSilvestre.TorqTrace.common;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuditableBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

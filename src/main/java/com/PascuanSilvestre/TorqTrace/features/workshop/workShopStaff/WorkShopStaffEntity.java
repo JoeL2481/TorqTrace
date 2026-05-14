@@ -1,6 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff;
 
 
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.enums.StaffRole;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,12 +20,10 @@ import java.time.LocalDateTime;
 @Table(name="staff_workshop")
 @Getter
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @NoArgsConstructor
-public class WorkShopStaffEntity {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+public class WorkShopStaffEntity  extends AuditableBase {
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workshop_id", nullable = false)
@@ -38,10 +38,5 @@ public class WorkShopStaffEntity {
     @Column(name = "role", nullable = false, length = 30)
     private StaffRole role;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+
 }

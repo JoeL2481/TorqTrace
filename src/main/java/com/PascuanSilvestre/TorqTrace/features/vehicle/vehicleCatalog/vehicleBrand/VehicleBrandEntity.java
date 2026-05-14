@@ -1,7 +1,9 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand;
 
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,15 +14,12 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="vehicle_brand")
-public class VehicleBrandEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class VehicleBrandEntity extends AuditableBase {
 
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "public_id", nullable = false, unique = true, updatable = false, length = 36)
@@ -29,11 +28,5 @@ public class VehicleBrandEntity {
     @Column(name = "name", length = 255)
     private String name;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
 }
