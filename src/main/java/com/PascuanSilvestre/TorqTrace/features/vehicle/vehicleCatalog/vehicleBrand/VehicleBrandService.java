@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand;
 
+import com.PascuanSilvestre.TorqTrace.common.ICrudService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.dto.VehicleBrandRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.dto.VehicleBrandResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.mapper.VehicleBrandMapper;
@@ -74,11 +75,15 @@ public class VehicleBrandService implements ICrudService<VehicleBrandRequestDTO,
     }
 
     @Override
-    public void delete(UUID id) {
-        vehicleBrandRepository.delete(
-                vehicleBrandRepository.findByPublicId(id)
-                        .orElseThrow(() -> new EntityNotFoundException("Vehicle brand was not found"))
-        );
+    public VehicleBrandResponseDTO delete(UUID id) {
 
+
+
+        VehicleBrandEntity entity = vehicleBrandRepository.findByPublicId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle brand was not found for deletion with that id:" + id));
+        VehicleBrandResponseDTO responseDTO = vehicleBrandMapper.toResponse(entity);
+
+        vehicleBrandRepository.delete(entity);
+        return responseDTO;
     }
 }

@@ -1,6 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder;
 
 
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.enums.WorkOrderStatus;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.WorkOrderItemEntity;
@@ -9,23 +10,24 @@ import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopC
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity
+
 @Table(name="work_order")
+@Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@Builder
+@SuperBuilder
 @NoArgsConstructor
-public class WorkOrderEntity {
+@AllArgsConstructor
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class WorkOrderEntity  extends AuditableBase {
+
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="workshop_id",nullable = false)
@@ -70,10 +72,5 @@ public class WorkOrderEntity {
     @Column(name="total_cost")
     private Double totalCost;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+
 }

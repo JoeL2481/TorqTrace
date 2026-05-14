@@ -1,8 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration;
 
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.ICrudService;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.VehicleBrandEntity;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.VehicleBrandRepository;
+import com.PascuanSilvestre.TorqTrace.common.ICrudService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.dto.VehicleGenerationRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.dto.VehicleGenerationResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.mapper.VehicleGenerationMapper;
@@ -57,12 +55,14 @@ public class VehicleGenerationService implements ICrudService<VehicleGenerationR
     }
 
     @Override
-    public void delete(Long id) {
+    public VehicleGenerationResponseDTO delete(Long id) {
         VehicleGenerationEntity entity = vehicleGenerationRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Vehicle generation not found with id: " + id
                 ));
-
+        VehicleGenerationResponseDTO responseDTO = vehicleGenerationMapper.toResponse(entity);
         vehicleGenerationRepository.delete(entity);
+
+        return responseDTO;
     }
 }

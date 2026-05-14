@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle;
 
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.extraMaintenanceItems.ExtraMaintenanceReminderEntity;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.MaintenanceEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
@@ -10,7 +11,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
-
+import lombok.experimental.SuperBuilder;
 
 
 import java.math.BigDecimal;
@@ -21,13 +22,11 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 
 
-public class UserVehicleEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class UserVehicleEntity extends AuditableBase {
+
 
     @Column(name = "licence_plate", length = 20, nullable = false, unique = true)
     private String licencePlate;
