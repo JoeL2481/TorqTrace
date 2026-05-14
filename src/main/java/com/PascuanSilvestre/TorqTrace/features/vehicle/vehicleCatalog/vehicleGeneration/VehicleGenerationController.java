@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/generations")
+@RequestMapping("api/vehicle-generation")
 @RequiredArgsConstructor
 public class VehicleGenerationController {
     private final VehicleGenerationService vehicleGenerationService;

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/brands")
+@RequestMapping("api/vehicle-brand")
 @RequiredArgsConstructor
 public class VehicleBrandController {
     private final VehicleBrandService vehicleBrandService;

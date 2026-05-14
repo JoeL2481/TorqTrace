@@ -1,16 +1,15 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop.mapper;
 
 import com.PascuanSilvestre.TorqTrace.common.IMapper;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto.WorkShopClientResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto.WorkShopStockResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.mapper.WorkOrderMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.mapper.WorkShopClientMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.mapper.WorkShopStaffMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.mapper.WorkShopStockMapper;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopDetailedResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopUpdateDTO;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -20,6 +19,10 @@ import org.springframework.stereotype.Component;
 public class WorkShopMapper implements IMapper<WorkShopEntity, WorkShopCreateDTO, WorkShopResponseDTO> {
 
     private final ModelMapper modelMapper;
+    private final WorkShopStaffMapper staffMapper;
+    private final WorkShopClientMapper clientMapper;
+    private final WorkShopStockMapper stockMapper;
+    private final WorkOrderMapper workOrderMapper;
     @Override
     public WorkShopEntity toEntity(WorkShopCreateDTO request) {
         return  modelMapper.map(request, WorkShopEntity.class);
@@ -53,10 +56,7 @@ public class WorkShopMapper implements IMapper<WorkShopEntity, WorkShopCreateDTO
         }
     }
 
-    public WorkShopDetailedResponseDTO toDetailedResponse(
-            WorkShopEntity entity
-    ) {
-
+    public WorkShopDetailedResponseDTO toDetailedResponse(WorkShopEntity entity) {
         return WorkShopDetailedResponseDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
@@ -70,46 +70,27 @@ public class WorkShopMapper implements IMapper<WorkShopEntity, WorkShopCreateDTO
                 .workers(
                         entity.getWorkers()
                                 .stream()
-                                .map(worker ->
-                                        WorkShopStaffResponseDTO.builder()
-                                                .id(worker.getId())
-                                                .build()
-                                )
-                                .toList()
+                                .map(staffMapper::toResponse).toList()
                 )
 
                 .clients(
                         entity.getClients()
                                 .stream()
-                                .map(client ->
-                                        WorkShopClientResponseDTO.builder()
-                                                .id(client.getId())
-                                                .build()
-                                )
+                                .map(clientMapper::toResponse)
                                 .toList()
                 )
 
                 .stockItems(
                         entity.getStockItems()
                                 .stream()
-                                .map(stock ->
-                                        WorkShopStockResponseDTO.builder()
-                                                .id(stock.getId())
-                                                .stockQuantity(stock.getStockQuantity())
-                                                .minStockAlert(stock.getMinStockAlert())
-                                                .build()
-                                )
+                                .map(stockMapper::toResponse)
                                 .toList()
                 )
 
                 .orderItems(
                         entity.getOrderItems()
                                 .stream()
-                                .map(order ->
-                                        WorkOrderResponseDTO.builder()
-                                                .id(order.getId())
-                                                .build()
-                                )
+                                .map(workOrderMapper::toResponse)
                                 .toList()
                 )
 

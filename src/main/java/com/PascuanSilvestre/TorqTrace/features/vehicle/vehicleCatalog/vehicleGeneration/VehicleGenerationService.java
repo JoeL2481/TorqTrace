@@ -55,12 +55,14 @@ public class VehicleGenerationService implements ICrudService<VehicleGenerationR
     }
 
     @Override
-    public void delete(Long id) {
+    public VehicleGenerationResponseDTO delete(Long id) {
         VehicleGenerationEntity entity = vehicleGenerationRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Vehicle generation not found with id: " + id
                 ));
-
+        VehicleGenerationResponseDTO responseDTO = vehicleGenerationMapper.toResponse(entity);
         vehicleGenerationRepository.delete(entity);
+
+        return responseDTO;
     }
 }
