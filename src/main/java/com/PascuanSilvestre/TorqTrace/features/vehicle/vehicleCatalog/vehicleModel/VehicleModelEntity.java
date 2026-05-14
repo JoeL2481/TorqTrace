@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel;
 
+import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,19 +17,9 @@ import java.time.LocalDateTime;
 @Table(name="vehicle_model")
 
 
-public class VehicleModelEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class VehicleModelEntity extends AuditableBase {
 
     @Column(name = "name")
     private String name;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
 }

@@ -7,11 +7,8 @@ import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserDetailedRespons
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserUpdateDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.mapper.UserMapper;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleRepository;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.ICrudService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
