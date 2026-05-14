@@ -1,8 +1,8 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto;
 
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopResponseDTO;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 public class WorkShopClientResponseDTO {
 
     private Long id;
+
+    private WorkShopResponseDTO workShop;
 
     private UserResponseDTO user;
 

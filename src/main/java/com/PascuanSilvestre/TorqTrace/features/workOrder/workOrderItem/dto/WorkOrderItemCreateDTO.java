@@ -1,21 +1,22 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto;
 
-//import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartResponseDTO;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkOrderItemResponseDTO {
+public class WorkOrderItemCreateDTO {
 
-    private Long id;
+    @NotNull
+    private Long workOrderId;
 
-//  private SparePartResponseDTO sparePart;
+    @NotNull
+    private Long sparePartId;
 
+    @NotNull
     private Integer quantityRequested;
 
     private Double unitPriceAtTime;
@@ -23,8 +24,4 @@ public class WorkOrderItemResponseDTO {
     private Double priceAtExecution;
 
     private Double subtotal;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
 }

@@ -1,5 +1,8 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto;
 
+import com.PascuanSilvestre.TorqTrace.features.workOrder.enums.WorkOrderStatus;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto.WorkOrderItemResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderType.dto.WorkOrderTypeResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto.WorkShopClientResponseDTO;
 import lombok.*;
 
@@ -22,11 +25,11 @@ public class WorkOrderResponseDTO {
 
     private String description;
 
-    //private WorkOrderStatusResponseDTO workOrderStatus;
+    private WorkOrderStatus status;
 
-    //private WorkOrderStatusResponseDTO workshopOrderType;
+    private WorkOrderTypeResponseDTO workOrderType;
 
-    //private WorkOrderItemResponseDTO workOrderItem;
+    private WorkOrderItemResponseDTO workOrderItem;
 
     private String currency;
 
