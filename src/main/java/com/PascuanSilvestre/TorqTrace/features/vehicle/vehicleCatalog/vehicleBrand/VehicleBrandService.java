@@ -75,11 +75,15 @@ public class VehicleBrandService implements ICrudService<VehicleBrandRequestDTO,
     }
 
     @Override
-    public void delete(UUID id) {
-        vehicleBrandRepository.delete(
-                vehicleBrandRepository.findByPublicId(id)
-                        .orElseThrow(() -> new EntityNotFoundException("Vehicle brand was not found"))
-        );
+    public VehicleBrandResponseDTO delete(UUID id) {
 
+
+
+        VehicleBrandEntity entity = vehicleBrandRepository.findByPublicId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle brand was not found for deletion with that id:" + id));
+        VehicleBrandResponseDTO responseDTO = vehicleBrandMapper.toResponse(entity);
+
+        vehicleBrandRepository.delete(entity);
+        return responseDTO;
     }
 }

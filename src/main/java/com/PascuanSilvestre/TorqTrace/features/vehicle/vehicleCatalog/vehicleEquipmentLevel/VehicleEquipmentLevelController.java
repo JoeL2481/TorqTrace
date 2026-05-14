@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/equipment-Level")
+@RequestMapping("api/vehicle-equipment-level")
 @RequiredArgsConstructor
 public class VehicleEquipmentLevelController {
     private final VehicleEquipmentLevelService service;

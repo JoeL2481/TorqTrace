@@ -7,5 +7,5 @@ public interface ICrudService<RequestDTO, ResponseDTO, ID> {
     List<ResponseDTO> getAll();
     ResponseDTO getById(ID id);
     ResponseDTO update(ID id, RequestDTO request);
-    void delete(ID id);
+    ResponseDTO delete(ID id);
 }
