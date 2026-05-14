@@ -20,15 +20,17 @@ public class UserProviderEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     UserEntity user;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id")
     AuthProviderEntity provider;
 
     @Column (name="external_id",nullable = false, length = 255)
-    private String external_id;
+    private String externalId;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

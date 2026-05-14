@@ -25,8 +25,8 @@ public class AuthProviderEntity {
 
     @Column(nullable = false, length = 50)
     private String name;
-    @Column(nullable = false, length = 55)
-    private String display_name;
+    @Column(name = "display_name",nullable = false, length = 55)
+    private String displayName;
     @OneToMany(mappedBy = "provider",fetch = FetchType.LAZY)
     List<UserProviderEntity> users;
 

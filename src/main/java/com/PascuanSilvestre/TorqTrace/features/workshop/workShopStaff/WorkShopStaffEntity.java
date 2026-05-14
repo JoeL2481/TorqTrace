@@ -26,7 +26,7 @@ public class WorkShopStaffEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "workshop_id")
+    @JoinColumn(name = "workshop_id", nullable = false)
     private WorkShopEntity workshop;
 
 
