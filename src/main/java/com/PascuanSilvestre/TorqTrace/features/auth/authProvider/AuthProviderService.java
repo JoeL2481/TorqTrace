@@ -4,8 +4,6 @@ import com.PascuanSilvestre.TorqTrace.common.ICrudService;
 import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.dto.AuthProviderCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.dto.AuthProviderResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.mapper.AuthProviderMapper;
-import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
-import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +23,7 @@ public class AuthProviderService implements ICrudService<AuthProviderCreateDTO, 
 
         authProviderEntity.setName(authProviderEntity.getName());
         authProviderEntity.setDisplayName(authProviderEntity.getDisplayName());
-        // esto es probable que no tenga que ser asi
+
         authProviderEntity.setUsers(authProviderEntity.getUsers());
 
         AuthProviderEntity savedEntity = authRepository.save(authProviderEntity);
