@@ -4,6 +4,7 @@ import com.PascuanSilvestre.TorqTrace.common.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto.WorkShopClientCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto.WorkShopClientResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto.WorkShopClientUpdateDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -22,5 +23,11 @@ public class WorkShopClientMapper implements IMapper<WorkShopClientEntity, WorkS
     @Override
     public WorkShopClientResponseDTO toResponse(WorkShopClientEntity entity) {
         return  modelMapper.map(entity,WorkShopClientResponseDTO.class);
+    }
+
+    public void toEntityUpdate (WorkShopClientUpdateDTO request, WorkShopClientEntity entity) {
+        if (request.getDescription() != null) {
+            entity.setDescription(request.getDescription());
+        }
     }
 }
