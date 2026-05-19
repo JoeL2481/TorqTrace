@@ -27,7 +27,7 @@ public class WorkShopEntity  extends AuditableBase {
 
 
 
-    @Column(name="name",nullable = false, length = 255)
+    @Column(name="name",unique = true,nullable = false, length = 255)
     private String name;
     @Column(name="descripcion",nullable = false, columnDefinition = "TEXT")
     private String description;

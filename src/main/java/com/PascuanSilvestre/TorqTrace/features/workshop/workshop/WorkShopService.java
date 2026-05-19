@@ -2,10 +2,10 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
 import com.PascuanSilvestre.TorqTrace.common.ICrudServiceComplete;
 
-import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopUpdateDTO;
+import com.PascuanSilvestre.TorqTrace.exception.DuplicatedNameException;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.mapper.WorkShopMapper;
 
 
@@ -27,7 +27,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
 
         boolean exists = repository.existsByName(request.getName());
         if (exists) {
-            throw new RuntimeException("Workshop already exists");
+            throw new DuplicatedNameException("Workshop name already in use");
         }
         WorkShopEntity entity = mapper.toEntity(request);
         entity.setStatus(true);
