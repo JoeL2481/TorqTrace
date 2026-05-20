@@ -41,7 +41,6 @@ public class WorkShopController {
 
     @DeleteMapping ("/{id}")
     public ResponseEntity<WorkShopResponseDTO> delete(@PathVariable Long id) {
-
         return ResponseEntity.ok(service.delete(id));
     }
 
