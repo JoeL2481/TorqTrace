@@ -10,4 +10,5 @@ public interface WorkShopStaffRepository extends JpaRepository<WorkShopStaffEnti
 
     List<WorkShopStaffEntity>
     findByWorkshopId(Long workshopId);
+
 }

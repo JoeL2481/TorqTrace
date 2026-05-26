@@ -26,6 +26,6 @@ public class WorkShopStaffCreateDTO {
     @NotNull
     private Long userId;
 
-    //private StaffRole role;
+    private StaffRole role;
 
 }

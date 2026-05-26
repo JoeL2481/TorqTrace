@@ -2,10 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.auth.authProvider;
 import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.auth.userProvider.UserProviderEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name="auth_provider")
 @Getter
+@Setter
 @AllArgsConstructor
 @SuperBuilder
 @NoArgsConstructor
