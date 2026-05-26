@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.extraMaintenanceItems;
 
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.ExtraMaintenanceReminderType;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import jakarta.persistence.*;

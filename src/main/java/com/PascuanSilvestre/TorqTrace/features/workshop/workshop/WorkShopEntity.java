@@ -1,8 +1,8 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
-import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
-import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
+import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.WorkShopStaffEntity;
@@ -10,10 +10,7 @@ import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.WorkShopSt
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity

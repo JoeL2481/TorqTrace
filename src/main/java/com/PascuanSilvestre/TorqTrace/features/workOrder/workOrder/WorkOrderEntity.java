@@ -1,7 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder;
 
 
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.enums.WorkOrderStatus;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.WorkOrderItemEntity;
@@ -11,10 +11,6 @@ import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 
 @Table(name="work_order")

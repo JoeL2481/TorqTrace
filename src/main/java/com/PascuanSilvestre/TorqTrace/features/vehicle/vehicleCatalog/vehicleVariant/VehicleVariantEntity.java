@@ -1,9 +1,8 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant;
 
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

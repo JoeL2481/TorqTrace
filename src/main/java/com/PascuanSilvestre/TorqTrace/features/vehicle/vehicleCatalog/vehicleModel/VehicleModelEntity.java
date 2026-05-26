@@ -1,13 +1,9 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel;
 
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @SuperBuilder

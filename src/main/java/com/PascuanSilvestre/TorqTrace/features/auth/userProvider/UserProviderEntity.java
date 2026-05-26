@@ -1,14 +1,10 @@
 package com.PascuanSilvestre.TorqTrace.features.auth.userProvider;
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.AuthProviderEntity;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name=("user_provider"))

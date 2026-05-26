@@ -1,15 +1,11 @@
 package com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility;
 
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.EngineEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission.TransmissionEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "spare_part_compatibility")

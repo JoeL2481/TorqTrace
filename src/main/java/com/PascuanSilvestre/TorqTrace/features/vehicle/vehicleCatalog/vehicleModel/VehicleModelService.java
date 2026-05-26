@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel;
 
-import com.PascuanSilvestre.TorqTrace.common.ICrudService;
+import com.PascuanSilvestre.TorqTrace.common.utils.ICrudService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.dto.VehicleModelRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.dto.VehicleModelResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.mapper.VehicleModelMapper;

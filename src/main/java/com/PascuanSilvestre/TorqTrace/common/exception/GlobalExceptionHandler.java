@@ -1,8 +1,7 @@
-package com.PascuanSilvestre.TorqTrace.exception;
+package com.PascuanSilvestre.TorqTrace.common.exception;
 
 import com.PascuanSilvestre.TorqTrace.common.DTO.ErrorResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

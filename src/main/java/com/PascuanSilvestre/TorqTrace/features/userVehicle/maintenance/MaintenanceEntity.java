@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance;
 
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.MaintenanceType;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;

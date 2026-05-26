@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engineTransmission.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.IMapper;
+import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engineTransmission.EngineTransmissionEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engineTransmission.dto.EngineTransmissionRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engineTransmission.dto.EngineTransmissionResponseDTO;

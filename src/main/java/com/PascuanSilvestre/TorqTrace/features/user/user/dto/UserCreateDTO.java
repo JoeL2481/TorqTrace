@@ -1,8 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.user.user.dto;
 
-import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
-import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
-import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
+import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
+import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

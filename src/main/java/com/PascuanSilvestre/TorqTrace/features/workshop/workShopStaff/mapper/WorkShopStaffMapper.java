@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.IMapper;
+import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.WorkShopStaffEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffResponseDTO;

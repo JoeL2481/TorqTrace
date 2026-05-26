@@ -1,17 +1,13 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff;
 
 
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.enums.StaffRole;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name="staff_workshop")

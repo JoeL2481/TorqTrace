@@ -1,7 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff;
 
-import com.PascuanSilvestre.TorqTrace.common.ICrudServiceComplete;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientRepository;
+import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffUpdateDTO;

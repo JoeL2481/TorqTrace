@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.common;
+package com.PascuanSilvestre.TorqTrace.common.utils;
 import java.util.List;
 public interface ICrudServiceComplete<CreateDTO, UpdateDTO, ResponseDTO, ID> {
     ResponseDTO create(CreateDTO request);

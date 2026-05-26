@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.common;
+package com.PascuanSilvestre.TorqTrace.common.utils;
 
 public interface IMapper<Entity, RequestOrCreateDTO, ResponseDTO> {
     Entity toEntity(RequestOrCreateDTO request);

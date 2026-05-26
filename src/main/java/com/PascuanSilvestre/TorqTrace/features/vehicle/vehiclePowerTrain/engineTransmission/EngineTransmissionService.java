@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engineTransmission;
 
-import com.PascuanSilvestre.TorqTrace.common.ICrudService;
+import com.PascuanSilvestre.TorqTrace.common.utils.ICrudService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.EngineEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.EngineRespository;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engineTransmission.dto.EngineTransmissionRequestDTO;

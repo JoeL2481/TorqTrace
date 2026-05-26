@@ -1,7 +1,6 @@
-package com.PascuanSilvestre.TorqTrace.common;
+package com.PascuanSilvestre.TorqTrace.common.utils;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.exception;
+package com.PascuanSilvestre.TorqTrace.common.exception;
 
 public class DuplicatedNameException extends RuntimeException {
     public DuplicatedNameException(String message) {

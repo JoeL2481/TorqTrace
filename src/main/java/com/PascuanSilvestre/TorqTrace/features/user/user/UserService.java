@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.user.user;
 
-import com.PascuanSilvestre.TorqTrace.common.ICrudServiceComplete;
+import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserDetailedResponseDTO;

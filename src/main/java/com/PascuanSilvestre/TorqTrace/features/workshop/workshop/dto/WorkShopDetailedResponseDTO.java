@@ -1,8 +1,8 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto;
 
 
-import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
-import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
+import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
+import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto.WorkShopClientResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffResponseDTO;
