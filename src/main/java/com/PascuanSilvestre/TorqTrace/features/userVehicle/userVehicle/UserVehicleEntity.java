@@ -1,14 +1,10 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle;
 
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.extraMaintenanceItems.ExtraMaintenanceReminderEntity;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.MaintenanceEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import lombok.experimental.SuperBuilder;

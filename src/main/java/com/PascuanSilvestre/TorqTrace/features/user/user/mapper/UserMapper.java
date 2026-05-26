@@ -1,18 +1,16 @@
 package com.PascuanSilvestre.TorqTrace.features.user.user.mapper;
 
 
-import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
-import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
-import com.PascuanSilvestre.TorqTrace.common.IMapper;
+import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
+import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
+import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserDetailedResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserUpdateDTO;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 

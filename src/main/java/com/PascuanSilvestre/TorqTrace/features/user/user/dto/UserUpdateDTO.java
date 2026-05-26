@@ -1,7 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.user.user.dto;
 
-import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
-import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
+import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
+import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

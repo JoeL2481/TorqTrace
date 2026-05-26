@@ -1,14 +1,10 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem;
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name="item_work_order")

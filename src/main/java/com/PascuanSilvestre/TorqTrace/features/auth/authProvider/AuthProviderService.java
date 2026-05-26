@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.auth.authProvider;
 
-import com.PascuanSilvestre.TorqTrace.common.ICrudService;
+import com.PascuanSilvestre.TorqTrace.common.utils.ICrudService;
 import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.dto.AuthProviderCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.dto.AuthProviderResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.mapper.AuthProviderMapper;

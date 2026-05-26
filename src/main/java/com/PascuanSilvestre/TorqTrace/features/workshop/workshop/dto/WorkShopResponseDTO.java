@@ -2,8 +2,8 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto;
 
 
 import lombok.*;
-import com.PascuanSilvestre.TorqTrace.common.AddressInfo;
-import com.PascuanSilvestre.TorqTrace.common.ContactInfo;
+import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
+import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 
 import java.time.LocalDateTime;
 

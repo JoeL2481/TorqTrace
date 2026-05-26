@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.IMapper;
+import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.mapper.WorkOrderMapper;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.mapper.WorkShopClientMapper;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.mapper.WorkShopStaffMapper;

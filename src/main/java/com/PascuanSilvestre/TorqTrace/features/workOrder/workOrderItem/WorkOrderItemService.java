@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem;
 
-import com.PascuanSilvestre.TorqTrace.common.ICrudService;
+import com.PascuanSilvestre.TorqTrace.common.utils.ICrudService;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto.WorkOrderItemCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto.WorkOrderItemResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.mapper.WorkOrderItemMapper;

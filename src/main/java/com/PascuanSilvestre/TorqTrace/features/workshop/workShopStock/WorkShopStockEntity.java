@@ -1,15 +1,11 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock;
 
-import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table (name="stock_workshop")

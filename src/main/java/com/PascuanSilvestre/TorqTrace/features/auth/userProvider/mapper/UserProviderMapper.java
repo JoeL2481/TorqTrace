@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.auth.userProvider.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.IMapper;
+import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import org.modelmapper.ModelMapper;
 import com.PascuanSilvestre.TorqTrace.features.auth.userProvider.UserProviderEntity;
 import com.PascuanSilvestre.TorqTrace.features.auth.userProvider.dto.UserProviderCreateDTO;

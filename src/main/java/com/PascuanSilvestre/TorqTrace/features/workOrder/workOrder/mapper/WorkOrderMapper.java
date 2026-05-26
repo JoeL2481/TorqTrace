@@ -1,7 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.mapper;
 
 
-import com.PascuanSilvestre.TorqTrace.common.IMapper;
+import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderCreateDTO;

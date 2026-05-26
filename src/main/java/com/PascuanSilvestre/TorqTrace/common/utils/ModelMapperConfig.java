@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.common;
+package com.PascuanSilvestre.TorqTrace.common.utils;
 
 
 import org.modelmapper.ModelMapper;

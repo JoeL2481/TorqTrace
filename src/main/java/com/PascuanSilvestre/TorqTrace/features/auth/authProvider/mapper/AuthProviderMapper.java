@@ -1,7 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.auth.authProvider.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.IMapper;
-import lombok.NoArgsConstructor;
+import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import org.modelmapper.ModelMapper;
 import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.AuthProviderEntity;
 import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.dto.AuthProviderCreateDTO;

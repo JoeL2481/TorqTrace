@@ -1,11 +1,11 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
-import com.PascuanSilvestre.TorqTrace.common.ICrudServiceComplete;
+import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopUpdateDTO;
-import com.PascuanSilvestre.TorqTrace.exception.DuplicatedNameException;
+import com.PascuanSilvestre.TorqTrace.common.exception.DuplicatedNameException;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.mapper.WorkShopMapper;
 
 
