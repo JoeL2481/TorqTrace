@@ -6,10 +6,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "transmission")
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransmissionEntity extends AuditableBase {
@@ -28,6 +32,4 @@ public class TransmissionEntity extends AuditableBase {
     private String manufacturer;
     @Column(name="description")
     private String description;
-
-
 }

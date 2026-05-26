@@ -1,12 +1,10 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine;
 
 import com.PascuanSilvestre.TorqTrace.common.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.enums.AspirationType;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.enums.EngineLayout;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -15,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 public class EngineEntity extends AuditableBase {
 
 
@@ -33,6 +32,9 @@ public class EngineEntity extends AuditableBase {
     @Enumerated(EnumType.STRING)
     @Column(name= "engine_layout", length = 20)
     private EngineLayout engineLayout;
+    @Enumerated(EnumType.STRING)
+    @Column(name= "aspiration_type", length =20)
+    private AspirationType aspirationType;
 
 
 
