@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name="engine_transmission")
 @Getter
+@Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
