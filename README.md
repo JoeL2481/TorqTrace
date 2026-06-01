@@ -67,21 +67,6 @@ La aplicación utiliza MySQL como sistema gestor de base de datos para almacenar
 git clone https://github.com/JoeL2481/TorqTrace.git
 ```
 
-## Estructura del proyecto
-
-```plaintext
-TorqTrace/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/PascuanSilvestre/TorqTrace/
-│   │   └── resources/
-│   └── test/
-├── pom.xml
-├── mvnw
-└── README.md
-```
-
 ## Integrantes
 
 - Joel Pascuan
