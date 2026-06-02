@@ -6,12 +6,20 @@ import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission.TransmissionEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "spare_part_compatibility")
+@Getter
+@Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SparePartCompatibilityEntity extends AuditableBase {
-
-
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "spare_part_id", nullable = false)
@@ -31,6 +39,4 @@ public class SparePartCompatibilityEntity extends AuditableBase {
 
     @Column(name = "notes", length = 255)
     private String notes;
-
-
 }
