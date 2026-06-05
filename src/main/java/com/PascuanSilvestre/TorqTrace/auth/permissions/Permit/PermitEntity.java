@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.auth.permissions;
+package com.PascuanSilvestre.TorqTrace.auth.permissions.Permit;
 
 import jakarta.persistence.*;
 import lombok.*;

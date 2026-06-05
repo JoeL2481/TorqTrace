@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.auth.permissions;
+package com.PascuanSilvestre.TorqTrace.auth.permissions.Permit;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.auth.permissions;
+package com.PascuanSilvestre.TorqTrace.auth.permissions.Permit;
 
 public enum Permits {
     VER_CUENTAS,
