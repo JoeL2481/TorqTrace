@@ -1,6 +1,6 @@
-package com.PascuanSilvestre.TorqTrace.features.auth.userProvider.dto;
+package com.PascuanSilvestre.TorqTrace.auth.userProvider.dto;
 
-import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.dto.AuthProviderResponseDTO;
+import com.PascuanSilvestre.TorqTrace.auth.authProvider.dto.AuthProviderResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
 import lombok.*;
 

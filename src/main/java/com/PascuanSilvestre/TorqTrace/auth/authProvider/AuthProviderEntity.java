@@ -1,6 +1,6 @@
-package com.PascuanSilvestre.TorqTrace.features.auth.authProvider;
+package com.PascuanSilvestre.TorqTrace.auth.authProvider;
 import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
-import com.PascuanSilvestre.TorqTrace.features.auth.userProvider.UserProviderEntity;
+import com.PascuanSilvestre.TorqTrace.auth.userProvider.UserProviderEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
