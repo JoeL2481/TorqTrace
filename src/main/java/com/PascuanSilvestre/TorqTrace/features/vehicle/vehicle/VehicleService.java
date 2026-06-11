@@ -45,7 +45,6 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
                 .vehicleVariant(getVariantOrNull(request.getVehicleVariantId()))
                 .vehicleGeneration(getGenerationOrNull(request.getVehicleGenerationId()))
                 .vehicleEquipmentLevel(getEquipmentLevelOrNull(request.getVehicleEquipmentLevelId()))
-                .vehicleBodyType(request.getVehicleBodyType())
                 .vehicleCategory(request.getVehicleCategory())
                 .build();
 
@@ -84,9 +83,7 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
         if (request.getVehicleEquipmentLevelId() != null) {
             entity.setVehicleEquipmentLevel(getEquipmentLevelOrNull(request.getVehicleEquipmentLevelId()));
         }
-        if (request.getVehicleBodyType() != null) {
-            entity.setVehicleBodyType(request.getVehicleBodyType());
-        }
+
         if (request.getVehicleCategory() != null) {
             entity.setVehicleCategory(request.getVehicleCategory());
         }
@@ -111,7 +108,6 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
                 .filter(vehicle -> variantId == null || (vehicle.getVehicleVariant() != null && vehicle.getVehicleVariant().getId().equals(variantId)))
                 .filter(vehicle -> generationId == null || (vehicle.getVehicleGeneration() != null && vehicle.getVehicleGeneration().getId().equals(generationId)))
                 .filter(vehicle -> equipmentLevelId == null || (vehicle.getVehicleEquipmentLevel() != null && vehicle.getVehicleEquipmentLevel().getId().equals(equipmentLevelId)))
-                .filter(vehicle -> vehicleBodyType == null || vehicle.getVehicleBodyType() == vehicleBodyType)
                 .filter(vehicle -> vehicleCategory == null || vehicle.getVehicleCategory() == vehicleCategory)
                 .map(mapper::toResponse)
                 .toList();

@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VehicleCreateDTO {
+public class VehicleCreateCompleteDTO {
 
     private Long vehicleBrandId;
     private String vehicleBrandName;
@@ -48,37 +48,33 @@ public class VehicleCreateDTO {
         return exactlyOne(vehicleModelId, vehicleModelName);
     }
 
-    @AssertTrue(message = "Provide vehicleGenerationId or vehicleGenerationName, not both")
+    @AssertTrue(message = "Provide either vehicleGenerationId or vehicleGenerationName")
     public boolean isVehicleGenerationValid() {
-        return onlyOneOrNone(vehicleGenerationId, vehicleGenerationName);
+        return exactlyOne(vehicleGenerationId, vehicleGenerationName);
     }
 
-    @AssertTrue(message = "Provide vehicleVariantId or vehicleVariantName, not both")
+    @AssertTrue(message = "Provide either vehicleVariantId or vehicleVariantName")
     public boolean isVehicleVariantValid() {
-        return onlyOneOrNone(vehicleVariantId, vehicleVariantName);
+        return exactlyOne(vehicleVariantId, vehicleVariantName);
     }
 
-    @AssertTrue(message = "Provide vehicleEquipmentLevelId or vehicleEquipmentLevelName, not both")
+    @AssertTrue(message = "Provide either vehicleEquipmentLevelId or vehicleEquipmentLevelName")
     public boolean isVehicleEquipmentLevelValid() {
-        return onlyOneOrNone(vehicleEquipmentLevelId, vehicleEquipmentLevelName);
+        return exactlyOne(vehicleEquipmentLevelId, vehicleEquipmentLevelName);
     }
 
-    @AssertTrue(message = "Provide engineId or engineCode, not both")
+    @AssertTrue(message = "Provide either engineId or engineCode")
     public boolean isEngineValid() {
-        return onlyOneOrNone(engineId, engineCode);
+        return exactlyOne(engineId, engineCode);
     }
 
-    @AssertTrue(message = "Provide transmissionId or transmissionCode, not both")
+    @AssertTrue(message = "Provide either transmissionId or transmissionCode")
     public boolean isTransmissionValid() {
-        return onlyOneOrNone(transmissionId, transmissionCode);
+        return exactlyOne(transmissionId, transmissionCode);
     }
 
     private boolean exactlyOne(Object first, Object second) {
         return isPresent(first) != isPresent(second);
-    }
-
-    private boolean onlyOneOrNone(Object first, Object second) {
-        return !(isPresent(first) && isPresent(second));
     }
 
     private boolean isPresent(Object value) {

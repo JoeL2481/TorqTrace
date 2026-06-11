@@ -1,6 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.enums.TransmissionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,4 +35,8 @@ public class TransmissionEntity extends AuditableBase {
     private String manufacturer;
     @Column(name="description")
     private String description;
+
+
+    @OneToMany(mappedBy = "transmission", fetch = FetchType.LAZY)
+    private List<VehicleEntity> vehicleConfigurations;
 }

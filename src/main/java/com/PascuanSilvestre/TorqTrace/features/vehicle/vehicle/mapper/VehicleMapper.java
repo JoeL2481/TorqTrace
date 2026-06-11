@@ -1,6 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.mapper;
 
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.dto.VehicleBrandResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.dto.VehicleEquipmentLevelResponseDTO;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class VehicleMapper {
+
+    public VehicleEntity toEntity(VehicleCreateDTO)
 
     public VehicleResponseDTO toResponse(VehicleEntity entity) {
         return VehicleResponseDTO.builder()
@@ -40,7 +43,6 @@ public class VehicleMapper {
                         .id(entity.getVehicleEquipmentLevel().getId())
                         .name(entity.getVehicleEquipmentLevel().getName())
                         .build())
-                .vehicleBodyType(entity.getVehicleBodyType())
                 .vehicleCategory(entity.getVehicleCategory())
                 .build();
     }

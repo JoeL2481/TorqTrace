@@ -52,4 +52,9 @@ public class UserVehicleEntity extends AuditableBase {
     @OneToMany(mappedBy = "userVehicle")
     private List<ExtraMaintenanceReminderEntity> extraMaintenanceReminders;
 
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "vehicle_configuration_id", nullable = false)
+    private VehicleEntity vehicleConfiguration;
+
 }

@@ -30,4 +30,7 @@ public class EngineTransmissionEntity extends AuditableBase {
     @JoinColumn(name = "transmission_id", nullable = false)
     private TransmissionEntity transmission;
 
+
+
+
 }

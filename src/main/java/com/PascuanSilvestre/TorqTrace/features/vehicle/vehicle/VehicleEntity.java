@@ -2,7 +2,6 @@ package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleBodyType;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleCategory;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.VehicleBrandEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.VehicleEquipmentLevelEntity;
@@ -30,7 +29,7 @@ import java.util.UUID;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class VehicleConfigurationEntity extends AuditableBase {
+public class VehicleEntity extends AuditableBase {
 
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "public_id", nullable = false, unique = true, updatable = false, length = 36)
