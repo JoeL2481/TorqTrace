@@ -1,11 +1,13 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto;
 
 
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto.WorkShopClientResponseDTO;
 import lombok.*;
 import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
 import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
@@ -26,7 +28,7 @@ public class WorkShopResponseDTO {
 
     private boolean status;
 
-    private LocalDateTime createdAt;
+    private List<WorkShopClientResponseDTO> clients;
 
-    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
 }
