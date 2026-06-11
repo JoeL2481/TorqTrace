@@ -2,7 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.user.user;
 
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsEntity;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsRepository;
-import com.PascuanSilvestre.TorqTrace.auth.permissions.RoleRepository;
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleRepository;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserCreateDTO;
@@ -15,8 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.PascuanSilvestre.TorqTrace.auth.dto.NewAccountRequest;
-import com.PascuanSilvestre.TorqTrace.auth.permissions.RoleEntity;
-import com.PascuanSilvestre.TorqTrace.auth.permissions.Roles;
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleEntity;
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.Roles;
 import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 
 import java.util.List;

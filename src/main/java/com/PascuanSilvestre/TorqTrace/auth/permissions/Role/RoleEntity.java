@@ -1,9 +1,9 @@
-package com.PascuanSilvestre.TorqTrace.auth.permissions;
+package com.PascuanSilvestre.TorqTrace.auth.permissions.Role;
 
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Permit.PermitEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.lang.reflect.Constructor;
 import java.util.HashSet;
 import java.util.Set;
 
