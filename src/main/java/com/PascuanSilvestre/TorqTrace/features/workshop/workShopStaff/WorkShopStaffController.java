@@ -34,10 +34,6 @@ public class WorkShopStaffController {
     public ResponseEntity<List<WorkShopStaffResponseDTO>>getAll(){
         return ResponseEntity.ok(workShopStaffService.getAll());
     }
-    @PostMapping("{id}")
-    public ResponseEntity<WorkShopStaffResponseDTO>update(@Valid @RequestBody WorkShopStaffUpdateDTO workShopStaffUpdateDTO, @PathVariable("id") Long id){
-        return  ResponseEntity.ok(workShopStaffService.update(id,workShopStaffUpdateDTO));
-    }
     @DeleteMapping("{id}")
     public ResponseEntity<WorkShopStaffResponseDTO>delete(@PathVariable("id") Long id){
         return ResponseEntity.ok(workShopStaffService.delete(id));
