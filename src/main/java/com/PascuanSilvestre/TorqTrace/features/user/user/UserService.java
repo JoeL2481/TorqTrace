@@ -10,6 +10,7 @@ import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserDetailedRespons
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserUpdateDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.mapper.UserMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -124,6 +125,12 @@ public class UserService implements ICrudServiceComplete<UserCreateDTO,UserUpdat
         repository.delete(entity);
 
         return response;
+    }
 
+    public boolean existUser (Long id){
+        if(!!repository.existsById(id)){
+            throw new EntityNotFoundException("User was not found");
+        }
+        return true;
     }
 }

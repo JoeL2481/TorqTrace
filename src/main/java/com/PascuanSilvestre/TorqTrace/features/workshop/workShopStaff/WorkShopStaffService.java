@@ -1,10 +1,13 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
+import com.PascuanSilvestre.TorqTrace.features.user.user.UserService;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffUpdateDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.enums.StaffRole;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.mapper.WorkShopStaffMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,8 +18,13 @@ import java.util.List;
 public class WorkShopStaffService implements ICrudServiceComplete<WorkShopStaffCreateDTO,WorkShopStaffUpdateDTO, WorkShopStaffResponseDTO,Long> {
     private final WorkShopStaffRepository workShopStaffRepository;
     private final WorkShopStaffMapper workShopStaffMapper;
+    private final WorkShopService workShopService;
+    private final UserService userService;
+
     @Override
     public WorkShopStaffResponseDTO create(WorkShopStaffCreateDTO request) {
+        workShopService.existWorkshop(request.getWorkshopId());
+        userService.existUser(request.getUserId());
         WorkShopStaffEntity workShopStaffEntity = workShopStaffMapper.toEntity(request);
         workShopStaffEntity = workShopStaffRepository.save(workShopStaffEntity);
         return workShopStaffMapper.toResponse(workShopStaffEntity);

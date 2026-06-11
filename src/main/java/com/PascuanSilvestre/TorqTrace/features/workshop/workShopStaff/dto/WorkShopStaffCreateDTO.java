@@ -18,12 +18,10 @@ import java.time.LocalDateTime;
 @Setter
 public class WorkShopStaffCreateDTO {
 
-
-
-    @NotNull
+    @NotNull(message = "Workshop ID is required")
     private Long workshopId;
 
-    @NotNull
+    @NotNull(message = "User ID is required")
     private Long userId;
 
     private StaffRole role;
