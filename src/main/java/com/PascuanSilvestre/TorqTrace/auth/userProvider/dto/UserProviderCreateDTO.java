@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.features.auth.userProvider.dto;
+package com.PascuanSilvestre.TorqTrace.auth.userProvider.dto;
 
 
 import jakarta.validation.constraints.NotNull;

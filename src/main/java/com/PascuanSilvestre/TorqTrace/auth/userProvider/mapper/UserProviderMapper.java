@@ -1,10 +1,10 @@
-package com.PascuanSilvestre.TorqTrace.features.auth.userProvider.mapper;
+package com.PascuanSilvestre.TorqTrace.auth.userProvider.mapper;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import org.modelmapper.ModelMapper;
-import com.PascuanSilvestre.TorqTrace.features.auth.userProvider.UserProviderEntity;
-import com.PascuanSilvestre.TorqTrace.features.auth.userProvider.dto.UserProviderCreateDTO;
-import com.PascuanSilvestre.TorqTrace.features.auth.userProvider.dto.UserProviderResponseDTO;
+import com.PascuanSilvestre.TorqTrace.auth.userProvider.UserProviderEntity;
+import com.PascuanSilvestre.TorqTrace.auth.userProvider.dto.UserProviderCreateDTO;
+import com.PascuanSilvestre.TorqTrace.auth.userProvider.dto.UserProviderResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

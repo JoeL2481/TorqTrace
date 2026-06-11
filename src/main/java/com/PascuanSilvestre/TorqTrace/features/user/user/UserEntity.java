@@ -3,7 +3,7 @@ package com.PascuanSilvestre.TorqTrace.features.user.user;
 import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
 import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
-import com.PascuanSilvestre.TorqTrace.features.auth.userProvider.UserProviderEntity;
+import com.PascuanSilvestre.TorqTrace.auth.userProvider.UserProviderEntity;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import jakarta.persistence.*;

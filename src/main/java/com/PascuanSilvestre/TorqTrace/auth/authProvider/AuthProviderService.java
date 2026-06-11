@@ -1,9 +1,9 @@
-package com.PascuanSilvestre.TorqTrace.features.auth.authProvider;
+package com.PascuanSilvestre.TorqTrace.auth.authProvider;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudService;
-import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.dto.AuthProviderCreateDTO;
-import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.dto.AuthProviderResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.mapper.AuthProviderMapper;
+import com.PascuanSilvestre.TorqTrace.auth.authProvider.dto.AuthProviderCreateDTO;
+import com.PascuanSilvestre.TorqTrace.auth.authProvider.dto.AuthProviderResponseDTO;
+import com.PascuanSilvestre.TorqTrace.auth.authProvider.mapper.AuthProviderMapper;
 import jakarta.persistence.EntityNotFoundException;
 
 import lombok.RequiredArgsConstructor;

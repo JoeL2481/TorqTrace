@@ -1,7 +1,7 @@
-package com.PascuanSilvestre.TorqTrace.features.auth.authProvider;
+package com.PascuanSilvestre.TorqTrace.auth.authProvider;
 
-import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.dto.AuthProviderCreateDTO;
-import com.PascuanSilvestre.TorqTrace.features.auth.authProvider.dto.AuthProviderResponseDTO;
+import com.PascuanSilvestre.TorqTrace.auth.authProvider.dto.AuthProviderCreateDTO;
+import com.PascuanSilvestre.TorqTrace.auth.authProvider.dto.AuthProviderResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
