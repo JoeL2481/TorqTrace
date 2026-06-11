@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface WorkShopStaffRepository extends JpaRepository<WorkShopStaffEntity,Long> {
 
     List<WorkShopStaffEntity> findByWorkshopId(Long workshopId);
-    boolean existByUserIdAndWorkshopId(Long userId,Long workshopId);
+    boolean existsByUserIdAndWorkshopId(Long userId,Long workshopId);
     Optional<WorkShopStaffEntity> findByUserIdAndWorkshopId(Long userId, Long workshopId);
 
 }

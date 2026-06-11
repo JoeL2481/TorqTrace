@@ -84,7 +84,7 @@ public class WorkShopStaffService implements IWorkShopStaffService<WorkShopStaff
     }
 
     public boolean existEmployeeWorkshopStaff(Long idEmployee, Long  idWorkshop) {
-        if (!workShopStaffRepository.existByUserIdAndWorkshopId(idEmployee,idWorkshop)){
+        if (!workShopStaffRepository.existsByUserIdAndWorkshopId(idEmployee,idWorkshop)){
             throw new EntityNotFoundException("WorkshopStaff not found");
         }
         return true;
