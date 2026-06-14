@@ -65,4 +65,14 @@ public class VehicleModelService implements ICrudService<VehicleModelRequestDTO,
         return response;
 
     }
+
+    public VehicleModelEntity getEntityByIdOrName(Long id, String name) {
+        if (id != null) {
+            return repository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Vehicle model not found for id: " + id));
+        }
+
+        return repository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle model not found for name: " + name));
+    }
 }

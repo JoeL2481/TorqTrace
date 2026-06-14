@@ -15,17 +15,21 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VehicleResponseDTO {
+public class VehicleDetailedResponseDTO {
 
     private UUID publicId;
 
-    private UUID vehicleBrandId;
-    private Long vehicleModelId;
-    private Long vehicleGenerationId;
-    private Long vehicleVariantId;
-    private Long vehicleEquipmentLevelId;
-    private Long engineId;
-    private Long transmissionId;
+    private String vehicleBrandName;
+    private String vehicleModelName;
+    private String vehicleGenerationName;
+    private String vehicleGenerationAlias;
+    private String vehicleVariantName;
+    private String vehicleEquipmentLevelName;
+
+    private String engineCode;
+    private String engineName;
+
+    private String transmissionName;
 
     private VehicleBodyType vehicleBodyType;
     private VehicleCategory vehicleCategory;

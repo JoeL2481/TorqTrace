@@ -36,20 +36,18 @@ public class UserVehicleEntity extends AuditableBase {
     @Column(name="vin", nullable = false, length = 50, unique = true)
     private String vin;
 
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user", nullable = false)
     private UserEntity user;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name= "vehicle", nullable = false)
-    private VehicleEntity vehicle;
-
 
     @OneToMany(mappedBy = "userVehicle")
     private List<MaintenanceEntity> maintenances;
 
     @OneToMany(mappedBy = "userVehicle")
     private List<ExtraMaintenanceReminderEntity> extraMaintenanceReminders;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "vehicle_configuration_id", nullable = false)
+    private VehicleEntity vehicleConfiguration;
 
 }

@@ -37,6 +37,16 @@ public class TransmissionService implements ICrudServiceComplete<TransmissionCre
                 .orElseThrow(() -> new EntityNotFoundException("Transmission not found for id: " + id));
     }
 
+    public TransmissionEntity getEntityByIdOrName(Long id, String name) {
+        if (id != null) {
+            return repo.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Transmission not found for id: " + id));
+        }
+
+        return repo.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new EntityNotFoundException("Transmission not found for name: " + name));
+    }
+
     @Override
     public TransmissionResponseDTO getById(Long id) {
         return mapper.toResponse(getEntityById(id));

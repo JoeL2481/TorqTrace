@@ -4,12 +4,14 @@ import com.PascuanSilvestre.TorqTrace.common.utils.ValidationDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleBodyType;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleCategory;
 import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class VehicleUpdateDTO {
+public class VehicleCreateCompleteDTO {
+
     private Long vehicleBrandId;
     private String vehicleBrandName;
 
@@ -31,41 +33,49 @@ public class VehicleUpdateDTO {
     private Long transmissionId;
     private String transmissionName;
 
+    @NotNull(message = "Vehicle body type is required")
     private VehicleBodyType vehicleBodyType;
+
+    @NotNull(message = "Vehicle category is required")
     private VehicleCategory vehicleCategory;
 
-    @AssertTrue(message = "Provide vehicleBrandId or vehicleBrandName, not both")
+    @AssertTrue(message = "Provide either vehicleBrandId or vehicleBrandName")
     public boolean isVehicleBrandValid() {
-        return ValidationDTO.onlyOneOrNone(vehicleBrandId, vehicleBrandName);
+        return ValidationDTO.exactlyOne(vehicleBrandId, vehicleBrandName);
     }
 
-    @AssertTrue(message = "Provide vehicleModelId or vehicleModelName, not both")
+    @AssertTrue(message = "Provide either vehicleModelId or vehicleModelName")
     public boolean isVehicleModelValid() {
-        return ValidationDTO.onlyOneOrNone(vehicleModelId, vehicleModelName);
+
+        return ValidationDTO.exactlyOne(vehicleModelId, vehicleModelName);
     }
 
-    @AssertTrue(message = "Provide vehicleGenerationId or vehicleGenerationName, not both")
+    @AssertTrue(message = "Provide either vehicleGenerationId or vehicleGenerationName")
     public boolean isVehicleGenerationValid() {
-        return ValidationDTO.onlyOneOrNone(vehicleGenerationId, vehicleGenerationName);
+        return ValidationDTO.exactlyOne(vehicleGenerationId, vehicleGenerationName);
     }
 
-    @AssertTrue(message = "Provide vehicleVariantId or vehicleVariantName, not both")
+    @AssertTrue(message = "Provide either vehicleVariantId or vehicleVariantName")
     public boolean isVehicleVariantValid() {
-        return ValidationDTO.onlyOneOrNone(vehicleVariantId, vehicleVariantName);
+
+        return ValidationDTO.exactlyOne(vehicleVariantId, vehicleVariantName);
     }
 
-    @AssertTrue(message = "Provide vehicleEquipmentLevelId or vehicleEquipmentLevelName, not both")
+    @AssertTrue(message = "Provide either vehicleEquipmentLevelId or vehicleEquipmentLevelName")
     public boolean isVehicleEquipmentLevelValid() {
-        return ValidationDTO.onlyOneOrNone(vehicleEquipmentLevelId, vehicleEquipmentLevelName);
+        return ValidationDTO.exactlyOne(vehicleEquipmentLevelId, vehicleEquipmentLevelName);
     }
 
-    @AssertTrue(message = "Provide engineId or engineCode, not both")
+    @AssertTrue(message = "Provide either engineId or engineCode")
     public boolean isEngineValid() {
-        return ValidationDTO.onlyOneOrNone(engineId, engineCode);
+
+        return ValidationDTO.exactlyOne(engineId, engineCode);
     }
 
-    @AssertTrue(message = "Provide transmissionId or transmissionCode, not both")
+    @AssertTrue(message = "Provide either transmissionId or transmissionName")
     public boolean isTransmissionValid() {
-        return ValidationDTO.onlyOneOrNone(transmissionId, transmissionName);
+        return ValidationDTO.exactlyOne(transmissionId, transmissionName);
     }
+
+
 }

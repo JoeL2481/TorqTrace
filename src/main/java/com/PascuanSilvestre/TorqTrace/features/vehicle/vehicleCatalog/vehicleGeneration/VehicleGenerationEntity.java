@@ -1,9 +1,13 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.VehicleModelEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Entity
 @SuperBuilder
@@ -32,6 +36,14 @@ public class VehicleGenerationEntity  extends AuditableBase {
 
     @Column(name = "month_to")
     private Integer monthTo;
+
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="vehicle_model_id", nullable = false)
+    private VehicleModelEntity vehicleModel;
+
+    @OneToMany(mappedBy = "vehicleGeneration",fetch = FetchType.LAZY)
+    private List<VehicleEntity> vehicleConfigurations ;
 
 
 }

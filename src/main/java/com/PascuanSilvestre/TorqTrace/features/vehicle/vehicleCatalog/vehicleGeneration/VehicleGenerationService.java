@@ -65,4 +65,14 @@ public class VehicleGenerationService implements ICrudService<VehicleGenerationR
 
         return responseDTO;
     }
+
+    public VehicleGenerationEntity getEntityByIdOrName(Long id, String name) {
+        if (id != null) {
+            return vehicleGenerationRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Vehicle generation not found for id: " + id));
+        }
+
+        return vehicleGenerationRepository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle generation not found for name: " + name));
+    }
 }
