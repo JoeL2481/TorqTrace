@@ -59,4 +59,14 @@ public class VehicleVariantService implements ICrudService<VehicleVariantRequest
         repository.delete(entity);
         return response;
     }
+
+    public VehicleVariantEntity getEntityByIdOrName(Long id, String name) {
+        if (id != null) {
+            return repository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Vehicle variant not found for id: " + id));
+        }
+
+        return repository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle variant not found for name: " + name));
+    }
 }

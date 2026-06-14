@@ -86,4 +86,14 @@ public class VehicleBrandService implements ICrudService<VehicleBrandRequestDTO,
         vehicleBrandRepository.delete(entity);
         return responseDTO;
     }
+
+    public VehicleBrandEntity getEntityByIdOrName(Long id, String name) {
+        if (id != null) {
+            return vehicleBrandRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Vehicle brand was not found for id: " + id));
+        }
+
+        return vehicleBrandRepository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle brand was not found for name: " + name));
+    }
 }

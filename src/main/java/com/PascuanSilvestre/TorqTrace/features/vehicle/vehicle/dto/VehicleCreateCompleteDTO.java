@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto;
 
+import com.PascuanSilvestre.TorqTrace.common.utils.ValidationDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleBodyType;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleCategory;
 import jakarta.validation.constraints.AssertTrue;
@@ -40,52 +41,42 @@ public class VehicleCreateCompleteDTO {
 
     @AssertTrue(message = "Provide either vehicleBrandId or vehicleBrandName")
     public boolean isVehicleBrandValid() {
-        return exactlyOne(vehicleBrandId, vehicleBrandName);
+        return ValidationDTO.exactlyOne(vehicleBrandId, vehicleBrandName);
     }
 
     @AssertTrue(message = "Provide either vehicleModelId or vehicleModelName")
     public boolean isVehicleModelValid() {
-        return exactlyOne(vehicleModelId, vehicleModelName);
+
+        return ValidationDTO.exactlyOne(vehicleModelId, vehicleModelName);
     }
 
     @AssertTrue(message = "Provide either vehicleGenerationId or vehicleGenerationName")
     public boolean isVehicleGenerationValid() {
-        return exactlyOne(vehicleGenerationId, vehicleGenerationName);
+        return ValidationDTO.exactlyOne(vehicleGenerationId, vehicleGenerationName);
     }
 
     @AssertTrue(message = "Provide either vehicleVariantId or vehicleVariantName")
     public boolean isVehicleVariantValid() {
-        return exactlyOne(vehicleVariantId, vehicleVariantName);
+
+        return ValidationDTO.exactlyOne(vehicleVariantId, vehicleVariantName);
     }
 
     @AssertTrue(message = "Provide either vehicleEquipmentLevelId or vehicleEquipmentLevelName")
     public boolean isVehicleEquipmentLevelValid() {
-        return exactlyOne(vehicleEquipmentLevelId, vehicleEquipmentLevelName);
+        return ValidationDTO.exactlyOne(vehicleEquipmentLevelId, vehicleEquipmentLevelName);
     }
 
     @AssertTrue(message = "Provide either engineId or engineCode")
     public boolean isEngineValid() {
-        return exactlyOne(engineId, engineCode);
+
+        return ValidationDTO.exactlyOne(engineId, engineCode);
     }
 
     @AssertTrue(message = "Provide either transmissionId or transmissionCode")
     public boolean isTransmissionValid() {
-        return exactlyOne(transmissionId, transmissionCode);
+
+        return ValidationDTO.exactlyOne(transmissionId, transmissionCode);
     }
 
-    private boolean exactlyOne(Object first, Object second) {
-        return isPresent(first) != isPresent(second);
-    }
 
-    private boolean isPresent(Object value) {
-        if (value == null) {
-            return false;
-        }
-
-        if (value instanceof String text) {
-            return !text.isBlank();
-        }
-
-        return true;
-    }
 }

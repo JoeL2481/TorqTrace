@@ -1,6 +1,8 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
+import com.PascuanSilvestre.TorqTrace.common.utils.ValidationDTO;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateCompleteDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleUpdateDTO;
@@ -8,15 +10,17 @@ import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.mapper.VehicleMap
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleBodyType;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleCategory;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.VehicleBrandEntity;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.VehicleBrandRepository;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.VehicleBrandService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.VehicleEquipmentLevelEntity;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.VehicleEquipmentLevelRepository;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.VehicleEquipmentLevelService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.VehicleGenerationEntity;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.VehicleGenerationRepository;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.VehicleGenerationService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.VehicleModelEntity;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.VehicleModelRepository;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.VehicleModelService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.VehicleVariantEntity;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.VehicleVariantRepository;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.VehicleVariantService;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.EngineService;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission.TransmissionService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,24 +33,33 @@ import java.util.UUID;
 public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, VehicleUpdateDTO, VehicleResponseDTO, UUID> {
 
     private final VehicleRepository repo;
-    private final VehicleBrandRepository brandRepo;
-    private final VehicleModelRepository modelRepo;
-    private final VehicleVariantRepository variantRepo;
-    private final VehicleGenerationRepository generationRepo;
-    private final VehicleEquipmentLevelRepository equipmentLevelRepo;
+    private final VehicleBrandService brandService;
+    private final VehicleModelService modelService;
+    private final VehicleVariantService variantService;
+    private final VehicleGenerationService generationService;
+    private final VehicleEquipmentLevelService equipmentLevelService;
+    private final EngineService engineService;
+    private final TransmissionService transmissionService;
     private final VehicleMapper mapper;
 
     @Override
     public VehicleResponseDTO create(VehicleCreateDTO request) {
-        VehicleEntity entity = VehicleEntity.builder()
-                .publicId(UUID.randomUUID())
-                .vehicleBrand(getBrandById(request.getVehicleBrandId()))
-                .vehicleModel(getModelById(request.getVehicleModelId()))
-                .vehicleVariant(getVariantOrNull(request.getVehicleVariantId()))
-                .vehicleGeneration(getGenerationOrNull(request.getVehicleGenerationId()))
-                .vehicleEquipmentLevel(getEquipmentLevelOrNull(request.getVehicleEquipmentLevelId()))
-                .vehicleCategory(request.getVehicleCategory())
-                .build();
+        VehicleEntity entity = mapper.toEntity(request);
+        entity.setVehicleBrand(brandService.getEntityByIdOrName(request.getVehicleBrandId(), request.getVehicleBrandName()));
+        entity.setVehicleModel(modelService.getEntityByIdOrName(request.getVehicleModelId(), request.getVehicleModelName()));
+
+        return mapper.toResponse(repo.save(entity));
+    }
+
+    public VehicleResponseDTO createComplete(VehicleCreateCompleteDTO request) {
+        VehicleEntity entity = mapper.toEntity(request);
+        entity.setVehicleBrand(brandService.getEntityByIdOrName(request.getVehicleBrandId(), request.getVehicleBrandName()));
+        entity.setVehicleModel(modelService.getEntityByIdOrName(request.getVehicleModelId(), request.getVehicleModelName()));
+        entity.setVehicleGeneration(generationService.getEntityByIdOrName(request.getVehicleGenerationId(), request.getVehicleGenerationName()));
+        entity.setVehicleVariant(variantService.getEntityByIdOrName(request.getVehicleVariantId(), request.getVehicleVariantName()));
+        entity.setVehicleEquipmentLevel(equipmentLevelService.getEntityByIdOrName(request.getVehicleEquipmentLevelId(), request.getVehicleEquipmentLevelName()));
+        entity.setEngine(engineService.getEntityByIdOrName(request.getEngineId(), request.getEngineCode()));
+        entity.setTransmission(transmissionService.getEntityByIdOrName(request.getTransmissionId(), request.getTransmissionCode()));
 
         return mapper.toResponse(repo.save(entity));
     }
@@ -68,20 +81,57 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
     public VehicleResponseDTO update(UUID id, VehicleUpdateDTO request) {
         VehicleEntity entity = getEntityByPublicId(id);
 
-        if (request.getVehicleBrandId() != null) {
-            entity.setVehicleBrand(getBrandById(request.getVehicleBrandId()));
+        Long brandId = request.getVehicleBrandId();
+        String brandName = request.getVehicleBrandName();
+
+        if (ValidationDTO.isPresent(brandId) || ValidationDTO.isPresent(brandName)) {
+            entity.setVehicleBrand(brandService.getEntityByIdOrName(brandId, brandName));
         }
-        if (request.getVehicleModelId() != null) {
-            entity.setVehicleModel(getModelById(request.getVehicleModelId()));
+
+        Long modelId = request.getVehicleModelId();
+        String modelName = request.getVehicleModelName();
+
+        if (ValidationDTO.isPresent(modelId) || ValidationDTO.isPresent(modelName)) {
+            entity.setVehicleModel(modelService.getEntityByIdOrName(modelId, modelName));
         }
-        if (request.getVehicleVariantId() != null) {
-            entity.setVehicleVariant(getVariantOrNull(request.getVehicleVariantId()));
+
+        Long variantId = request.getVehicleVariantId();
+        String variantName = request.getVehicleVariantName();
+
+        if (ValidationDTO.isPresent(variantId) || ValidationDTO.isPresent(variantName)) {
+            entity.setVehicleVariant(variantService.getEntityByIdOrName(variantId, variantName));
         }
-        if (request.getVehicleGenerationId() != null) {
-            entity.setVehicleGeneration(getGenerationOrNull(request.getVehicleGenerationId()));
+
+        Long generationId = request.getVehicleGenerationId();
+        String generationName = request.getVehicleGenerationName();
+
+        if (ValidationDTO.isPresent(generationId) || ValidationDTO.isPresent(generationName)) {
+            entity.setVehicleGeneration(generationService.getEntityByIdOrName(generationId, generationName));
         }
-        if (request.getVehicleEquipmentLevelId() != null) {
-            entity.setVehicleEquipmentLevel(getEquipmentLevelOrNull(request.getVehicleEquipmentLevelId()));
+
+        Long equipmentLevelId = request.getVehicleEquipmentLevelId();
+        String equipmentLevelName = request.getVehicleEquipmentLevelName();
+
+        if (ValidationDTO.isPresent(equipmentLevelId) || ValidationDTO.isPresent(equipmentLevelName)) {
+            entity.setVehicleEquipmentLevel(equipmentLevelService.getEntityByIdOrName(equipmentLevelId, equipmentLevelName));
+        }
+
+        Long engineId = request.getEngineId();
+        String engineCode = request.getEngineCode();
+
+        if (ValidationDTO.isPresent(engineId) || ValidationDTO.isPresent(engineCode)) {
+            entity.setEngine(engineService.getEntityByIdOrName(engineId, engineCode));
+        }
+
+        Long transmissionId = request.getTransmissionId();
+        Integer transmissionCode = request.getTransmissionCode();
+
+        if (ValidationDTO.isPresent(transmissionId) || ValidationDTO.isPresent(transmissionCode)) {
+            entity.setTransmission(transmissionService.getEntityByIdOrName(transmissionId, transmissionCode));
+        }
+
+        if (request.getVehicleBodyType() != null) {
+            entity.setVehicleBodyType(request.getVehicleBodyType());
         }
 
         if (request.getVehicleCategory() != null) {
@@ -99,15 +149,43 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
         return dto;
     }
 
-    public List<VehicleResponseDTO> search(Long brandId, Long modelId, Long variantId, Long generationId,
-                                           Long equipmentLevelId, VehicleBodyType vehicleBodyType, VehicleCategory vehicleCategory) {
+    public List<VehicleResponseDTO> search(
+            Long brandId, String brandName,
+            Long modelId, String modelName,
+            Long variantId, String variantName,
+            Long generationId, String generationName,
+            Long equipmentLevelId, String equipmentLevelName,
+            VehicleBodyType vehicleBodyType,
+            VehicleCategory vehicleCategory
+    ) {
+        final VehicleBrandEntity brand =
+                (ValidationDTO.isPresent(brandId) || ValidationDTO.isPresent(brandName))
+                        ? brandService.getEntityByIdOrName(brandId, brandName) : null;
+
+        final VehicleModelEntity model =
+                (ValidationDTO.isPresent(modelId) || ValidationDTO.isPresent(modelName))
+                        ? modelService.getEntityByIdOrName(modelId, modelName) : null;
+
+        final VehicleVariantEntity variant =
+                (ValidationDTO.isPresent(variantId) || ValidationDTO.isPresent(variantName))
+                        ? variantService.getEntityByIdOrName(variantId, variantName) : null;
+
+        final VehicleGenerationEntity generation =
+                (ValidationDTO.isPresent(generationId) || ValidationDTO.isPresent(generationName))
+                        ? generationService.getEntityByIdOrName(generationId, generationName) : null;
+
+        final VehicleEquipmentLevelEntity equipmentLevel =
+                (ValidationDTO.isPresent(equipmentLevelId) || ValidationDTO.isPresent(equipmentLevelName))
+                        ? equipmentLevelService.getEntityByIdOrName(equipmentLevelId, equipmentLevelName) : null;
+
         return repo.findAll()
                 .stream()
-                .filter(vehicle -> brandId == null || vehicle.getVehicleBrand().getId().equals(brandId))
-                .filter(vehicle -> modelId == null || vehicle.getVehicleModel().getId().equals(modelId))
-                .filter(vehicle -> variantId == null || (vehicle.getVehicleVariant() != null && vehicle.getVehicleVariant().getId().equals(variantId)))
-                .filter(vehicle -> generationId == null || (vehicle.getVehicleGeneration() != null && vehicle.getVehicleGeneration().getId().equals(generationId)))
-                .filter(vehicle -> equipmentLevelId == null || (vehicle.getVehicleEquipmentLevel() != null && vehicle.getVehicleEquipmentLevel().getId().equals(equipmentLevelId)))
+                .filter(vehicle -> brand == null || vehicle.getVehicleBrand().getId().equals(brand.getId()))
+                .filter(vehicle -> model == null || vehicle.getVehicleModel().getId().equals(model.getId()))
+                .filter(vehicle -> variant == null || (vehicle.getVehicleVariant() != null && vehicle.getVehicleVariant().getId().equals(variant.getId())))
+                .filter(vehicle -> generation == null || (vehicle.getVehicleGeneration() != null && vehicle.getVehicleGeneration().getId().equals(generation.getId())))
+                .filter(vehicle -> equipmentLevel == null || (vehicle.getVehicleEquipmentLevel() != null && vehicle.getVehicleEquipmentLevel().getId().equals(equipmentLevel.getId())))
+                .filter(vehicle -> vehicleBodyType == null || vehicle.getVehicleBodyType() == vehicleBodyType)
                 .filter(vehicle -> vehicleCategory == null || vehicle.getVehicleCategory() == vehicleCategory)
                 .map(mapper::toResponse)
                 .toList();
@@ -116,39 +194,5 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
     private VehicleEntity getEntityByPublicId(UUID id) {
         return repo.findByPublicId(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found for public id: " + id));
-    }
-
-    private VehicleBrandEntity getBrandById(Long id) {
-        return brandRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Vehicle brand not found for id: " + id));
-    }
-
-    private VehicleModelEntity getModelById(Long id) {
-        return modelRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Vehicle model not found for id: " + id));
-    }
-
-    private VehicleVariantEntity getVariantOrNull(Long id) {
-        if (id == null) {
-            return null;
-        }
-        return variantRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Vehicle variant not found for id: " + id));
-    }
-
-    private VehicleGenerationEntity getGenerationOrNull(Long id) {
-        if (id == null) {
-            return null;
-        }
-        return generationRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Vehicle generation not found for id: " + id));
-    }
-
-    private VehicleEquipmentLevelEntity getEquipmentLevelOrNull(Long id) {
-        if (id == null) {
-            return null;
-        }
-        return equipmentLevelRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Vehicle equipment level not found for id: " + id));
     }
 }

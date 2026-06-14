@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleBodyType;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleCategory;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.VehicleBrandEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.VehicleEquipmentLevelEntity;
@@ -43,7 +44,7 @@ public class VehicleEntity extends AuditableBase {
     @JoinColumn(name="vehicle_model_id", nullable = false)
     private VehicleModelEntity vehicleModel;
 
-     @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="vehicle_generation_id" )
     private VehicleGenerationEntity vehicleGeneration;
 
@@ -51,10 +52,9 @@ public class VehicleEntity extends AuditableBase {
     @JoinColumn(name="vehicle_variant_id")
     private VehicleVariantEntity vehicleVariant;
 
-     @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="vehicle_equipment_level_id")
     private VehicleEquipmentLevelEntity vehicleEquipmentLevel;
-
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -65,12 +65,13 @@ public class VehicleEntity extends AuditableBase {
     @JoinColumn(name = "transmission_id")
     private TransmissionEntity transmission;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "vehicle_body_type", length = 50)
+    private VehicleBodyType vehicleBodyType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "vehicle_category_id", length = 50)
     private VehicleCategory vehicleCategory;
-
-
 
 
     @OneToMany(mappedBy = "vehicleConfiguration",fetch= FetchType.LAZY)

@@ -1,49 +1,113 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.mapper;
 
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateCompleteDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateDTO;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleDetailedResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.dto.VehicleBrandResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.dto.VehicleEquipmentLevelResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.dto.VehicleGenerationResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.dto.VehicleModelResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.dto.VehicleVariantResponseDTO;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 public class VehicleMapper {
 
-    public VehicleEntity toEntity(VehicleCreateDTO)
+    public VehicleEntity toEntity(VehicleCreateDTO dto) {
+        VehicleEntity entity = new VehicleEntity();
+
+        entity.setPublicId(UUID.randomUUID());
+        entity.setVehicleBodyType(dto.getVehicleBodyType());
+        entity.setVehicleCategory(dto.getVehicleCategory());
+
+        return entity;
+    }
+
+    public VehicleEntity toEntity(VehicleCreateCompleteDTO dto) {
+        VehicleEntity entity = new VehicleEntity();
+
+        entity.setPublicId(UUID.randomUUID());
+        entity.setVehicleBodyType(dto.getVehicleBodyType());
+        entity.setVehicleCategory(dto.getVehicleCategory());
+
+        return entity;
+    }
 
     public VehicleResponseDTO toResponse(VehicleEntity entity) {
-        return VehicleResponseDTO.builder()
-                .publicId(entity.getPublicId())
-                .vehicleBrand(entity.getVehicleBrand() == null ? null : VehicleBrandResponseDTO.builder()
-                        .id(entity.getVehicleBrand().getPublicId())
-                        .name(entity.getVehicleBrand().getName())
-                        .build())
-                .vehicleModel(entity.getVehicleModel() == null ? null : VehicleModelResponseDTO.builder()
-                        .id(entity.getVehicleModel().getId())
-                        .name(entity.getVehicleModel().getName())
-                        .build())
-                .vehicleVariant(entity.getVehicleVariant() == null ? null : VehicleVariantResponseDTO.builder()
-                        .id(entity.getVehicleVariant().getId())
-                        .name(entity.getVehicleVariant().getName())
-                        .build())
-                .vehicleGeneration(entity.getVehicleGeneration() == null ? null : VehicleGenerationResponseDTO.builder()
-                        .id(entity.getVehicleGeneration().getId())
-                        .name(entity.getVehicleGeneration().getName())
-                        .alias(entity.getVehicleGeneration().getAlias())
-                        .yearsFrom(entity.getVehicleGeneration().getYearFrom())
-                        .monthFrom(entity.getVehicleGeneration().getMonthFrom())
-                        .yearsTo(entity.getVehicleGeneration().getYearTo())
-                        .monthTo(entity.getVehicleGeneration().getMonthTo())
-                        .build())
-                .vehicleEquipmentLevel(entity.getVehicleEquipmentLevel() == null ? null : VehicleEquipmentLevelResponseDTO.builder()
-                        .id(entity.getVehicleEquipmentLevel().getId())
-                        .name(entity.getVehicleEquipmentLevel().getName())
-                        .build())
-                .vehicleCategory(entity.getVehicleCategory())
-                .build();
+        VehicleResponseDTO dto = new VehicleResponseDTO();
+
+        dto.setPublicId(entity.getPublicId());
+        dto.setVehicleBodyType(entity.getVehicleBodyType());
+        dto.setVehicleCategory(entity.getVehicleCategory());
+
+        if (entity.getVehicleBrand() != null) {
+            dto.setVehicleBrandId(entity.getVehicleBrand().getPublicId());
+        }
+
+        if (entity.getVehicleModel() != null) {
+            dto.setVehicleModelId(entity.getVehicleModel().getId());
+        }
+
+        if (entity.getVehicleGeneration() != null) {
+            dto.setVehicleGenerationId(entity.getVehicleGeneration().getId());
+        }
+
+        if (entity.getVehicleVariant() != null) {
+            dto.setVehicleVariantId(entity.getVehicleVariant().getId());
+        }
+
+        if (entity.getVehicleEquipmentLevel() != null) {
+            dto.setVehicleEquipmentLevelId(entity.getVehicleEquipmentLevel().getId());
+        }
+
+        if (entity.getEngine() != null) {
+            dto.setEngineId(entity.getEngine().getId());
+        }
+
+        if (entity.getTransmission() != null) {
+            dto.setTransmissionId(entity.getTransmission().getId());
+        }
+
+        return dto;
+    }
+
+    public VehicleDetailedResponseDTO toDetailedResponse(VehicleEntity entity) {
+        VehicleDetailedResponseDTO dto = new VehicleDetailedResponseDTO();
+
+        dto.setPublicId(entity.getPublicId());
+        dto.setVehicleBodyType(entity.getVehicleBodyType());
+        dto.setVehicleCategory(entity.getVehicleCategory());
+
+        if (entity.getVehicleBrand() != null) {
+            dto.setVehicleBrandName(entity.getVehicleBrand().getName());
+        }
+
+        if (entity.getVehicleModel() != null) {
+            dto.setVehicleModelName(entity.getVehicleModel().getName());
+        }
+
+        if (entity.getVehicleGeneration() != null) {
+            dto.setVehicleGenerationName(entity.getVehicleGeneration().getName());
+            dto.setVehicleGenerationAlias(entity.getVehicleGeneration().getAlias());
+        }
+
+        if (entity.getVehicleVariant() != null) {
+            dto.setVehicleVariantName(entity.getVehicleVariant().getName());
+        }
+
+        if (entity.getVehicleEquipmentLevel() != null) {
+            dto.setVehicleEquipmentLevelName(entity.getVehicleEquipmentLevel().getName());
+        }
+
+        if (entity.getEngine() != null) {
+            dto.setEngineCode(entity.getEngine().getCode());
+            dto.setEngineName(entity.getEngine().getName());
+        }
+
+        if (entity.getTransmission() != null) {
+            dto.setTransmissionCode(entity.getTransmission().getCode());
+            dto.setTransmissionName(entity.getTransmission().getName());
+        }
+
+        return dto;
     }
 }
