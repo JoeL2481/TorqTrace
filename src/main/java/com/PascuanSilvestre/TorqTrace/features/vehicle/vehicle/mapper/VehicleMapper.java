@@ -104,7 +104,6 @@ public class VehicleMapper {
         }
 
         if (entity.getTransmission() != null) {
-            dto.setTransmissionCode(entity.getTransmission().getCode());
             dto.setTransmissionName(entity.getTransmission().getName());
         }
 

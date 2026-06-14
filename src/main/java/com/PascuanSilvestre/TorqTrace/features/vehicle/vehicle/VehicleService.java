@@ -4,6 +4,7 @@ import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 import com.PascuanSilvestre.TorqTrace.common.utils.ValidationDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateCompleteDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateDTO;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleDetailedResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleUpdateDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.mapper.VehicleMapper;
@@ -19,7 +20,9 @@ import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleMod
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.VehicleModelService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.VehicleVariantEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.VehicleVariantService;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.EngineEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.EngineService;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission.TransmissionEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission.TransmissionService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +62,7 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
         entity.setVehicleVariant(variantService.getEntityByIdOrName(request.getVehicleVariantId(), request.getVehicleVariantName()));
         entity.setVehicleEquipmentLevel(equipmentLevelService.getEntityByIdOrName(request.getVehicleEquipmentLevelId(), request.getVehicleEquipmentLevelName()));
         entity.setEngine(engineService.getEntityByIdOrName(request.getEngineId(), request.getEngineCode()));
-        entity.setTransmission(transmissionService.getEntityByIdOrName(request.getTransmissionId(), request.getTransmissionCode()));
+        entity.setTransmission(transmissionService.getEntityByIdOrName(request.getTransmissionId(), request.getTransmissionName()));
 
         return mapper.toResponse(repo.save(entity));
     }
@@ -75,6 +78,10 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
     @Override
     public VehicleResponseDTO getById(UUID id) {
         return mapper.toResponse(getEntityByPublicId(id));
+    }
+
+    public VehicleDetailedResponseDTO getDetailedById(UUID id) {
+        return mapper.toDetailedResponse(getEntityByPublicId(id));
     }
 
     @Override
@@ -124,10 +131,10 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
         }
 
         Long transmissionId = request.getTransmissionId();
-        Integer transmissionCode = request.getTransmissionCode();
+        String transmissionName = request.getTransmissionName();
 
-        if (ValidationDTO.isPresent(transmissionId) || ValidationDTO.isPresent(transmissionCode)) {
-            entity.setTransmission(transmissionService.getEntityByIdOrName(transmissionId, transmissionCode));
+        if (ValidationDTO.isPresent(transmissionId) || ValidationDTO.isPresent(transmissionName)) {
+            entity.setTransmission(transmissionService.getEntityByIdOrName(transmissionId, transmissionName));
         }
 
         if (request.getVehicleBodyType() != null) {
@@ -155,6 +162,8 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
             Long variantId, String variantName,
             Long generationId, String generationName,
             Long equipmentLevelId, String equipmentLevelName,
+            Long engineId, String engineCode,
+            Long transmissionId, String transmissionName,
             VehicleBodyType vehicleBodyType,
             VehicleCategory vehicleCategory
     ) {
@@ -178,6 +187,9 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
                 (ValidationDTO.isPresent(equipmentLevelId) || ValidationDTO.isPresent(equipmentLevelName))
                         ? equipmentLevelService.getEntityByIdOrName(equipmentLevelId, equipmentLevelName) : null;
 
+        final EngineEntity engine = (ValidationDTO.isPresent(engineId) || ValidationDTO.isPresent(engineCode)) ? engineService.getEntityByIdOrName(engineId, engineCode) : null;
+        final TransmissionEntity transmission = (ValidationDTO.isPresent(transmissionId) || ValidationDTO.isPresent(transmissionName)) ? transmissionService.getEntityByIdOrName(transmissionId,transmissionName) : null;
+
         return repo.findAll()
                 .stream()
                 .filter(vehicle -> brand == null || vehicle.getVehicleBrand().getId().equals(brand.getId()))
@@ -185,6 +197,8 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
                 .filter(vehicle -> variant == null || (vehicle.getVehicleVariant() != null && vehicle.getVehicleVariant().getId().equals(variant.getId())))
                 .filter(vehicle -> generation == null || (vehicle.getVehicleGeneration() != null && vehicle.getVehicleGeneration().getId().equals(generation.getId())))
                 .filter(vehicle -> equipmentLevel == null || (vehicle.getVehicleEquipmentLevel() != null && vehicle.getVehicleEquipmentLevel().getId().equals(equipmentLevel.getId())))
+                .filter(vehicle -> engine == null || (vehicle.getEngine() != null && vehicle.getEngine().getId().equals(engine.getId())))
+                .filter(vehicle -> transmission == null || (vehicle.getTransmission() != null && vehicle.getTransmission().getId().equals(transmission.getId())))
                 .filter(vehicle -> vehicleBodyType == null || vehicle.getVehicleBodyType() == vehicleBodyType)
                 .filter(vehicle -> vehicleCategory == null || vehicle.getVehicleCategory() == vehicleCategory)
                 .map(mapper::toResponse)

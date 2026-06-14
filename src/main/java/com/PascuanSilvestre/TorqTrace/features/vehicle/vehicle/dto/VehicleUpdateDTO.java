@@ -29,7 +29,7 @@ public class VehicleUpdateDTO {
     private String engineCode;
 
     private Long transmissionId;
-    private Integer transmissionCode;
+    private String transmissionName;
 
     private VehicleBodyType vehicleBodyType;
     private VehicleCategory vehicleCategory;
@@ -66,6 +66,6 @@ public class VehicleUpdateDTO {
 
     @AssertTrue(message = "Provide transmissionId or transmissionCode, not both")
     public boolean isTransmissionValid() {
-        return ValidationDTO.onlyOneOrNone(transmissionId, transmissionCode);
+        return ValidationDTO.onlyOneOrNone(transmissionId, transmissionName);
     }
 }

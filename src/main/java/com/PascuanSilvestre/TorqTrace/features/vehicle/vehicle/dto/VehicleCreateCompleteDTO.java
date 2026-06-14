@@ -31,7 +31,7 @@ public class VehicleCreateCompleteDTO {
     private String engineCode;
 
     private Long transmissionId;
-    private Integer transmissionCode;
+    private String transmissionName;
 
     @NotNull(message = "Vehicle body type is required")
     private VehicleBodyType vehicleBodyType;
@@ -72,10 +72,9 @@ public class VehicleCreateCompleteDTO {
         return ValidationDTO.exactlyOne(engineId, engineCode);
     }
 
-    @AssertTrue(message = "Provide either transmissionId or transmissionCode")
+    @AssertTrue(message = "Provide either transmissionId or transmissionName")
     public boolean isTransmissionValid() {
-
-        return ValidationDTO.exactlyOne(transmissionId, transmissionCode);
+        return ValidationDTO.exactlyOne(transmissionId, transmissionName);
     }
 
 

@@ -29,7 +29,6 @@ public class VehicleDetailedResponseDTO {
     private String engineCode;
     private String engineName;
 
-    private Integer transmissionCode;
     private String transmissionName;
 
     private VehicleBodyType vehicleBodyType;
