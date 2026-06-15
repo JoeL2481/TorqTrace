@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -26,38 +28,31 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public AuthenticationManager
-    authenticationManager(AuthenticationConfiguration config)
-            throws Exception {
+    authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws
-            Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                 //ACA VAN LAS RUTAS QUE NO REQUIEREN AUTORIZACION
                      /*   .requestMatchers("/api/vehicles/**").hasRole("USER")*/
-
                         .anyRequest().authenticated())
                 .cors(Customizer.withDefaults())
                 //ACA SE CONFIGURAN LOS CORS
                 .csrf(AbstractHttpConfigurer::disable)
-                .headers(headers
-                        -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
-                )
-                .sessionManagement(manager ->
-                        manager.sessionCreationPolicy(STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter,
-                        UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(e ->
-                        e.authenticationEntryPoint(restAuthenticationEntryPoint));
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+                .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(e -> e.authenticationEntryPoint(restAuthenticationEntryPoint));
         return http.build();
     }
 

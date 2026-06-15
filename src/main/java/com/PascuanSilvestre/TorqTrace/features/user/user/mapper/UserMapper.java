@@ -38,9 +38,6 @@ public class UserMapper implements IMapper<UserEntity, UserCreateDTO, UserRespon
         if (request.getLastName() != null) {
             entity.setLastName(request.getLastName());
         }
-        if (request.getPassword() != null) {
-            entity.setPasswordHash(request.getPassword());
-        }
         if (request.getAvatarUrl() != null) {
             entity.setAvatarUrl(request.getAvatarUrl());
         }
