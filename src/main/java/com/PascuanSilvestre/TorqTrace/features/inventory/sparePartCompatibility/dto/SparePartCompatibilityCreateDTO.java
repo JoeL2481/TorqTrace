@@ -11,7 +11,7 @@ public class SparePartCompatibilityCreateDTO {
     @NotNull(message = "Spare part id is required")
     private Long sparePartId;
 
-    private Long vehicleId;
+    private String vehicleId;
 
     private Long engineId;
 

@@ -1,6 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.SparePartCategoryEntity;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.dto.SparePartCategoryCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.dto.SparePartCategoryResponseDTO;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SparePartCategoryMapper implements IMapper<SparePartCategoryEntity, SparePartCategoryCreateDTO, SparePartCategoryResponseDTO> {
+public class SparePartCategoryMapper implements ISparePartCategoryMapper<SparePartCategoryEntity, SparePartCategoryCreateDTO, SparePartCategoryUpdateDTO, SparePartCategoryResponseDTO> {
     private final ModelMapper mapper;
 
     @Override
@@ -24,7 +23,7 @@ public class SparePartCategoryMapper implements IMapper<SparePartCategoryEntity,
         return mapper.map(entity, SparePartCategoryResponseDTO.class);
     }
 
-    public void toEntityUpdate(SparePartCategoryUpdateDTO request, SparePartCategoryEntity entity) {
+    public SparePartCategoryEntity toEntityUpdate(SparePartCategoryUpdateDTO request, SparePartCategoryEntity entity) {
         if (request.getName() != null) {
             entity.setName(request.getName());
         }
@@ -32,5 +31,7 @@ public class SparePartCategoryMapper implements IMapper<SparePartCategoryEntity,
         if (request.getDescription() != null) {
             entity.setDescription(request.getDescription());
         }
+
+        return entity;
     }
 }
