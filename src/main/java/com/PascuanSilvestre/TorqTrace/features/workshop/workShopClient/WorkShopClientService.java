@@ -83,7 +83,7 @@ public class WorkShopClientService implements IWorkshopClientService<WorkShopCli
 
     public boolean existClientByWorkshopAndUser(Long userId, Long workshopId ) {
         if (!workShopClientRepository.existsByUserIdAndWorkshopId(userId, workshopId)) {
-            throw new EntityNotFoundException("Workshop Client not found");
+            return false;
         }
         return true;
     }
