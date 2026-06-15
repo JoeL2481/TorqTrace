@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -18,8 +19,9 @@ public class WorkShopStockCreateDTO {
     private Long sparePartId;
 
     @NotNull
+    @Min(1)
     private Integer stockQuantity;
 
     @NotNull
-    private Integer minStockAlert;
-}
+    @Min(0)
+    private Integer minStockAlert;}

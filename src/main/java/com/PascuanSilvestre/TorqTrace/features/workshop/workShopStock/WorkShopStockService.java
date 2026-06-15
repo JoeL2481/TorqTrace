@@ -1,12 +1,16 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock;
 
+import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
+import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartService;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto.WorkShopStockCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto.WorkShopStockResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto.WorkShopStockUpdateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.mapper.WorkShopStockMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopPermissionService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +20,24 @@ import java.util.List;
 public class WorkShopStockService implements ICrudServiceComplete<WorkShopStockCreateDTO, WorkShopStockUpdateDTO, WorkShopStockResponseDTO,Long> {
     private final WorkShopStockRepository workShopStockRepository;
     private final WorkShopStockMapper workShopStockMapper;
+    private final SecurityUtils securityUtils;
+    private final WorkshopPermissionService permissionService;
+    private final SparePartService sparePartService;
+
     @Override
     public WorkShopStockResponseDTO create(WorkShopStockCreateDTO request) {
+
+
+        if (!permissionService.isManagerOrOwnerOrMechanic(request.getWorkshopId())) {
+            throw new AccessDeniedException("Not permissions enough");
+        }
+
+        //sparePartService.existSparePart(request.getSparePartId());
+
         WorkShopStockEntity workShopStock = workShopStockMapper.toEntity(request);
+
         workShopStockRepository.save(workShopStock);
+
         return workShopStockMapper.toResponse(workShopStock);
     }
 

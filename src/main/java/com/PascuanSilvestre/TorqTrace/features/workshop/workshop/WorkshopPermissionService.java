@@ -34,4 +34,18 @@ public class WorkshopPermissionService {
                                 staff.getRole() == StaffRole.MANAGER)
                 .orElse(false);
     }
+
+    public boolean isManagerOrOwnerOrMechanic(Long workshopId) {
+
+        Long userId = securityUtils.getCurrentUserId();
+
+        return repository
+                .findByUserIdAndWorkshopId(userId, workshopId)
+                .map(staff ->
+                        staff.getRole() == StaffRole.OWNER ||
+                                staff.getRole() == StaffRole.MANAGER ||staff.getRole() == StaffRole.MECHANIC)
+                .orElse(false);
+    }
+
+
 }
