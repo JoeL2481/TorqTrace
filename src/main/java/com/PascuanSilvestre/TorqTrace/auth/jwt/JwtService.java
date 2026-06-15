@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -16,13 +17,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class JwtService {
-    @Value("${JWT_SECRET}")
+    @Value("${jwt.secret}")
     private String jwtSecretKey;
-    @Value("${JWT_EXPIRATION}")
+
+    @Value("${jwt.expiration}")
     private Long jwtExpiration;
 
     public String extractUsername(String token) {
