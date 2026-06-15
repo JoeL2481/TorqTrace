@@ -30,4 +30,8 @@ public class AddressInfo {
     @NotBlank(message = "Zip code is required")
     @Size(max = 20, message = "Zip code must not exceed 20 characters")
     private String zipCode;
+
+    @NotBlank(message = "Country is required")
+    @Size(max = 100, message = "Country must not exceed 100 characters")
+    private String country;
 }

@@ -31,9 +31,10 @@ public class WorkShopEntity  extends AuditableBase {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "address", column = @Column(name = "workshop_address")),
+            @AttributeOverride(name = "street", column = @Column(name = "workshop_street")),
             @AttributeOverride(name = "city", column = @Column(name = "workshop_city")),
             @AttributeOverride(name = "state", column = @Column(name = "workshop_state")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "workshop_zip_code")),
             @AttributeOverride(name = "country", column = @Column(name = "workshop_country"))
     })
     private AddressInfo workshopAddress;

@@ -8,6 +8,7 @@ import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEqu
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,38 +21,45 @@ public class UserController {
 
     private final UserService service;
 
-
-    @PostMapping
-    public ResponseEntity<UserResponseDTO> create(@Valid  @RequestBody UserCreateDTO request) {
-        return ResponseEntity.ok(service.create(request));
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @GetMapping("/profile")
+    public ResponseEntity<UserResponseDTO> getMyProfile() {
+        return ResponseEntity.ok(service.getMyProfile());
     }
 
-
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getById(@PathVariable UUID id) {
-        return ResponseEntity.ok(service.getById(id));
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @GetMapping("/profile/details")
+    public ResponseEntity<UserDetailedResponseDTO> getMyProfileDetails() {
+        return ResponseEntity.ok(service.getMyProfileDetails());
     }
 
-    @GetMapping("/{id}/details")
-    public ResponseEntity<UserDetailedResponseDTO> getDetailedById(@PathVariable UUID id) {
-        return ResponseEntity.ok(service.getDetailedByID(id));
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PutMapping("/profile")
+    public ResponseEntity<UserResponseDTO> updateMyProfile(@Valid @RequestBody UserUpdateDTO request) {
+        return ResponseEntity.ok(service.updateMyProfile(request));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
 
-
-    @PutMapping ("/{id}")
-    public ResponseEntity<UserResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateDTO request) {
-          return  ResponseEntity.ok(service.update(id,request));
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.getById(id));
     }
-    @DeleteMapping ("/{id}")
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/{id}/details")
+    public ResponseEntity<UserDetailedResponseDTO> getDetailedById(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.getDetailedByID(id));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
     public ResponseEntity<UserResponseDTO> delete(@PathVariable UUID id) {
-
         return ResponseEntity.ok(service.delete(id));
-
-
     }
 }
