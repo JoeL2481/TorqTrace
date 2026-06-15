@@ -16,14 +16,9 @@ import java.util.List;
 public class WorkShopClientController {
     private final WorkShopClientService workShopClientService;
 
-    @PostMapping
-    public ResponseEntity<WorkShopClientResponseDTO>create(@Valid @RequestBody WorkShopClientCreateDTO workShopClientCreateDTO){
-        return ResponseEntity.ok(workShopClientService.create(workShopClientCreateDTO));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<WorkShopClientResponseDTO>>findAll(){
-        return ResponseEntity.ok(workShopClientService.getAll());
+    @GetMapping("/workshops/{workshopId}/clients")
+    public ResponseEntity<List<WorkShopClientResponseDTO>>findAllByWorkshop(@PathVariable("workshopId") Long id){
+        return ResponseEntity.ok(workShopClientService.getAll(id));
     }
 
     @GetMapping("{id}")
@@ -35,6 +30,7 @@ public class WorkShopClientController {
     public ResponseEntity<WorkShopClientResponseDTO>update(@Valid @RequestBody WorkShopClientUpdateDTO workShopClientUpdateDTO, @PathVariable("id") Long id){
         return ResponseEntity.ok(workShopClientService.update(id,workShopClientUpdateDTO));
     }
+
     @DeleteMapping("{id}")
     public ResponseEntity<WorkShopClientResponseDTO>delete(@PathVariable("id") Long id){
         return ResponseEntity.ok(workShopClientService.delete(id));

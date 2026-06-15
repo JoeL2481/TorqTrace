@@ -20,7 +20,6 @@ import java.util.List;
 public class WorkShopStockService implements IWorkShopStockService<WorkShopStockCreateDTO, WorkShopStockUpdateDTO, WorkShopStockResponseDTO,Long> {
     private final WorkShopStockRepository workShopStockRepository;
     private final WorkShopStockMapper workShopStockMapper;
-    private final SecurityUtils securityUtils;
     private final WorkshopPermissionService permissionService;
     private final SparePartService sparePartService;
 
@@ -85,5 +84,12 @@ public class WorkShopStockService implements IWorkShopStockService<WorkShopStock
         WorkShopStockResponseDTO response = workShopStockMapper.toResponse(workShopStock);
         workShopStockRepository.delete(workShopStock);
         return response;
+    }
+
+    public boolean existWorkshopStock(Long id) {
+        if (!workShopStockRepository.existsById(id)){
+            throw new EntityNotFoundException("WorkshopStock not found");
+        }
+        return true;
     }
 }

@@ -5,6 +5,8 @@ import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
+
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,15 +18,15 @@ public interface WorkShopClientRepository
     List<WorkShopClientEntity> findByUser(UserEntity user);
 
     // Buscar todos los clientes de un taller
-    List<WorkShopClientEntity> findByWorkshop(WorkShopEntity workshop);
+    List<WorkShopClientEntity> findByWorkshop(Long workShopId);
 
     // Buscar relación específica user + workshop
     Optional<WorkShopClientEntity> findByUserAndWorkshop(UserEntity user, WorkShopEntity workshop);
 
     // Variante por IDs
-    List<WorkShopClientEntity> findByUserId(Long userId);
+    Optional<WorkShopClientEntity> findByUserId(Long userId);
 
     List<WorkShopClientEntity> findByWorkshopId(Long workshopId);
 
-    Optional<WorkShopClientEntity> findByUserIdAndWorkshopId(Long userId, Long workshopId);
+    boolean existsByUserIdAndWorkshopId(Long userId, Long workshopId);
 }
