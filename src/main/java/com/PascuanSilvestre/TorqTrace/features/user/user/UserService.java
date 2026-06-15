@@ -4,6 +4,7 @@ import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsEntity;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsRepository;
 import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleRepository;
+import com.PascuanSilvestre.TorqTrace.common.exception.DuplicatedNameException;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserCreateDTO;
@@ -40,7 +41,7 @@ public class UserService implements ICrudServiceComplete<UserCreateDTO,UserUpdat
     public UserResponseDTO register(NewAccountRequest request) {
 
         if (credentialsRepository.findByUsername(request.username()).isPresent()) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new DuplicatedNameException("Username already exists");
         }
 
         UserEntity user = UserEntity.builder()
