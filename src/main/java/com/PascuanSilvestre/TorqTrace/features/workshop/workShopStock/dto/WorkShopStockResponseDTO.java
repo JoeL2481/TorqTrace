@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto;
 
+import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartResponseDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class WorkShopStockResponseDTO {
 
     private Long id;
 
-    //private SparePartResponseDTO sparePart;
+    private SparePartResponseDTO sparePart;
 
     private Integer stockQuantity;
 

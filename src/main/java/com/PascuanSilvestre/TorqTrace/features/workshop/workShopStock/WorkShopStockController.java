@@ -22,13 +22,14 @@ public class WorkShopStockController {
         return ResponseEntity.ok(workShopStockService.create(workShopStockCreateDTO));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/stock/{id}")
     public ResponseEntity<WorkShopStockResponseDTO>get(@PathVariable("id") Long id){
         return ResponseEntity.ok(workShopStockService.getById(id));
     }
-    @GetMapping
-    public ResponseEntity<List<WorkShopStockResponseDTO>>getAll(){
-        return ResponseEntity.ok(workShopStockService.getAll());
+
+    @GetMapping("/workshops/{workshopId}/stocks")
+    public ResponseEntity<List<WorkShopStockResponseDTO>>getAll(@PathVariable("workshopId") Long id){
+        return ResponseEntity.ok(workShopStockService.getAll(id));
     }
 
     @PutMapping("{id}")
