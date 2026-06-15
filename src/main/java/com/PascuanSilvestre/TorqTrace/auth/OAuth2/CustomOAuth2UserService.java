@@ -1,10 +1,15 @@
 package com.PascuanSilvestre.TorqTrace.auth.OAuth2;
 
+import com.PascuanSilvestre.TorqTrace.auth.authProvider.AuthProviderEntity;
+import com.PascuanSilvestre.TorqTrace.auth.authProvider.AuthProviderRepository;
+import com.PascuanSilvestre.TorqTrace.auth.authProvider.enums.EAuthProviders;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsEntity;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsRepository;
 import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleEntity;
 import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleRepository;
 import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.Roles;
+import com.PascuanSilvestre.TorqTrace.auth.userProvider.UserProviderEntity;
+import com.PascuanSilvestre.TorqTrace.auth.userProvider.UserProviderRepository;
 import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
@@ -27,6 +32,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final UserRepository userRepository;
+    private final UserProviderRepository userProviderRepository;
+    private final AuthProviderRepository authProviderRepository;
     private final CredentialsRepository credentialsRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -46,6 +53,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     private CredentialsEntity processOAuthUser(OAuth2User oauthUser) {
+        String googleId = oauthUser.getAttribute("sub");
         String email = oauthUser.getAttribute("email");
         String firstName = oauthUser.getAttribute("given_name");
         String lastName = oauthUser.getAttribute("family_name");
@@ -53,6 +61,21 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         if (email == null || email.isBlank()) {
             throw new RuntimeException("Google account did not provide email");
+        }
+
+        AuthProviderEntity googleProvider = authProviderRepository.findByName(EAuthProviders.GOOGLE)
+                .orElseThrow(() -> new RuntimeException("Proveedor GOOGLE no encontrado"));
+
+        Optional<UserProviderEntity> providerLink =
+                userProviderRepository.findByProviderAndExternalId(googleProvider, googleId);
+
+        if (providerLink.isPresent()) {
+            UserEntity user = providerLink.get().getUser();
+
+            updateDefaultProfileData(user, firstName, lastName, picture);
+
+            return credentialsRepository.findByUsuario(user)
+                    .orElseThrow(() -> new RuntimeException("Credenciales no encontradas"));
         }
 
         UserEntity user = userRepository.findByUserContactInfoEmail(email)
@@ -67,21 +90,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                     return userRepository.save(newUser);
                 });
 
-        boolean updated = false;
+        updateDefaultProfileData(user, firstName, lastName, picture);
 
-        if (user.getFirstName() != null && user.getFirstName().equalsIgnoreCase("Default")) {
-            user.setFirstName(firstName);
-            updated = true;
-        }
-
-        if (user.getLastName() != null && user.getLastName().equalsIgnoreCase("Default")) {
-            user.setLastName(lastName);
-            updated = true;
-        }
-
-        if (updated) {
-            user = userRepository.save(user);
-        }
+        UserProviderEntity userProvider = new UserProviderEntity();
+        userProvider.setUser(user);
+        userProvider.setProvider(googleProvider);
+        userProvider.setExternalId(googleId);
+        userProviderRepository.save(userProvider);
 
         Optional<CredentialsEntity> existingCredentials = credentialsRepository.findByUsuario(user);
         if (existingCredentials.isPresent()) {
@@ -100,5 +115,28 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .build();
 
         return credentialsRepository.save(credentials);
+    }
+
+    private void updateDefaultProfileData(UserEntity user, String firstName, String lastName, String picture) {
+        boolean updated = false;
+
+        if (user.getFirstName() != null && user.getFirstName().equalsIgnoreCase("Default")) {
+            user.setFirstName(firstName);
+            updated = true;
+        }
+
+        if (user.getLastName() != null && user.getLastName().equalsIgnoreCase("Default")) {
+            user.setLastName(lastName);
+            updated = true;
+        }
+
+        if ((user.getAvatarUrl() == null || user.getAvatarUrl().isBlank()) && picture != null && !picture.isBlank()) {
+            user.setAvatarUrl(picture);
+            updated = true;
+        }
+
+        if (updated) {
+            userRepository.save(user);
+        }
     }
 }
