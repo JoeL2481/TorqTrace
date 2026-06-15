@@ -1,6 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartResponseDTO;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SparePartMapper implements IMapper<SparePartEntity, SparePartCreateDTO, SparePartResponseDTO> {
+public class SparePartMapper implements ISparePartMapper<SparePartEntity, SparePartCreateDTO, SparePartUpdateDTO, SparePartResponseDTO> {
     private final ModelMapper mapper;
 
     @Override
@@ -24,7 +23,7 @@ public class SparePartMapper implements IMapper<SparePartEntity, SparePartCreate
         return mapper.map(entity, SparePartResponseDTO.class);
     }
 
-    public void toEntityUpdate(SparePartUpdateDTO request, SparePartEntity entity) {
+    public SparePartEntity toEntityUpdate(SparePartUpdateDTO request, SparePartEntity entity) {
         if (request.getName() != null) {
             entity.setName(request.getName());
         }
@@ -32,5 +31,7 @@ public class SparePartMapper implements IMapper<SparePartEntity, SparePartCreate
         if (request.getDescription() != null) {
             entity.setDescription(request.getDescription());
         }
+
+        return entity;
     }
 }

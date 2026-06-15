@@ -1,52 +1,54 @@
 package com.PascuanSilvestre.TorqTrace.features.inventory.sparePart;
 
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartCreateDTO;
-import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartDetailedResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartUpdateDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/spare-part")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
 public class SparePartController {
-    private final SparePartService service;
+    private final ISparePartService<SparePartCreateDTO, SparePartUpdateDTO, SparePartResponseDTO, Long> service;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public SparePartResponseDTO create(@Valid @RequestBody SparePartCreateDTO request) {
-        return service.create(request);
+    public ResponseEntity<SparePartResponseDTO> create(@Valid @RequestBody SparePartCreateDTO request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 
     @GetMapping("/{id}")
-    public SparePartResponseDTO getById(@PathVariable Long id) {
-        return service.getById(id);
-    }
-
-    @GetMapping("/{id}/details")
-    public SparePartDetailedResponseDTO getDetailedById(@PathVariable Long id) {
-        return service.getDetailedById(id);
+    public ResponseEntity<SparePartResponseDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getById(id));
     }
 
     @GetMapping
-    public List<SparePartResponseDTO> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<SparePartResponseDTO>> getAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public SparePartResponseDTO update(@PathVariable Long id, @Valid @RequestBody SparePartUpdateDTO request) {
-        return service.update(id, request);
+    public ResponseEntity<SparePartResponseDTO> update(@PathVariable Long id, @Valid @RequestBody SparePartUpdateDTO request) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public SparePartResponseDTO delete(@PathVariable Long id) {
-        return service.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

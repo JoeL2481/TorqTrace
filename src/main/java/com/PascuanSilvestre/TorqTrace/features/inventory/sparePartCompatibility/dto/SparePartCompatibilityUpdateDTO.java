@@ -9,7 +9,7 @@ import lombok.Setter;
 public class SparePartCompatibilityUpdateDTO {
     private Long sparePartId;
 
-    private Long vehicleId;
+    private String vehicleId;
 
     private Long engineId;
 

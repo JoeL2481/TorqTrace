@@ -14,7 +14,7 @@ import lombok.Setter;
 public class SparePartCompatibilityResponseDTO {
     private Long id;
     private Long sparePartId;
-    private Long vehicleId;
+    private String vehicleId;
     private Long engineId;
     private Long transmissionId;
     private String notes;
