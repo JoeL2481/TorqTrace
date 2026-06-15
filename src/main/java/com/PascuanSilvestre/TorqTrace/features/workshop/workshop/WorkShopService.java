@@ -4,10 +4,10 @@ import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserService;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.WorkShopStaffService;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffCreateDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffUpdateDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.enums.StaffRole;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.WorkshopStaffService;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffCreateDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffUpdateDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.enums.StaffRole;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopDetailedResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopResponseDTO;
@@ -31,7 +31,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
 
     private final WorkShopRepository repository;
     private final WorkShopMapper mapper;
-    private final WorkShopStaffService workShopStaffService;
+    private final WorkshopStaffService workShopStaffService;
     private final SecurityUtils securityUtils;
     private final UserService userService;
     private final WorkshopPermissionService permissionService;
@@ -46,7 +46,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
         WorkShopEntity entity = mapper.toEntity(request);
         entity.setStatus(true);
         WorkShopEntity savedEntity = repository.save(entity);
-        WorkShopStaffCreateDTO owner = WorkShopStaffCreateDTO.builder().workshopId(savedEntity.getId())
+        WorkshopStaffCreateDTO owner = WorkshopStaffCreateDTO.builder().workshopId(savedEntity.getId())
                 .userId(securityUtils.getCurrentUserId())
                 .role(StaffRole.OWNER)
                 .build();
@@ -116,7 +116,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
     }
 
     @Transactional
-    public WorkShopDetailedResponseDTO changeEmployeeRole(WorkShopStaffUpdateDTO request) {
+    public WorkShopDetailedResponseDTO changeEmployeeRole(WorkshopStaffUpdateDTO request) {
 
         // Verifica que quien hace la petición sea OWNER
         if (!permissionService.isOwner(request.getIdWorkshop())) {
@@ -149,7 +149,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
             throw new EntityNotFoundException("This user is already a staff member of this workshop");
         }
 
-        WorkShopStaffCreateDTO owner = WorkShopStaffCreateDTO.builder().workshopId(idWorkshop)
+        WorkshopStaffCreateDTO owner = WorkshopStaffCreateDTO.builder().workshopId(idWorkshop)
                 .userId(securityUtils.getCurrentUserId())
                 .role(role)
                 .build();

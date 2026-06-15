@@ -9,7 +9,7 @@ import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrder
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderUpdateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.WorkOrderItemEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderType.WorkOrderTypeEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.WorkshopClientEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -43,7 +43,7 @@ public class WorkOrderMapper implements IMapper<WorkOrderEntity, WorkOrderCreate
 
         if (request.getClientId() != null) {
             entity.setClient(
-                    WorkShopClientEntity.builder()
+                    WorkshopClientEntity.builder()
                             .id(request.getClientId())
                             .build()
             );
