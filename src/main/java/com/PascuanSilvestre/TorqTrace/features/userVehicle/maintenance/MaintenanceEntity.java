@@ -13,6 +13,7 @@ import java.util.Date;
 @Entity
 @Table(name="maintenance")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder

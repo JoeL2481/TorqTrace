@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.auth.config;
 
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsEntity;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsRepository;
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.Roles;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,5 +40,12 @@ public class SecurityUtils {
     }
     public Long getCurrentUserId() {
         return getCurrentCredentials().getUsuario().getId();
+    }
+
+    public boolean hasRole(Roles role) {
+        return getCurrentCredentials()
+                .getRoles()
+                .stream()
+                .anyMatch(roleEntity -> roleEntity.getRole() == role);
     }
 }
