@@ -8,7 +8,7 @@ import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.dto.UserV
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserVehicleMapper {
+public class UserVehicleMapper implements IUserVehicleMapper<UserVehicleEntity, UserVehicleCreateDTO, UserVehicleUpdateDTO, UserVehicleResponseDTO> {
 
     public UserVehicleEntity toEntity(UserVehicleCreateDTO request) {
         UserVehicleEntity entity = new UserVehicleEntity();
@@ -20,7 +20,7 @@ public class UserVehicleMapper {
         return entity;
     }
 
-    public void toEntityUpdate(UserVehicleUpdateDTO request, UserVehicleEntity entity) {
+    public UserVehicleEntity toEntityUpdate(UserVehicleUpdateDTO request, UserVehicleEntity entity) {
         if (request.getLicencePlate() != null && !request.getLicencePlate().isBlank()) {
             entity.setLicencePlate(request.getLicencePlate());
         }
@@ -36,6 +36,8 @@ public class UserVehicleMapper {
         if (request.getVin() != null && !request.getVin().isBlank()) {
             entity.setVin(request.getVin());
         }
+
+        return entity;
     }
 
     public UserVehicleResponseDTO toResponse(UserVehicleEntity entity) {
