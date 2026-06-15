@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MaintenanceService {
+public class MaintenanceService implements IMaintenanceService<MaintenanceCreateDTO, MaintenanceUpdateDTO, MaintenanceDTO, String, Long> {
 
     private final MaintenanceRepository repository;
     private final MaintenanceMapper mapper;
@@ -27,7 +27,7 @@ public class MaintenanceService {
     private final SecurityUtils securityUtils;
 
     public MaintenanceDTO create(String userVehicleId, MaintenanceCreateDTO request) {
-        UserVehicleEntity userVehicle = userVehicleService.getAnyById(userVehicleId);
+        UserVehicleEntity userVehicle = userVehicleService.getAnyVehicleById(userVehicleId);
         WorkOrderEntity workOrder = getWorkOrderById(request.getWorkOrderId());
 
         MaintenanceEntity maintenance = mapper.toEntity(request);
@@ -61,7 +61,7 @@ public class MaintenanceService {
     public List<MaintenanceDTO> getMaintenancesByUserVehicle(String userVehicleId) {
 
         if (canEditMaintenance()) {
-            userVehicleService.getAnyById(userVehicleId);
+            userVehicleService.getAnyVehicleById(userVehicleId);
 
             return repository.findByUserVehiclePublicId(userVehicleId)
                     .stream()
@@ -69,7 +69,7 @@ public class MaintenanceService {
                     .toList();
         }
 
-        userVehicleService.getOwnedVehicle(userVehicleId);
+        userVehicleService.getOwnedVehicleOnly(userVehicleId);
 
         return repository.findByUserVehiclePublicIdAndUserVehicleUserId(userVehicleId, securityUtils.getCurrentUserId())
                 .stream()

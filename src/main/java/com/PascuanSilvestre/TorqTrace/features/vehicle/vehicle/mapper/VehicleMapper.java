@@ -9,7 +9,7 @@ import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleRespon
 import org.springframework.stereotype.Component;
 
 @Component
-public class VehicleMapper {
+public class VehicleMapper implements IVehicleMapper<VehicleEntity, VehicleCreateDTO, VehicleCreateCompleteDTO, VehicleResponseDTO, VehicleDetailedResponseDTO> {
 
     public VehicleEntity toEntity(VehicleCreateDTO dto) {
         VehicleEntity entity = new VehicleEntity();
@@ -21,7 +21,7 @@ public class VehicleMapper {
         return entity;
     }
 
-    public VehicleEntity toEntity(VehicleCreateCompleteDTO dto) {
+    public VehicleEntity toCompleteEntity(VehicleCreateCompleteDTO dto) {
         VehicleEntity entity = new VehicleEntity();
 
         entity.setPublicId(ShortPublicIdGenerator.generate());

@@ -1,6 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 import com.PascuanSilvestre.TorqTrace.common.utils.ValidationDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateCompleteDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateDTO;
@@ -32,7 +31,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, VehicleUpdateDTO, VehicleResponseDTO, String> {
+public class VehicleService implements IVehicleService<VehicleCreateDTO, VehicleCreateCompleteDTO, VehicleUpdateDTO, VehicleResponseDTO, VehicleDetailedResponseDTO, String> {
 
     private final VehicleRepository repo;
     private final VehicleBrandService brandService;
@@ -54,7 +53,7 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
     }
 
     public VehicleResponseDTO createComplete(VehicleCreateCompleteDTO request) {
-        VehicleEntity entity = mapper.toEntity(request);
+        VehicleEntity entity = mapper.toCompleteEntity(request);
         entity.setVehicleBrand(brandService.getEntityByIdOrName(request.getVehicleBrandId(), request.getVehicleBrandName()));
         entity.setVehicleModel(modelService.getEntityByIdOrName(request.getVehicleModelId(), request.getVehicleModelName()));
         entity.setVehicleGeneration(generationService.getEntityByIdOrName(request.getVehicleGenerationId(), request.getVehicleGenerationName()));
@@ -66,21 +65,28 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
         return mapper.toResponse(repo.save(entity));
     }
 
+    private VehicleEntity getEntityByPublicId(String id) {
+        return repo.findByPublicId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle not found for public id: " + id));
+    }
+
+
+    @Override
+    public VehicleResponseDTO getById(String id) {
+
+        return mapper.toResponse(getEntityByPublicId(id));
+    }
+
+    public VehicleDetailedResponseDTO getDetailedById(String id) {
+        return mapper.toDetailedResponse(getEntityByPublicId(id));
+    }
+
     @Override
     public List<VehicleResponseDTO> getAll() {
         return repo.findAll()
                 .stream()
                 .map(mapper::toResponse)
                 .toList();
-    }
-
-    @Override
-    public VehicleResponseDTO getById(String id) {
-        return mapper.toResponse(getEntityByPublicId(id));
-    }
-
-    public VehicleDetailedResponseDTO getDetailedById(String id) {
-        return mapper.toDetailedResponse(getEntityByPublicId(id));
     }
 
     @Override
@@ -204,8 +210,5 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
                 .toList();
     }
 
-    private VehicleEntity getEntityByPublicId(String id) {
-        return repo.findByPublicId(id)
-                .orElseThrow(() -> new EntityNotFoundException("Vehicle not found for public id: " + id));
-    }
+
 }

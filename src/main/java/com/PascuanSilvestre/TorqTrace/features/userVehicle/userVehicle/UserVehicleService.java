@@ -19,7 +19,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserVehicleService {
+public class UserVehicleService implements IUserVehicleService<UserVehicleCreateDTO, UserVehicleUpdateDTO, UserVehicleResponseDTO, String, UserVehicleEntity> {
 
     private final UserVehicleRepository repository;
     private final UserVehicleMapper mapper;
@@ -32,7 +32,7 @@ public class UserVehicleService {
 
         validateUnique(request.getLicencePlate(), request.getVin(), null);
 
-        VehicleEntity particularVehicle = getParticularVehicleByPublicId(request.getParticularVehicleId());
+        VehicleEntity particularVehicle = getGenericVehicleById(request.getParticularVehicleId());
         UserVehicleEntity entity = mapper.toEntity(request);
 
         entity.setUser(securityUtils.getCurrentUser());
@@ -65,17 +65,17 @@ public class UserVehicleService {
         }
     }
 
-    private VehicleEntity getParticularVehicleByPublicId(String publicId) {
+    private VehicleEntity getGenericVehicleById(String publicId) {
         return vehicleRepository.findByPublicId(publicId)
                 .orElseThrow(() -> new EntityNotFoundException("Particular vehicle not found for public id: " + publicId));
     }
 
-    public UserVehicleEntity getOwnedVehicle(String publicId) {
+    public UserVehicleEntity getOwnedVehicleOnly(String publicId) {
         return repository.findByPublicIdAndUserId(publicId, securityUtils.getCurrentUserId())
                 .orElseThrow(() -> new EntityNotFoundException("User vehicle not found for current user"));
     }
 
-    public UserVehicleEntity getAnyById(String publicId) {
+    public UserVehicleEntity getAnyVehicleById(String publicId) {
         return repository.findByPublicId(publicId)
                 .orElseThrow(() -> new EntityNotFoundException("User vehicle not found"));
     }
@@ -108,18 +108,18 @@ public class UserVehicleService {
     }
 
     public UserVehicleResponseDTO getById(String id) {
-        return mapper.toResponse(getOwnedVehicle(id));
+        return mapper.toResponse(getOwnedVehicleOnly(id));
     }
 
     public UserVehicleResponseDTO update(String id, UserVehicleUpdateDTO request) {
-        UserVehicleEntity entity = getOwnedVehicle(id);
+        UserVehicleEntity entity = getOwnedVehicleOnly(id);
 
         String licencePlate = entity.getLicencePlate();
+        String vin = entity.getVin();
+
         if (request.getLicencePlate() != null && !request.getLicencePlate().isBlank()) {
             licencePlate = request.getLicencePlate();
         }
-
-        String vin = entity.getVin();
         if (request.getVin() != null && !request.getVin().isBlank()) {
             vin = request.getVin();
         }
@@ -127,16 +127,16 @@ public class UserVehicleService {
         validateUnique(licencePlate, vin, entity.getId());
 
         if (request.getParticularVehicleId() != null) {
-            entity.setParticularVehicle(getParticularVehicleByPublicId(request.getParticularVehicleId()));
+            entity.setParticularVehicle(getGenericVehicleById(request.getParticularVehicleId()));
         }
 
-        mapper.toEntityUpdate(request, entity);
-        return mapper.toResponse(repository.save(entity));
+        return mapper.toResponse(repository.save(mapper.toEntityUpdate(request, entity)));
+
     }
 
     @Transactional
     public void delete(String id) {
-        UserVehicleEntity entity = getOwnedVehicle(id);
+        UserVehicleEntity entity = getOwnedVehicleOnly(id);
 
         maintenanceRepository.deleteByUserVehicleId(entity.getId());
         extraMaintenanceReminderRepository.deleteByUserVehicleId(entity.getId());
