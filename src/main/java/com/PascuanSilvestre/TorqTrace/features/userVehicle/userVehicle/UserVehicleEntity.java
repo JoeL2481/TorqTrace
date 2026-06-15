@@ -16,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "user_vehicle")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -48,6 +49,6 @@ public class UserVehicleEntity extends AuditableBase {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "vehicle_configuration_id", nullable = false)
-    private VehicleEntity vehicleConfiguration;
+    private VehicleEntity particularVehicle;
 
 }

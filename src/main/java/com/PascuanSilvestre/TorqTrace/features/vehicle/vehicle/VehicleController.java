@@ -10,6 +10,7 @@ import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.Vehi
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,34 +24,33 @@ public class VehicleController {
     private final VehicleService service;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public VehicleResponseDTO create(@Valid @RequestBody VehicleCreateDTO request) {
-        return service.create(request);
+    public ResponseEntity<VehicleResponseDTO> create(@Valid @RequestBody VehicleCreateDTO request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 
     @PostMapping("/complete")
-    @ResponseStatus(HttpStatus.CREATED)
-    public VehicleResponseDTO createComplete(@Valid @RequestBody VehicleCreateCompleteDTO request) {
-        return service.createComplete(request);
+    public ResponseEntity<VehicleResponseDTO> createComplete(@Valid @RequestBody VehicleCreateCompleteDTO request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createComplete(request));
     }
 
     @GetMapping("/{id}")
-    public VehicleResponseDTO getById(@PathVariable UUID id) {
-        return service.getById(id);
+    public ResponseEntity<VehicleResponseDTO> getById(@PathVariable UUID id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getById(id));
     }
 
     @GetMapping("/{id}/detailed")
-    public VehicleDetailedResponseDTO getDetailedById(@PathVariable UUID id) {
-        return service.getDetailedById(id);
+    public ResponseEntity<VehicleDetailedResponseDTO> getDetailedById(@PathVariable UUID id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getDetailedById(id));
     }
 
     @GetMapping
-    public List<VehicleResponseDTO> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<VehicleResponseDTO>> getAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
     }
 
+
     @GetMapping("/search")
-    public List<VehicleResponseDTO> search(
+    public ResponseEntity<List<VehicleResponseDTO>> search(
             @RequestParam(required = false) Long brandId, @RequestParam(required = false) String brandName,
             @RequestParam(required = false) Long modelId, @RequestParam(required = false) String modelName,
             @RequestParam(required = false) Long variantId, @RequestParam(required = false) String variantName,
@@ -61,7 +61,7 @@ public class VehicleController {
             @RequestParam(required = false) VehicleBodyType vehicleBodyType,
             @RequestParam(required = false) VehicleCategory vehicleCategory
     ) {
-        return service.search(
+        return ResponseEntity.status(HttpStatus.OK).body(service.search(
                 brandId, brandName,
                 modelId, modelName,
                 variantId, variantName,
@@ -70,18 +70,16 @@ public class VehicleController {
                 engineId, engineCode,
                 transmissionId, transmissionName,
                 vehicleBodyType, vehicleCategory
-        );
+        ));
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public VehicleResponseDTO update(@PathVariable UUID id, @Valid @RequestBody VehicleUpdateDTO request) {
-        return service.update(id, request);
+    public ResponseEntity<VehicleResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody VehicleUpdateDTO request) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public VehicleResponseDTO delete(@PathVariable UUID id) {
-        return service.delete(id);
+    public ResponseEntity<VehicleResponseDTO> delete(@PathVariable UUID id) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.delete(id));
     }
 }

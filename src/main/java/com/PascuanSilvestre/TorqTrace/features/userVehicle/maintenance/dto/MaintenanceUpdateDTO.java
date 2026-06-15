@@ -8,13 +8,11 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class MaintenanceDTO {
-    private Long id;
-    private Long userVehicleId;
+public class MaintenanceUpdateDTO {
     private Long workOrderId;
     private MaintenanceType maintenanceType;
     private String description;
-    private int serviceKm;
-    private int nextServiceKm;
+    private Integer serviceKm;
+    private Integer nextServiceKm;
     private Date nextServiceDate;
 }

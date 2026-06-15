@@ -74,7 +74,7 @@ public class VehicleEntity extends AuditableBase {
     private VehicleCategory vehicleCategory;
 
 
-    @OneToMany(mappedBy = "vehicleConfiguration",fetch= FetchType.LAZY)
+    @OneToMany(mappedBy = "particularVehicle",fetch= FetchType.LAZY)
     private List<UserVehicleEntity> userVehicles;
 
 }

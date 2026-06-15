@@ -18,6 +18,7 @@ public class RoleInitializer implements CommandLineRunner {
 
         createRoleIfNotExists(Roles.ROLE_ADMIN);
         createRoleIfNotExists(Roles.ROLE_USER);
+        createRoleIfNotExists(Roles.ROLE_EMPLOYEE);
     }
 
     private void createRoleIfNotExists(Roles role) {
