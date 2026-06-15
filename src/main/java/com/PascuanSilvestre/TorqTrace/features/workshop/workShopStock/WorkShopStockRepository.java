@@ -7,6 +7,5 @@ import java.util.List;
 
 @Repository
 public interface WorkShopStockRepository extends JpaRepository<WorkShopStockEntity,Long> {
-    List<WorkShopStockEntity>
-    findByWorkshopId(Long workshopId);
+    List<WorkShopStockEntity> findByWorkshopId(Long workshopId);
 }

@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class WorkShopStockService implements ICrudServiceComplete<WorkShopStockCreateDTO, WorkShopStockUpdateDTO, WorkShopStockResponseDTO,Long> {
+public class WorkShopStockService implements IWorkShopStockService<WorkShopStockCreateDTO, WorkShopStockUpdateDTO, WorkShopStockResponseDTO,Long> {
     private final WorkShopStockRepository workShopStockRepository;
     private final WorkShopStockMapper workShopStockMapper;
     private final SecurityUtils securityUtils;
@@ -32,7 +32,7 @@ public class WorkShopStockService implements ICrudServiceComplete<WorkShopStockC
             throw new AccessDeniedException("Not permissions enough");
         }
 
-        //sparePartService.existSparePart(request.getSparePartId());
+        sparePartService.existSparePart(request.getSparePartId());
 
         WorkShopStockEntity workShopStock = workShopStockMapper.toEntity(request);
 
@@ -42,23 +42,35 @@ public class WorkShopStockService implements ICrudServiceComplete<WorkShopStockC
     }
 
     @Override
-    public List<WorkShopStockResponseDTO> getAll() {
-        return workShopStockRepository.findAll().stream().
+    public List<WorkShopStockResponseDTO> getAll(Long workShopId) {
+        if (!permissionService.isManagerOrOwnerOrMechanic(workShopId)) {
+            throw new AccessDeniedException("Not permissions enough");
+        }
+        return workShopStockRepository.findByWorkshopId(workShopId).stream().
                 map(workShopStockMapper::toResponse)
                 .toList();
     }
 
     @Override
     public WorkShopStockResponseDTO getById(Long id) {
+
         WorkShopStockEntity workShopStock = workShopStockRepository.
                 findById(id).
                 orElseThrow(()->new EntityNotFoundException("WorkShopStock with id " + id + " not found"));
+
+        if (!permissionService.isManagerOrOwnerOrMechanic(workShopStock.getWorkshop().getId())) {
+            throw new AccessDeniedException("Not permissions enough");
+        }
+
         return workShopStockMapper.toResponse(workShopStock);
     }
 
     @Override
     public WorkShopStockResponseDTO update(Long id, WorkShopStockUpdateDTO request) {
         WorkShopStockEntity workShopStock = workShopStockRepository.findById(id).orElseThrow(()->new EntityNotFoundException("WorkShopStock with id " + id + " not found"));
+        if (!permissionService.isManagerOrOwnerOrMechanic(workShopStock.getWorkshop().getId())) {
+            throw new AccessDeniedException("Not permissions enough");
+        }
         workShopStockMapper.toEntityUpdate(request,workShopStock);
         workShopStockRepository.save(workShopStock);
         return workShopStockMapper.toResponse(workShopStock);
@@ -67,6 +79,9 @@ public class WorkShopStockService implements ICrudServiceComplete<WorkShopStockC
     @Override
     public WorkShopStockResponseDTO delete(Long id) {
         WorkShopStockEntity workShopStock = workShopStockRepository.findById(id).orElseThrow(()->new EntityNotFoundException("WorkShopStock with id " + id + " not found"));
+        if (!permissionService.isManagerOrOwnerOrMechanic(workShopStock.getWorkshop().getId())) {
+            throw new AccessDeniedException("Not permissions enough");
+        }
         WorkShopStockResponseDTO response = workShopStockMapper.toResponse(workShopStock);
         workShopStockRepository.delete(workShopStock);
         return response;
