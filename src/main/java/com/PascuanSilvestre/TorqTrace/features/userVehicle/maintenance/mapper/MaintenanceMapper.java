@@ -7,7 +7,7 @@ import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto.Maint
 import org.springframework.stereotype.Component;
 
 @Component
-public class MaintenanceMapper {
+public class MaintenanceMapper implements IMaintenanceMapper<MaintenanceEntity, MaintenanceCreateDTO, MaintenanceUpdateDTO, MaintenanceDTO> {
 
     public MaintenanceEntity toEntity(MaintenanceCreateDTO request) {
         MaintenanceEntity entity = new MaintenanceEntity();
