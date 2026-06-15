@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.user.user;
 
+import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsEntity;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsRepository;
 import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleRepository;
@@ -33,8 +34,10 @@ public class UserService implements ICrudServiceComplete<UserCreateDTO,UserUpdat
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final CredentialsRepository credentialsRepository;
+    private final SecurityUtils securityUtils;
 
-    public UserResponseDTO save(NewAccountRequest request) {
+
+    public UserResponseDTO register(NewAccountRequest request) {
 
         if (credentialsRepository.findByUsername(request.username()).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
@@ -42,9 +45,8 @@ public class UserService implements ICrudServiceComplete<UserCreateDTO,UserUpdat
 
         UserEntity user = UserEntity.builder()
                 .publicId(UUID.randomUUID())
-                .firstName(request.username())
-                .lastName("User")
-                .passwordHash(passwordEncoder.encode(request.password()))
+                .firstName("Default")
+                .lastName("Default")
                 .status(UserStatus.ACTIVE)
                 .userContactInfo(new ContactInfo(null, request.email()))
                 .build();
@@ -68,7 +70,23 @@ public class UserService implements ICrudServiceComplete<UserCreateDTO,UserUpdat
 
         return mapper.toResponse(savedUser);
     }
-    @Override
+    public UserResponseDTO getMyProfile() {
+        UserEntity currentUser = securityUtils.getCurrentUser();
+        return mapper.toResponse(currentUser);
+    }
+
+    public UserDetailedResponseDTO getMyProfileDetails() {
+        UserEntity currentUser = securityUtils.getCurrentUser();
+        return mapper.toDetailedResponse(currentUser);
+    }
+
+    public UserResponseDTO updateMyProfile(UserUpdateDTO request) {
+        UserEntity currentUser = securityUtils.getCurrentUser();
+        mapper.toEntityUpdate(request, currentUser);
+        UserEntity savedUser = repository.save(currentUser);
+        return mapper.toResponse(savedUser);
+    }
+   @Override
     public UserResponseDTO create(UserCreateDTO request) {
        UserEntity entity = mapper.toEntity(request);
        entity.setPublicId(UUID.randomUUID());

@@ -26,9 +26,7 @@ public class UserCreateDTO {
     private String lastName;
 
 
-    @NotBlank(message = "Password is required")
-    @Size(min = 8, max = 255, message = "Password must be between 8 and 255 characters")
-    private String passwordHash;
+
 
     @Size(max = 255, message = "Avatar URL must not exceed 255 characters")
     private String avatarUrl;

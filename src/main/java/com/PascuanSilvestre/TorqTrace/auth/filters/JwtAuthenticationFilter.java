@@ -24,9 +24,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
+    protected void doFilterInternal(        HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain filterChain)
             throws ServletException, IOException {
 
         final String authHeader = request.getHeader("Authorization");
@@ -40,28 +40,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             final String username = jwtService.extractUsername(jwt);
-            Authentication authentication =
-                    SecurityContextHolder.getContext().getAuthentication();
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
             if (username != null && authentication == null) {
-                List<GrantedAuthority> authorities =
-                        jwtService.extractAuthorities(jwt);
-                UsernamePasswordAuthenticationToken authToken = new
-                        UsernamePasswordAuthenticationToken(
+                List<GrantedAuthority> authorities = jwtService.extractAuthorities(jwt);
+
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(
                         username,
                         null,
                         authorities
                 );
 
-                authToken.setDetails(new
-                        WebAuthenticationDetailsSource().buildDetails(request));
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         } catch (JwtException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
-            response.getWriter().write(String.format("{\"error\":\"Token JWT invalido o expirado\", \"status\": %d, \"path\": \"%s\"}",
-                    HttpServletResponse.SC_UNAUTHORIZED,
-                    request.getRequestURI()));
+            response.getWriter().write(String.format("{\"error\":\"Token JWT invalido o expirado\", \"status\": %d, \"path\": \"%s\"}", HttpServletResponse.SC_UNAUTHORIZED,
+            request.getRequestURI()));
             response.getWriter().flush();
             return;
         }
