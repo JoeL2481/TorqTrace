@@ -39,12 +39,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws
             Exception {
+
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                //ACA VAN LAS RUTAS QUE NO REQUIEREN AUTORIZACION
                      /*   .requestMatchers("/api/vehicles/**").hasRole("USER")*/
 
                         .anyRequest().authenticated())
                 .cors(Customizer.withDefaults())
+                //ACA SE CONFIGURAN LOS CORS
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers
                         -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)

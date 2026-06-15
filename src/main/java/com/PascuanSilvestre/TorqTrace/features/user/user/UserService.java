@@ -2,7 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.user.user;
 
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsEntity;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsRepository;
-import com.PascuanSilvestre.TorqTrace.auth.permissions.RoleRepository;
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleRepository;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserCreateDTO;
@@ -10,13 +10,14 @@ import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserDetailedRespons
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserUpdateDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.mapper.UserMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.PascuanSilvestre.TorqTrace.auth.dto.NewAccountRequest;
-import com.PascuanSilvestre.TorqTrace.auth.permissions.RoleEntity;
-import com.PascuanSilvestre.TorqTrace.auth.permissions.Roles;
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleEntity;
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.Roles;
 import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 
 import java.util.List;
@@ -124,6 +125,12 @@ public class UserService implements ICrudServiceComplete<UserCreateDTO,UserUpdat
         repository.delete(entity);
 
         return response;
+    }
 
+    public boolean existUser (Long id){
+        if(!!repository.existsById(id)){
+            throw new EntityNotFoundException("User was not found");
+        }
+        return true;
     }
 }

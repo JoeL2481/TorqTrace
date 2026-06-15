@@ -39,6 +39,16 @@ public class EngineService implements ICrudServiceComplete<EngineCreateDTO, Engi
                 .orElseThrow(() -> new EntityNotFoundException("Engine not found for that id"));
     }
 
+    public EngineEntity getEntityByIdOrName(Long id, String code) {
+        if (id != null) {
+            return repo.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Engine not found for id: " + id));
+        }
+
+        return repo.findByCodeIgnoreCase(code)
+                .orElseThrow(() -> new EntityNotFoundException("Engine not found for code: " + code));
+    }
+
     @Override
     public EngineResponseDTO getById(Long id) {
         return mapper.toResponse(getEntityById(id));

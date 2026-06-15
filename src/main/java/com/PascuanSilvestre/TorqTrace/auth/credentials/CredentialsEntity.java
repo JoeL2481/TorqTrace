@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.auth.credentials;
 
-import com.PascuanSilvestre.TorqTrace.auth.permissions.RoleEntity;
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleEntity;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;

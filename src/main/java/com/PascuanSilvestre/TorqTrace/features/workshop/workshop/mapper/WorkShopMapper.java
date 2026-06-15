@@ -2,8 +2,11 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workshop.mapper;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.mapper.WorkOrderMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto.WorkShopClientResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.mapper.WorkShopClientMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.mapper.WorkShopStaffMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto.WorkShopStockResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.mapper.WorkShopStockMapper;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopCreateDTO;
@@ -31,6 +34,28 @@ public class WorkShopMapper implements IMapper<WorkShopEntity, WorkShopCreateDTO
     @Override
     public WorkShopResponseDTO toResponse(WorkShopEntity entity) {
         return  modelMapper.map(entity, WorkShopResponseDTO.class);
+    }
+
+    public WorkShopDetailedResponseDTO toDetailResponse(WorkShopEntity entity) {
+
+        WorkShopDetailedResponseDTO dto =
+                modelMapper.map(entity, WorkShopDetailedResponseDTO.class);
+        dto.setWorkers(
+                entity.getWorkers().stream()
+                        .map(worker -> modelMapper.map(worker, WorkShopStaffResponseDTO.class))
+                        .toList()
+        );
+        dto.setClients(
+                entity.getClients().stream()
+                        .map(client -> modelMapper.map(client, WorkShopClientResponseDTO.class))
+                        .toList()
+        );
+        dto.setStockItems(
+                entity.getStockItems().stream()
+                        .map(stock -> modelMapper.map(stock, WorkShopStockResponseDTO.class))
+                        .toList()
+        );
+        return dto;
     }
 
     public void toEntityUpdate(WorkShopUpdateDTO request, WorkShopEntity entity) {
