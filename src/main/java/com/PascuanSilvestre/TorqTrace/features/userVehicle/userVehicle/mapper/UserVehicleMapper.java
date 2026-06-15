@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.mapper;
 
+import com.PascuanSilvestre.TorqTrace.common.utils.ShortPublicIdGenerator;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.dto.UserVehicleCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.dto.UserVehicleResponseDTO;
@@ -11,6 +12,7 @@ public class UserVehicleMapper {
 
     public UserVehicleEntity toEntity(UserVehicleCreateDTO request) {
         UserVehicleEntity entity = new UserVehicleEntity();
+        entity.setPublicId(ShortPublicIdGenerator.generate());
         entity.setLicencePlate(request.getLicencePlate());
         entity.setYear(request.getYear());
         entity.setCurrentKm(request.getCurrentKm());
@@ -38,7 +40,7 @@ public class UserVehicleMapper {
 
     public UserVehicleResponseDTO toResponse(UserVehicleEntity entity) {
         UserVehicleResponseDTO response = new UserVehicleResponseDTO();
-        response.setId(entity.getId());
+        response.setPublicId(entity.getPublicId());
         response.setUserId(entity.getUser().getId());
         response.setUserPublicId(entity.getUser().getPublicId());
         response.setLicencePlate(entity.getLicencePlate());

@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/vehicle")
@@ -34,12 +33,12 @@ public class VehicleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VehicleResponseDTO> getById(@PathVariable UUID id) {
+    public ResponseEntity<VehicleResponseDTO> getById(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getById(id));
     }
 
     @GetMapping("/{id}/detailed")
-    public ResponseEntity<VehicleDetailedResponseDTO> getDetailedById(@PathVariable UUID id) {
+    public ResponseEntity<VehicleDetailedResponseDTO> getDetailedById(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getDetailedById(id));
     }
 
@@ -74,12 +73,12 @@ public class VehicleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<VehicleResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody VehicleUpdateDTO request) {
+    public ResponseEntity<VehicleResponseDTO> update(@PathVariable String id, @Valid @RequestBody VehicleUpdateDTO request) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<VehicleResponseDTO> delete(@PathVariable UUID id) {
+    public ResponseEntity<VehicleResponseDTO> delete(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.delete(id));
     }
 }

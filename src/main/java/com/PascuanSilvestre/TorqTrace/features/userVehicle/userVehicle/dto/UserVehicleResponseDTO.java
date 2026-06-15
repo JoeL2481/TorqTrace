@@ -4,15 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.UUID;
-
 @Getter
 @Setter
 public class UserVehicleResponseDTO {
-    private Long id;
+    private String publicId;
     private Long userId;
-    private UUID userPublicId;
-    private UUID particularVehicleId;
+    private java.util.UUID userPublicId;
+    private String particularVehicleId;
     private String vehicleBrandName;
     private String vehicleModelName;
     private String vehicleVariantName;

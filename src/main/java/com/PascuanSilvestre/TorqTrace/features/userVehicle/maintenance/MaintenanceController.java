@@ -21,7 +21,7 @@ public class MaintenanceController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @PostMapping("/{userVehicleId}/maintenance")
-    public ResponseEntity<MaintenanceDTO> create(@PathVariable Long userVehicleId, @Valid @RequestBody MaintenanceCreateDTO request) {
+    public ResponseEntity<MaintenanceDTO> create(@PathVariable String userVehicleId, @Valid @RequestBody MaintenanceCreateDTO request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(userVehicleId, request));
     }
 
@@ -33,8 +33,8 @@ public class MaintenanceController {
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'EMPLOYEE')")
     @GetMapping("/{userVehicleId}/maintenance")
-    public ResponseEntity<List<MaintenanceDTO>> getAllByUserVehicle(@PathVariable Long userVehicleId) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAllByUserVehicle(userVehicleId));
+    public ResponseEntity<List<MaintenanceDTO>> getAllByUserVehicle(@PathVariable String userVehicleId) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getMaintenancesByUserVehicle(userVehicleId));
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'EMPLOYEE')")
@@ -51,7 +51,8 @@ public class MaintenanceController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @DeleteMapping("/maintenance/{id}")
-    public ResponseEntity<MaintenanceDTO> delete(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.delete(id));
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

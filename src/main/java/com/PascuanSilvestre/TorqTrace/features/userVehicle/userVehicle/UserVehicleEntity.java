@@ -24,6 +24,8 @@ import java.util.List;
 
 public class UserVehicleEntity extends AuditableBase {
 
+    @Column(name = "public_id", nullable = false, unique = true, updatable = false, length = 16)
+    private String publicId;
 
     @Column(name = "licence_plate", length = 20, nullable = false, unique = true)
     private String licencePlate;

@@ -6,12 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.UUID;
-
 @Getter
 @Setter
 public class UserVehicleUpdateDTO {
-    private UUID particularVehicleId;
+    private String particularVehicleId;
 
     @Size(max = 20, message = "Licence plate must not exceed 20 characters")
     private String licencePlate;

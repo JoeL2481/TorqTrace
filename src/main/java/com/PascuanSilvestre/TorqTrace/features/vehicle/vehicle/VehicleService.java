@@ -29,11 +29,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, VehicleUpdateDTO, VehicleResponseDTO, UUID> {
+public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, VehicleUpdateDTO, VehicleResponseDTO, String> {
 
     private final VehicleRepository repo;
     private final VehicleBrandService brandService;
@@ -76,16 +75,16 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
     }
 
     @Override
-    public VehicleResponseDTO getById(UUID id) {
+    public VehicleResponseDTO getById(String id) {
         return mapper.toResponse(getEntityByPublicId(id));
     }
 
-    public VehicleDetailedResponseDTO getDetailedById(UUID id) {
+    public VehicleDetailedResponseDTO getDetailedById(String id) {
         return mapper.toDetailedResponse(getEntityByPublicId(id));
     }
 
     @Override
-    public VehicleResponseDTO update(UUID id, VehicleUpdateDTO request) {
+    public VehicleResponseDTO update(String id, VehicleUpdateDTO request) {
         VehicleEntity entity = getEntityByPublicId(id);
 
         Long brandId = request.getVehicleBrandId();
@@ -149,7 +148,7 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
     }
 
     @Override
-    public VehicleResponseDTO delete(UUID id) {
+    public VehicleResponseDTO delete(String id) {
         VehicleEntity entity = getEntityByPublicId(id);
         VehicleResponseDTO dto = mapper.toResponse(entity);
         repo.delete(entity);
@@ -205,7 +204,7 @@ public class VehicleService implements ICrudServiceComplete<VehicleCreateDTO, Ve
                 .toList();
     }
 
-    private VehicleEntity getEntityByPublicId(UUID id) {
+    private VehicleEntity getEntityByPublicId(String id) {
         return repo.findByPublicId(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found for public id: " + id));
     }

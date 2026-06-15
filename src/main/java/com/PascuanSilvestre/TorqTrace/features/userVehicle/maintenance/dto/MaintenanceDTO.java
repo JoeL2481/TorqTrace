@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 public class MaintenanceDTO {
     private Long id;
-    private Long userVehicleId;
+    private String userVehicleId;
     private Long workOrderId;
     private MaintenanceType maintenanceType;
     private String description;

@@ -33,19 +33,19 @@ public class UserVehicleController {
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{id}")
-    public ResponseEntity<UserVehicleResponseDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<UserVehicleResponseDTO> getById(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getById(id));
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<UserVehicleResponseDTO> update(@PathVariable Long id, @Valid @RequestBody UserVehicleUpdateDTO request) {
+    public ResponseEntity<UserVehicleResponseDTO> update(@PathVariable String id, @Valid @RequestBody UserVehicleUpdateDTO request) {
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, request));
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

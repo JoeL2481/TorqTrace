@@ -10,11 +10,15 @@ import java.util.Optional;
 public interface UserVehicleRepository extends JpaRepository<UserVehicleEntity, Long> {
     List<UserVehicleEntity> findByUserId(Long userId);
 
-    Optional<UserVehicleEntity> findByIdAndUserId(Long id, Long userId);
+    Optional<UserVehicleEntity> findByPublicIdAndUserId(String publicId, Long userId);
+
+    Optional<UserVehicleEntity> findByPublicId(String publicId);
 
     boolean existsByLicencePlate(String licencePlate);
 
     boolean existsByVin(String vin);
+
+    boolean existsByPublicId(String publicId);
 
     boolean existsByLicencePlateAndIdNot(String licencePlate, Long id);
 

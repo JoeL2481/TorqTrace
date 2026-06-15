@@ -19,7 +19,7 @@ public class MaintenanceMapper {
         return entity;
     }
 
-    public void toEntityUpdate(MaintenanceUpdateDTO request, MaintenanceEntity entity) {
+    public MaintenanceEntity toEntityUpdate(MaintenanceUpdateDTO request, MaintenanceEntity entity) {
         if (request.getMaintenanceType() != null) {
             entity.setMaintenanceType(request.getMaintenanceType());
         }
@@ -39,12 +39,14 @@ public class MaintenanceMapper {
         if (request.getNextServiceDate() != null) {
             entity.setNext_service_date(request.getNextServiceDate());
         }
+
+        return entity;
     }
 
     public MaintenanceDTO toResponse(MaintenanceEntity entity) {
         MaintenanceDTO response = new MaintenanceDTO();
         response.setId(entity.getId());
-        response.setUserVehicleId(entity.getUserVehicle().getId());
+        response.setUserVehicleId(entity.getUserVehicle().getPublicId());
         response.setWorkOrderId(entity.getWorkshopOrder().getId());
         response.setMaintenanceType(entity.getMaintenanceType());
         response.setDescription(entity.getDescription());

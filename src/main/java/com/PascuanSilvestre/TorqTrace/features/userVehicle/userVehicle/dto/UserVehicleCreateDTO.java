@@ -8,13 +8,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.UUID;
-
 @Getter
 @Setter
 public class UserVehicleCreateDTO {
     @NotNull(message = "Vehicle configuration is required")
-    private UUID particularVehicleId;
+    private String particularVehicleId;
 
     @NotBlank(message = "Licence plate is required")
     @Size(max = 20, message = "Licence plate must not exceed 20 characters")

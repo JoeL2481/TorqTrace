@@ -10,7 +10,9 @@ import java.util.Optional;
 public interface MaintenanceRepository extends JpaRepository<MaintenanceEntity, Long> {
     List<MaintenanceEntity> findByUserVehicleUserId(Long userId);
 
-    List<MaintenanceEntity> findByUserVehicleIdAndUserVehicleUserId(Long userVehicleId, Long userId);
+    List<MaintenanceEntity> findByUserVehiclePublicId(String userVehicleId);
+
+    List<MaintenanceEntity> findByUserVehiclePublicIdAndUserVehicleUserId(String userVehicleId, Long userId);
 
     Optional<MaintenanceEntity> findByIdAndUserVehicleUserId(Long id, Long userId);
 

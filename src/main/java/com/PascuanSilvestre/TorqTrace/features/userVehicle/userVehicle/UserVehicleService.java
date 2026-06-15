@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -66,31 +65,35 @@ public class UserVehicleService {
         }
     }
 
-    private VehicleEntity getParticularVehicleByPublicId(UUID publicId) {
+    private VehicleEntity getParticularVehicleByPublicId(String publicId) {
         return vehicleRepository.findByPublicId(publicId)
                 .orElseThrow(() -> new EntityNotFoundException("Particular vehicle not found for public id: " + publicId));
     }
 
-    public UserVehicleEntity getOwner(Long id) {
-        return repository.findByIdAndUserId(id, securityUtils.getCurrentUserId())
+    public UserVehicleEntity getOwnedVehicle(String publicId) {
+        return repository.findByPublicIdAndUserId(publicId, securityUtils.getCurrentUserId())
                 .orElseThrow(() -> new EntityNotFoundException("User vehicle not found for current user"));
     }
 
-    public UserVehicleEntity getAnyById(Long id) {
-        return repository.findById(id)
+    public UserVehicleEntity getAnyById(String publicId) {
+        return repository.findByPublicId(publicId)
                 .orElseThrow(() -> new EntityNotFoundException("User vehicle not found"));
     }
 
     public void incrementCurrentMileage(UserVehicleEntity userVehicle, int serviceKm) {
+        BigDecimal currentKm = userVehicle.getCurrentKm();
+        if (currentKm == null) {
+            throw new IllegalStateException("Current vehicle mileage is required");
+        }
+
         if (serviceKm <= 0) {
-            return;
+            throw new IllegalArgumentException("Service km must be greater than zero");
         }
 
         BigDecimal serviceKmValue = BigDecimal.valueOf(serviceKm);
-        BigDecimal currentKm = userVehicle.getCurrentKm();
 
-        if (currentKm == null || currentKm.compareTo(serviceKmValue) >= 0) {
-            return;
+        if (currentKm.compareTo(serviceKmValue) > 0) {
+            throw new IllegalArgumentException("Service km cannot be lower than current vehicle mileage");
         }
 
         userVehicle.setCurrentKm(serviceKmValue);
@@ -104,12 +107,12 @@ public class UserVehicleService {
                 .toList();
     }
 
-    public UserVehicleResponseDTO getById(Long id) {
-        return mapper.toResponse(getOwner(id));
+    public UserVehicleResponseDTO getById(String id) {
+        return mapper.toResponse(getOwnedVehicle(id));
     }
 
-    public UserVehicleResponseDTO update(Long id, UserVehicleUpdateDTO request) {
-        UserVehicleEntity entity = getOwner(id);
+    public UserVehicleResponseDTO update(String id, UserVehicleUpdateDTO request) {
+        UserVehicleEntity entity = getOwnedVehicle(id);
 
         String licencePlate = entity.getLicencePlate();
         if (request.getLicencePlate() != null && !request.getLicencePlate().isBlank()) {
@@ -121,7 +124,7 @@ public class UserVehicleService {
             vin = request.getVin();
         }
 
-        validateUnique(licencePlate, vin, id);
+        validateUnique(licencePlate, vin, entity.getId());
 
         if (request.getParticularVehicleId() != null) {
             entity.setParticularVehicle(getParticularVehicleByPublicId(request.getParticularVehicleId()));
@@ -132,11 +135,11 @@ public class UserVehicleService {
     }
 
     @Transactional
-    public void delete(Long id) {
-        UserVehicleEntity entity = getOwner(id);
+    public void delete(String id) {
+        UserVehicleEntity entity = getOwnedVehicle(id);
 
-        maintenanceRepository.deleteByUserVehicleId(id);
-        extraMaintenanceReminderRepository.deleteByUserVehicleId(id);
+        maintenanceRepository.deleteByUserVehicleId(entity.getId());
+        extraMaintenanceReminderRepository.deleteByUserVehicleId(entity.getId());
         repository.delete(entity);
     }
 }
