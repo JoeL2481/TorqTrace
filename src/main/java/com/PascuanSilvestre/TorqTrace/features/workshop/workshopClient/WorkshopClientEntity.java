@@ -1,5 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient;
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;

@@ -1,7 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff;
 
 import com.PascuanSilvestre.TorqTrace.common.exception.IncoherentDataException;
-import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
+import com.PascuanSilvestre.TorqTrace.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffUpdateDTO;

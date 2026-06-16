@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.auth.config;
+package com.PascuanSilvestre.TorqTrace.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

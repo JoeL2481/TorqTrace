@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.auth.config;
+package com.PascuanSilvestre.TorqTrace.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

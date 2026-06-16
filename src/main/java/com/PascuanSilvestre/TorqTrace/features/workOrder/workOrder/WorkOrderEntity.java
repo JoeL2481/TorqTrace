@@ -1,7 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder;
 
 
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.MaintenanceEntity;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.enums.EWorkOrderStatus;

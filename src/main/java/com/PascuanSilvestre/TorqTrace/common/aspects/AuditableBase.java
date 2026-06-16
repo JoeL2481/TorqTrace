@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.common.utils;
+package com.PascuanSilvestre.TorqTrace.common.aspects;
 
 import jakarta.persistence.*;
 import lombok.*;

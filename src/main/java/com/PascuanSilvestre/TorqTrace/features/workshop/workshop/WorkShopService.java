@@ -2,9 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
 import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.common.exception.ProhibitedOperationException;
-import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
-import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
-
+import com.PascuanSilvestre.TorqTrace.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserService;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.WorkshopStaffService;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffCreateDTO;
@@ -27,7 +25,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, WorkShopUpdateDTO, WorkShopResponseDTO, Long> {
+public class WorkShopService implements IWorkShopService<WorkShopCreateDTO, WorkShopUpdateDTO, WorkShopResponseDTO, Long> {
 
     private final WorkShopRepository repository;
     private final WorkShopMapper mapper;

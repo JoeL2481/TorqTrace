@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.inventory.sparePart;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.SparePartCategoryEntity;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility.SparePartCompatibilityEntity;
 import jakarta.persistence.*;

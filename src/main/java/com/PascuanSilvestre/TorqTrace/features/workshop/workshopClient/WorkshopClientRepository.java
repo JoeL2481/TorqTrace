@@ -13,19 +13,12 @@ import java.util.Optional;
 public interface WorkshopClientRepository
         extends JpaRepository<WorkshopClientEntity, Long>, JpaSpecificationExecutor<WorkshopClientEntity> {
 
-    // Buscar relación cliente-taller por user
-    List<WorkshopClientEntity> findByUser(UserEntity user);
 
-    // Buscar todos los clientes de un taller
     List<WorkshopClientEntity> findByWorkshop(Long workShopId);
 
-    // Buscar relación específica user + workshop
-    Optional<WorkshopClientEntity> findByUserAndWorkshop(UserEntity user, WorkShopEntity workshop);
 
-    // Variante por IDs
     Optional<WorkshopClientEntity> findByUserId(Long userId);
 
-    List<WorkshopClientEntity> findByWorkshopId(Long workshopId);
 
     boolean existsByUserIdAndWorkshopId(Long userId, Long workshopId);
 }

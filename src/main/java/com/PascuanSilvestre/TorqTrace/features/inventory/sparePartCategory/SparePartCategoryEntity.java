@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.extraMaintenanceItems.ExtraMaintenanceReminderEntity;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.MaintenanceEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;

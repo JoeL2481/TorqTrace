@@ -9,7 +9,6 @@ import java.util.Optional;
 @Repository
 public interface WorkshopStaffRepository extends JpaRepository<WorkshopStaffEntity,Long> {
 
-    List<WorkshopStaffEntity> findByWorkshopId(Long workshopId);
     boolean existsByUserIdAndWorkshopId(Long userId,Long workshopId);
     Optional<WorkshopStaffEntity> findByUserIdAndWorkshopId(Long userId, Long workshopId);
 

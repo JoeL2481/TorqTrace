@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.auth.config;
+package com.PascuanSilvestre.TorqTrace.config;
 
 import com.PascuanSilvestre.TorqTrace.auth.OAuth2.CustomOAuth2UserService;
 import com.PascuanSilvestre.TorqTrace.auth.OAuth2.OAuth2AuthenticationSuccessHandler;

@@ -1,6 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto;
 
 //import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartResponseDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class WorkOrderItemResponseDTO {
 
     private Long id;
 
-//  private SparePartResponseDTO sparePart;
+  private SparePartResponseDTO sparePart;
 
     private Integer quantityRequested;
 
