@@ -37,9 +37,44 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
-    @ExceptionHandler(DuplicatedNameException.class)
-    public ResponseEntity<ErrorResponseDTO>  handleDuplicateNameException(DuplicatedNameException ex) {
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<ErrorResponseDTO> handleAlreadyExistsException(AlreadyExistsException ex) {
         return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(IncoherentDataException.class)
+    public ResponseEntity<ErrorResponseDTO> handleIncoherentDataException(IncoherentDataException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidRelationshipException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidRelationshipException(InvalidRelationshipException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(CreationException.class)
+    public ResponseEntity<ErrorResponseDTO> handleCreationException(CreationException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(UpdateException.class)
+    public ResponseEntity<ErrorResponseDTO> handleUpdateException(UpdateException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(DeletionAttemptException.class)
+    public ResponseEntity<ErrorResponseDTO> handleDeletionAttemptException(DeletionAttemptException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(ProhibitedOperationException.class)
+    public ResponseEntity<ErrorResponseDTO> handleProhibitedOperationException(ProhibitedOperationException ex) {
+        return buildResponse(HttpStatus.FORBIDDEN, ex.getMessage());
+    }
+
+    @ExceptionHandler(UnauthenticatedException.class)
+    public ResponseEntity<ErrorResponseDTO> handleUnauthenticatedException(UnauthenticatedException ex) {
+        return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     //Helper

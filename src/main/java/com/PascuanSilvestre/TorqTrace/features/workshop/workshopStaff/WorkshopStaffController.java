@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff;
 
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/workshopstaff")
 @AllArgsConstructor
+@Tag(name = "Workshop Staff", description = "Workshop staff endpoints")
 public class WorkshopStaffController {
     private final WorkshopStaffService workShopStaffService;
 

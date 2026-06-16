@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBr
 
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.dto.VehicleBrandRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.dto.VehicleBrandResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/vehicle-brand")
 @RequiredArgsConstructor
+@Tag(name = "Vehicle Catalog - Brand", description = "Auxiliary vehicle brand catalog endpoints")
 public class VehicleBrandController {
     private final VehicleBrandService vehicleBrandService;
 

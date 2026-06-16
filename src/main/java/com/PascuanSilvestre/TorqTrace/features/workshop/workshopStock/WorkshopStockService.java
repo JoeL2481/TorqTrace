@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.ProhibitedOperationException;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartService;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockResponseDTO;
@@ -8,7 +9,6 @@ import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.mapper.Wor
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopPermissionService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class WorkshopStockService implements IWorkshopStockService<WorkshopStock
 
 
         if (!permissionService.isManagerOrOwnerOrMechanic(request.getWorkshopId())) {
-            throw new AccessDeniedException("Not permissions enough");
+            throw new ProhibitedOperationException("Not permissions enough");
         }
 
         sparePartService.existSparePart(request.getSparePartId());
@@ -41,7 +41,7 @@ public class WorkshopStockService implements IWorkshopStockService<WorkshopStock
     @Override
     public List<WorkshopStockResponseDTO> getAll(Long workShopId) {
         if (!permissionService.isManagerOrOwnerOrMechanic(workShopId)) {
-            throw new AccessDeniedException("Not permissions enough");
+            throw new ProhibitedOperationException("Not permissions enough");
         }
         return workShopStockRepository.findByWorkshopId(workShopId).stream().
                 map(workShopStockMapper::toResponse)
@@ -56,7 +56,7 @@ public class WorkshopStockService implements IWorkshopStockService<WorkshopStock
                 orElseThrow(()->new EntityNotFoundException("WorkShopStock with id " + id + " not found"));
 
         if (!permissionService.isManagerOrOwnerOrMechanic(workShopStock.getWorkshop().getId())) {
-            throw new AccessDeniedException("Not permissions enough");
+            throw new ProhibitedOperationException("Not permissions enough");
         }
 
         return workShopStockMapper.toResponse(workShopStock);
@@ -66,7 +66,7 @@ public class WorkshopStockService implements IWorkshopStockService<WorkshopStock
     public WorkshopStockResponseDTO update(Long id, WorkshopStockUpdateDTO request) {
         WorkshopStockEntity workShopStock = workShopStockRepository.findById(id).orElseThrow(()->new EntityNotFoundException("WorkShopStock with id " + id + " not found"));
         if (!permissionService.isManagerOrOwnerOrMechanic(workShopStock.getWorkshop().getId())) {
-            throw new AccessDeniedException("Not permissions enough");
+            throw new ProhibitedOperationException("Not permissions enough");
         }
         workShopStockMapper.toEntityUpdate(request,workShopStock);
         workShopStockRepository.save(workShopStock);
@@ -77,12 +77,19 @@ public class WorkshopStockService implements IWorkshopStockService<WorkshopStock
     public WorkshopStockResponseDTO delete(Long id) {
         WorkshopStockEntity workShopStock = workShopStockRepository.findById(id).orElseThrow(()->new EntityNotFoundException("WorkShopStock with id " + id + " not found"));
         if (!permissionService.isManagerOrOwnerOrMechanic(workShopStock.getWorkshop().getId())) {
-            throw new AccessDeniedException("Not permissions enough");
+            throw new ProhibitedOperationException("Not permissions enough");
         }
         WorkshopStockResponseDTO response = workShopStockMapper.toResponse(workShopStock);
         workShopStockRepository.delete(workShopStock);
         return response;
     }
+
+    public WorkshopStockResponseDTO findWorkshopStockByWorkShopAndSparePart(Long workshopId, Long sparePartId) {
+    return workShopStockRepository.findByWorkshopIdAndSparePartId(workshopId,sparePartId).map(workShopStockMapper::toResponse).
+                orElseThrow(()->new EntityNotFoundException("WorkshopStock with id " + workshopId + " sparePart not found"));
+    }
+
+
 
     public boolean existWorkshopStock(Long id) {
         if (!workShopStockRepository.existsById(id)){

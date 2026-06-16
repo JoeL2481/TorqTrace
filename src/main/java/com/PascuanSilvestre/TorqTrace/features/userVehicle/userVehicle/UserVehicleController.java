@@ -3,6 +3,7 @@ package com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.dto.UserVehicleCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.dto.UserVehicleResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.dto.UserVehicleUpdateDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/user-vehicle")
 @RequiredArgsConstructor
+@Tag(name = "User Vehicle", description = "Vehicles owned by authenticated users")
 public class UserVehicleController {
 
     private final UserVehicleService service;

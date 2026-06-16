@@ -3,6 +3,7 @@ package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleMo
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.dto.VehicleModelRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.dto.VehicleModelResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/vehicle-model")
-
+@Tag(name = "Vehicle Catalog - Model", description = "Auxiliary vehicle model catalog endpoints")
 public class VehicleModelController {
 
     private final VehicleModelService service;

@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.auth.userProvider;
 
 import com.PascuanSilvestre.TorqTrace.auth.userProvider.dto.UserProviderCreateDTO;
 import com.PascuanSilvestre.TorqTrace.auth.userProvider.dto.UserProviderResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/userprovider")
 @AllArgsConstructor
+@Tag(name = "Authentication - User Provider", description = "Auxiliary user-provider relationship endpoints")
 public class UserProviderController {
     private final UserProviderService userProviderService;
 

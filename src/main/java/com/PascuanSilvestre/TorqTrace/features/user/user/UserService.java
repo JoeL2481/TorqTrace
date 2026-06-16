@@ -4,7 +4,7 @@ import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsEntity;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsRepository;
 import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleRepository;
-import com.PascuanSilvestre.TorqTrace.common.exception.DuplicatedNameException;
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserDetailedResponseDTO;
@@ -39,7 +39,7 @@ public class UserService implements IUserService<NewAccountRequest, UserCreateDT
     public UserResponseDTO register(NewAccountRequest request) {
 
         if (credentialsRepository.findByUsername(request.username()).isPresent()) {
-            throw new DuplicatedNameException("Username already exists");
+            throw new AlreadyExistsException("Username already exists");
         }
 
         UserEntity user = UserEntity.builder()

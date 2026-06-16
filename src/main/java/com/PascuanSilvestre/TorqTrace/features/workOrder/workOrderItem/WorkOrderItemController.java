@@ -3,6 +3,7 @@ package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderUpdateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto.WorkOrderItemCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto.WorkOrderItemResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/workorderitem")
 @AllArgsConstructor
+@Tag(name = "Work Order Item", description = "Auxiliary work order item endpoints")
 public class WorkOrderItemController {
     private final WorkOrderItemService workOrderItemService;
 
