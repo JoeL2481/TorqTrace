@@ -2,15 +2,11 @@ package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.mapper;
 
 
 import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderUpdateDTO;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.WorkOrderItemEntity;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderType.WorkOrderTypeEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.WorkshopClientEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
+
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -33,30 +29,6 @@ public class WorkOrderMapper implements IMapper<WorkOrderEntity, WorkOrderCreate
 
     public void toEntityUpdate(WorkOrderUpdateDTO request, WorkOrderEntity entity) {
 
-        if (request.getWorkshopId() != null) {
-            entity.setWorkshop(
-                    WorkShopEntity.builder()
-                            .id(request.getWorkshopId())
-                            .build()
-            );
-        }
-
-        if (request.getClientId() != null) {
-            entity.setClient(
-                    WorkshopClientEntity.builder()
-                            .id(request.getClientId())
-                            .build()
-            );
-        }
-
-        if (request.getVehicleId() != null) {
-            entity.setVehicle(
-                    VehicleEntity.builder()
-                            .id(request.getVehicleId())
-                            .build()
-            );
-        }
-
         if (request.getEntryKm() != null) {
             entity.setEntryKm(request.getEntryKm());
         }
@@ -69,30 +41,8 @@ public class WorkOrderMapper implements IMapper<WorkOrderEntity, WorkOrderCreate
             entity.setStatus(request.getStatus());
         }
 
-    /*
-    if (request.getUserVehicleMaitenanceId() != null) {
-        entity.setUserVehicleMaitenance(
-                UserVehicleMaitenanceEntity.builder()
-                        .id(request.getUserVehicleMaitenanceId())
-                        .build()
-        );
-    }
-    */
-
-        if (request.getWorkshopOrderTypeId() != null) {
-            entity.setWorkshopOrderType(
-                    WorkOrderTypeEntity.builder()
-                            .id(request.getWorkshopOrderTypeId())
-                            .build()
-            );
-        }
-
-        if (request.getWorkOrderItemId() != null) {
-            entity.setWorkOrderItem(
-                    WorkOrderItemEntity.builder()
-                            .id(request.getWorkOrderItemId())
-                            .build()
-            );
+        if (request.getWorkshopOrderType() != null) {
+            entity.setWorkshopOrderType(request.getWorkshopOrderType());
         }
 
         if (request.getCurrency() != null) {

@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface WorkOrderRepository extends JpaRepository<WorkOrderEntity, Long> {
     List<WorkOrderEntity> findByWorkshopId(Long workshopId);
-    Optional<WorkOrderEntity> findByIdAndWorkhopId(Long id,Long workshopId);
+    Optional<WorkOrderEntity> findByIdAndWorkshopId(Long id,Long workshopId);
     List<WorkOrderEntity> findAllByOrderByCreatedAtDesc();
-    List<WorkOrderEntity> findByWorkshopIdByOrderByCreatedAtDesc(Long workshopId);
+    List<WorkOrderEntity> findByWorkshopIdOrderByCreatedAtDesc(Long workshopId);
 }

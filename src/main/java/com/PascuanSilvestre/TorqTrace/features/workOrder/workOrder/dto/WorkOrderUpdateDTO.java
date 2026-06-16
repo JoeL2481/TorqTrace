@@ -1,6 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto;
 
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.enums.EWorkOrderStatus;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.enums.EWorkOrderType;
 import lombok.*;
 
 @Setter
@@ -16,7 +17,7 @@ public class WorkOrderUpdateDTO {
 
     private EWorkOrderStatus status;
 
-    private Long workshopOrderTypeId;
+    private EWorkOrderType workshopOrderType;
 
     private String currency;
 

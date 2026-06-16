@@ -119,7 +119,7 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
 
     public List<WorkOrderResponseDTO> getAllByWorkshop(Long workshopId) {
         workshopPermissionService.isManagerOrOwnerOrMechanic(workshopId);
-        return workOrderRepository.findByWorkshopIdByOrderByCreatedAtDesc(workshopId).stream().
+        return workOrderRepository.findByWorkshopIdOrderByCreatedAtDesc(workshopId).stream().
                 map(workOrderMapper::toResponse)
                 .sorted()
                 .toList();
@@ -134,7 +134,7 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
 
     public WorkOrderResponseDTO getByIdforWorkshop(Long id, Long workshopId) {
         workshopPermissionService.isManagerOrOwnerOrMechanic(workshopId);
-        return workOrderRepository.findByIdAndWorkhopId(id,workshopId).
+        return workOrderRepository.findByIdAndWorkshopId(id,workshopId).
                 map(workOrderMapper::toResponse).
                 orElseThrow(() -> new EntityNotFoundException("workOrder was not found"));
     }
