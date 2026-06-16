@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.dto.EngineCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.dto.EngineResponseDTO;
@@ -20,6 +21,9 @@ public class EngineService implements ICrudServiceComplete<EngineCreateDTO, Engi
 
     @Override
     public EngineResponseDTO create(EngineCreateDTO request) {
+        if (repo.existsByCodeIgnoreCase(request.getCode())) {
+            throw new AlreadyExistsException("Engine code already exists");
+        }
         EngineEntity entity = mapper.toEntity(request);
 
 

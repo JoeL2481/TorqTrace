@@ -8,4 +8,6 @@ import java.util.Optional;
 @Repository
 public interface TransmissionRepository extends JpaRepository<TransmissionEntity, Long> {
     Optional<TransmissionEntity> findByNameIgnoreCase(String name);
+    boolean existsByNameIgnoreCase(String name);
+    boolean existsByCode(int code);
 }

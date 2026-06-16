@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.dto.VehicleBrandRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.dto.VehicleBrandResponseDTO;
@@ -22,6 +23,9 @@ public class VehicleBrandService implements ICrudService<VehicleBrandRequestDTO,
 
     @Override
     public VehicleBrandResponseDTO create(VehicleBrandRequestDTO request) {
+        if (vehicleBrandRepository.existsByNameIgnoreCase(request.getName())) {
+            throw new AlreadyExistsException("Vehicle brand already exists");
+        }
         VehicleBrandEntity entity = vehicleBrandMapper.toEntity(request);
         entity.setPublicId(UUID.randomUUID());
         VehicleBrandEntity saved = vehicleBrandRepository.save(entity);

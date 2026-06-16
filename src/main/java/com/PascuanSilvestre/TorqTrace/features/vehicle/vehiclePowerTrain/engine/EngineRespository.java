@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface EngineRespository extends JpaRepository<EngineEntity, Long> {
     Optional<EngineEntity> findByCodeIgnoreCase(String code);
+    boolean existsByCodeIgnoreCase(String code);
 }

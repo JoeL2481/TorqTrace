@@ -1,6 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.auth.userProvider.dto;
 
-import com.PascuanSilvestre.TorqTrace.auth.authProvider.dto.AuthProviderResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
 import lombok.*;
 
@@ -14,7 +13,6 @@ import java.time.LocalDateTime;
 public class UserProviderResponseDTO {
 
     private UserResponseDTO user;
-    private AuthProviderResponseDTO provider;
     private String externalId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
