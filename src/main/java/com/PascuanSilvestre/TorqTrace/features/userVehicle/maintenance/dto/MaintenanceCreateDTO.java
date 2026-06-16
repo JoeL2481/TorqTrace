@@ -2,13 +2,15 @@ package com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto;
 
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.MaintenanceType;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
-@Getter
 @Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MaintenanceCreateDTO {
     @NotNull(message = "Work order is required")
     private Long workOrderId;

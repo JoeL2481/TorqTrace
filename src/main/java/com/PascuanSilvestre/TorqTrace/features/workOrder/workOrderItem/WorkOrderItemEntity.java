@@ -29,9 +29,8 @@ public class WorkOrderItemEntity  extends AuditableBase {
     private Integer quantityRequested;
 
     @Column(name = "unit_price_at_time")
-    private Double unitPriceAtTime;
-    @Column(name = "price_at_execution")
-    private Double priceAtExecution;
+    private Double unitPrice;
+
     @Column(name = "subtotal")
     private Double subtotal;
 

@@ -1,8 +1,11 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto;
 
-import com.PascuanSilvestre.TorqTrace.features.workOrder.enums.WorkOrderStatus;
+import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto.MaintenanceDTO;
+import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.dto.UserVehicleResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.enums.EWorkOrderStatus;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.enums.EWorkOrderType;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto.WorkOrderItemResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderType.dto.WorkOrderTypeResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.dto.WorkshopClientResponseDTO;
 import lombok.*;
 
@@ -17,19 +20,24 @@ public class WorkOrderResponseDTO {
 
     private Long id;
 
+
+    private WorkShopResponseDTO workshop;
+
     private WorkshopClientResponseDTO client;
 
-    //private VehicleResponseDTO vehicle;
+    private UserVehicleResponseDTO userVehicle;
 
     private Double entryKm;
 
     private String description;
 
-    private WorkOrderStatus status;
+    private EWorkOrderStatus status;
 
-    private WorkOrderTypeResponseDTO workOrderType;
+    private EWorkOrderType workOrderType;
 
     private WorkOrderItemResponseDTO workOrderItem;
+
+    private MaintenanceDTO maintenance;
 
     private String currency;
 

@@ -144,4 +144,12 @@ public class UserVehicleService implements IUserVehicleService<UserVehicleCreate
         extraMaintenanceReminderRepository.deleteByUserVehicleId(entity.getId());
         repository.delete(entity);
     }
+
+    public boolean existByUserVehiclePublicId(String userVehiclePublicId) {
+        if (!repository.existsByPublicId(userVehiclePublicId)) {
+            throw new EntityNotFoundException("User vehicle not found");
+        }
+        return true;
+    }
+
 }

@@ -61,7 +61,7 @@ public class SparePartService implements ISparePartService<SparePartCreateDTO, S
         repo.delete(entity);
     }
 
-    private SparePartEntity getEntityById(Long id) {
+    public SparePartEntity getEntityById(Long id) {
         return repo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Spare part not found for id: " + id));
     }
