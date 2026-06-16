@@ -1,6 +1,8 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle;
 
 import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
+import com.PascuanSilvestre.TorqTrace.common.exception.IncoherentDataException;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.extraMaintenanceItems.ExtraMaintenanceReminderRepository;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.MaintenanceRepository;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.dto.UserVehicleCreateDTO;
@@ -50,7 +52,7 @@ public class UserVehicleService implements IUserVehicleService<UserVehicleCreate
         }
 
         if (duplicatedPlate) {
-            throw new IllegalArgumentException("Licence plate already exists");
+            throw new AlreadyExistsException("Licence plate already exists");
         }
 
         boolean duplicatedVin;
@@ -61,7 +63,7 @@ public class UserVehicleService implements IUserVehicleService<UserVehicleCreate
         }
 
         if (duplicatedVin) {
-            throw new IllegalArgumentException("Vin already exists");
+            throw new AlreadyExistsException("Vin already exists");
         }
     }
 
@@ -83,17 +85,17 @@ public class UserVehicleService implements IUserVehicleService<UserVehicleCreate
     public void incrementCurrentMileage(UserVehicleEntity userVehicle, int serviceKm) {
         BigDecimal currentKm = userVehicle.getCurrentKm();
         if (currentKm == null) {
-            throw new IllegalStateException("Current vehicle mileage is required");
+            throw new IncoherentDataException("Current vehicle mileage is required");
         }
 
         if (serviceKm <= 0) {
-            throw new IllegalArgumentException("Service km must be greater than zero");
+            throw new IncoherentDataException("Service km must be greater than zero");
         }
 
         BigDecimal serviceKmValue = BigDecimal.valueOf(serviceKm);
 
         if (currentKm.compareTo(serviceKmValue) > 0) {
-            throw new IllegalArgumentException("Service km cannot be lower than current vehicle mileage");
+            throw new IncoherentDataException("Service km cannot be lower than current vehicle mileage");
         }
 
         userVehicle.setCurrentKm(serviceKmValue);

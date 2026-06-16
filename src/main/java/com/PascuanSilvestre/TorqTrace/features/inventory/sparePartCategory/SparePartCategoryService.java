@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.dto.SparePartCategoryCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.dto.SparePartCategoryResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.dto.SparePartCategoryUpdateDTO;
@@ -23,7 +24,7 @@ public class SparePartCategoryService implements ISparePartCategoryService<Spare
 
         repo.findByNameIgnoreCaseAndDescriptionIgnoreCase(simpleName, description)
                 .ifPresent(existing -> {
-                    throw new IllegalArgumentException("Spare part category already exists");
+                    throw new AlreadyExistsException("Spare part category already exists");
                 });
 
         SparePartCategoryEntity entity = mapper.toEntity(request);
