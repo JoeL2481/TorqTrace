@@ -22,9 +22,7 @@ public class SparePartCategoryService implements ISparePartCategoryService<Spare
         String name = transformText(request.getName());
         String description = transformText(request.getDescription());
 
-        boolean exists = repo.findByNameIgnoreCaseAndDescriptionIgnoreCase(name, description).isPresent();
-
-        if (exists) {
+        if (repo.findByNameIgnoreCaseAndDescriptionIgnoreCase(name, description).isPresent()) {
             throw new AlreadyExistsException("Spare part category already exists");
         }
 
