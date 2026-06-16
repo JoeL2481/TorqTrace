@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto;
 
-import com.PascuanSilvestre.TorqTrace.features.workOrder.enums.WorkOrderStatus;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.enums.EWorkOrderStatus;
 import lombok.*;
 
 @Setter
@@ -10,21 +10,13 @@ import lombok.*;
 @AllArgsConstructor
 public class WorkOrderUpdateDTO {
 
-    private Long workshopId;
-
-    private Long clientId;
-
-    private Long vehicleId;
-
     private Double entryKm;
 
     private String description;
 
-    private WorkOrderStatus status;
+    private EWorkOrderStatus status;
 
     private Long workshopOrderTypeId;
-
-    private Long workOrderItemId;
 
     private String currency;
 

@@ -84,6 +84,13 @@ public class WorkshopStockService implements IWorkshopStockService<WorkshopStock
         return response;
     }
 
+    public WorkshopStockResponseDTO findWorkshopStockByWorkShopAndSparePart(Long workshopId, Long sparePartId) {
+    return workShopStockRepository.findByWorkshopIdAndSparePartId(workshopId,sparePartId).map(workShopStockMapper::toResponse).
+                orElseThrow(()->new EntityNotFoundException("WorkshopStock with id " + workshopId + " sparePart not found"));
+    }
+
+
+
     public boolean existWorkshopStock(Long id) {
         if (!workShopStockRepository.existsById(id)){
             throw new EntityNotFoundException("WorkshopStock not found");

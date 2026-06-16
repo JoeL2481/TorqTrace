@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -11,17 +12,10 @@ import lombok.*;
 public class WorkOrderItemCreateDTO {
 
     @NotNull
-    private Long workOrderId;
-
-    @NotNull
+    @Min(1)
     private Long sparePartId;
 
     @NotNull
+    @Min(1)
     private Integer quantityRequested;
-
-    private Double unitPriceAtTime;
-
-    private Double priceAtExecution;
-
-    private Double subtotal;
 }

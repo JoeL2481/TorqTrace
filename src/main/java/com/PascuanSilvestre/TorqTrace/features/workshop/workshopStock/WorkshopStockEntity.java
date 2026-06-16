@@ -25,6 +25,9 @@ public class WorkshopStockEntity extends AuditableBase {
     @JoinColumn(name = "spare_part_id", nullable = false)
     private SparePartEntity sparePart;
 
+    @Column(name ="price", nullable = false)
+    private double Unitprice;
+
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;
 

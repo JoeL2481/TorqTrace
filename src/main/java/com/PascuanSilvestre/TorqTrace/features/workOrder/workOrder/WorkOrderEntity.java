@@ -2,10 +2,11 @@ package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder;
 
 
 import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
-import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.enums.WorkOrderStatus;
+import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.MaintenanceEntity;
+import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.enums.EWorkOrderStatus;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.enums.EWorkOrderType;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.WorkOrderItemEntity;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderType.WorkOrderTypeEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.WorkshopClientEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
@@ -34,29 +35,31 @@ public class WorkOrderEntity  extends AuditableBase {
     private WorkshopClientEntity client;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="vehicle_id",nullable = false)
-    private VehicleEntity vehicle;
+    @JoinColumn(name="userVechicle_id",nullable = false)
+    private UserVehicleEntity userVehicle;
 
 
     @Column(name="entry_km",nullable = false)
     private Double entryKm;
+
     @Column(name="description", columnDefinition = "TEXT")
     private String description;
 
     @Enumerated(EnumType.STRING)
     @Column(name="Status", nullable = false)
-    private WorkOrderStatus status;
+    private EWorkOrderStatus status;
 
-/*
+
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_vehicle_maitenance_id")
-    private UserVehicleMaitenanceEntity userVehicleMaitenance;
-*/
+    @JoinColumn(name="maitenance_id")
+    private MaintenanceEntity maitenance;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="workshop_order_type_id",nullable = false)
-    private WorkOrderTypeEntity workshopOrderType;
+    @Column(name= "work_order_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EWorkOrderType workshopOrderType;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="item_work_order_id",nullable = false)
     private WorkOrderItemEntity workOrderItem;
