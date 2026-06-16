@@ -4,6 +4,7 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopUpdateDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/workshop")
 @RequiredArgsConstructor
+@Tag(name = "Workshop", description = "Workshop management endpoints")
 public class WorkShopController {
 
     private final WorkShopService service;

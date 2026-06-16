@@ -5,6 +5,7 @@ import com.PascuanSilvestre.TorqTrace.auth.dto.AuthResponse;
 import com.PascuanSilvestre.TorqTrace.auth.dto.NewAccountRequest;
 import com.PascuanSilvestre.TorqTrace.auth.jwt.JwtService;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
+@Tag(name = "Authentication", description = "Authentication and account registration endpoints")
 public class AuthController {
     private final AuthService authService;
     private final UserService userService;

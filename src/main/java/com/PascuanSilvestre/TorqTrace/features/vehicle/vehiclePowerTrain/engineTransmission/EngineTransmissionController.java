@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine
 
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engineTransmission.dto.EngineTransmissionRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engineTransmission.dto.EngineTransmissionResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/engine-transmission")
 @RequiredArgsConstructor
+@Tag(name = "Vehicle Powertrain - Engine Transmission", description = "Auxiliary engine and transmission relationship endpoints")
 public class EngineTransmissionController {
 
     private final EngineTransmissionService service;

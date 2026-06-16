@@ -3,6 +3,7 @@ package com.PascuanSilvestre.TorqTrace.features.user.user;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserDetailedResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserUpdateDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/user")
 @RequiredArgsConstructor
+@Tag(name = "User", description = "User profile and administration endpoints")
 public class UserController {
 
     private final UserService service;

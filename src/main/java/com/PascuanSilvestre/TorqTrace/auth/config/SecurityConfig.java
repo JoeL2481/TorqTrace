@@ -43,7 +43,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**",
                                 "/oauth2/**",
-                                "/login/**").permitAll()
+                                "/login/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**").permitAll()
                 //ACA VAN LAS RUTAS QUE NO REQUIEREN AUTORIZACION
                      /*   .requestMatchers("/api/vehicles/**").hasRole("USER")*/
                         .anyRequest().authenticated())

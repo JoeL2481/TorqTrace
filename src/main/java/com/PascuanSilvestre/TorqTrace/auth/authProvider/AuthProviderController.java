@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.auth.authProvider;
 
 import com.PascuanSilvestre.TorqTrace.auth.authProvider.dto.AuthProviderCreateDTO;
 import com.PascuanSilvestre.TorqTrace.auth.authProvider.dto.AuthProviderResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/authprovider")
 @AllArgsConstructor
+@Tag(name = "Authentication - Provider", description = "Auxiliary authentication provider endpoints")
 public class AuthProviderController {
     private final AuthProviderService authProviderService;
 
