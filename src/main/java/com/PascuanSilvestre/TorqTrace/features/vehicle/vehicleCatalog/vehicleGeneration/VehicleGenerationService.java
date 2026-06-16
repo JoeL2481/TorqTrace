@@ -1,6 +1,9 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
+import com.PascuanSilvestre.TorqTrace.common.exception.InvalidRelationshipException;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudService;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.VehicleModelService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.dto.VehicleGenerationRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.dto.VehicleGenerationResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.mapper.VehicleGenerationMapper;
@@ -16,11 +19,19 @@ public class VehicleGenerationService implements ICrudService<VehicleGenerationR
 
     private final VehicleGenerationRepository vehicleGenerationRepository;
     private final VehicleGenerationMapper vehicleGenerationMapper;
+    private final VehicleModelService vehicleModelService;
 
 
     @Override
     public VehicleGenerationResponseDTO create(VehicleGenerationRequestDTO request) {
+        if (request.getVehicleModelId() == null) {
+            throw new InvalidRelationshipException("Vehicle model is required for vehicle generation");
+        }
+        if (vehicleGenerationRepository.existsByNameIgnoreCase(request.getName())) {
+            throw new AlreadyExistsException("Vehicle generation already exists");
+        }
         VehicleGenerationEntity entity = vehicleGenerationMapper.toEntity(request);
+        entity.setVehicleModel(vehicleModelService.getEntityByIdOrName(request.getVehicleModelId(), null));
         return vehicleGenerationMapper.toResponse
                 (vehicleGenerationRepository.save(entity));
     }
@@ -50,6 +61,9 @@ public class VehicleGenerationService implements ICrudService<VehicleGenerationR
         entity.setMonthFrom(request.getMonthFrom());
         entity.setYearTo(request.getYearsTo());
         entity.setMonthTo(request.getMonthTo());
+        if (request.getVehicleModelId() != null) {
+            entity.setVehicleModel(vehicleModelService.getEntityByIdOrName(request.getVehicleModelId(), null));
+        }
 
         return vehicleGenerationMapper.toResponse(vehicleGenerationRepository.save(entity));
     }

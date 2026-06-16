@@ -4,6 +4,7 @@ import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.WorkshopSt
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffUpdateDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.enums.StaffRole;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,9 @@ public class WorkShopStaffMapper implements IWorkshopStaffMapper<WorkshopStaffEn
 
     @Override
     public WorkshopStaffEntity toEntity(WorkshopStaffCreateDTO request) {
-        return  modelMapper.map(request, WorkshopStaffEntity.class);
+        WorkshopStaffEntity entity = new WorkshopStaffEntity();
+        entity.setRole(request.getRole() != null ? request.getRole() : StaffRole.MECHANIC);
+        return entity;
     }
 
     @Override

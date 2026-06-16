@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface VehicleEquipmentLevelRepository extends JpaRepository<VehicleEquipmentLevelEntity, Long  > {
     Optional<VehicleEquipmentLevelEntity> findByNameIgnoreCase(String name);
+    boolean existsByNameIgnoreCase(String name);
 }

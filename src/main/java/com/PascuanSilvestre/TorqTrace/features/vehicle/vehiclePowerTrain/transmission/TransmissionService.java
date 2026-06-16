@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission.dto.TransmissionCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission.dto.TransmissionResponseDTO;
@@ -20,6 +21,12 @@ public class TransmissionService implements ICrudServiceComplete<TransmissionCre
 
     @Override
     public TransmissionResponseDTO create(TransmissionCreateDTO request) {
+        if (repo.existsByNameIgnoreCase(request.getName())) {
+            throw new AlreadyExistsException("Transmission name already exists");
+        }
+        if (repo.existsByCode(request.getCode())) {
+            throw new AlreadyExistsException("Transmission code already exists");
+        }
         TransmissionEntity entity = mapper.toEntity(request);
         return mapper.toResponse(repo.save(entity));
     }

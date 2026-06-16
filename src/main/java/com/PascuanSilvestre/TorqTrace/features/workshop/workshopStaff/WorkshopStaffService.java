@@ -2,6 +2,10 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff;
 
 import com.PascuanSilvestre.TorqTrace.common.exception.IncoherentDataException;
 import com.PascuanSilvestre.TorqTrace.config.SecurityUtils;
+import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
+import com.PascuanSilvestre.TorqTrace.features.user.user.UserRepository;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopRepository;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffUpdateDTO;
@@ -20,10 +24,19 @@ public class WorkshopStaffService implements IWorkshopStaffService<WorkshopStaff
     private final WorkshopStaffRepository workShopStaffRepository;
     private final WorkShopStaffMapper workShopStaffMapper;
     private final SecurityUtils securityUtils;
+    private final UserRepository userRepository;
+    private final WorkShopRepository workShopRepository;
 
     @Override
     public WorkshopStaffResponseDTO create(WorkshopStaffCreateDTO request) {
         WorkshopStaffEntity workShopStaffEntity = workShopStaffMapper.toEntity(request);
+        WorkShopEntity workshop = workShopRepository.findById(request.getWorkshopId())
+                .orElseThrow(() -> new EntityNotFoundException("Workshop not found"));
+        UserEntity user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        workShopStaffEntity.setWorkshop(workshop);
+        workShopStaffEntity.setUser(user);
         workShopStaffEntity = workShopStaffRepository.save(workShopStaffEntity);
         return workShopStaffMapper.toResponse(workShopStaffEntity);
     }

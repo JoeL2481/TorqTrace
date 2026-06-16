@@ -7,6 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VehicleGenerationRequestDTO {
+    @Positive(message = "Vehicle model id must be greater than zero")
+    private Long vehicleModelId;
+
     @NotBlank(message = "Name is required")
     @Size(max = 100, message = "Name must not exceed 100 characters")
     private String name;
