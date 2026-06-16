@@ -19,16 +19,17 @@ public class SparePartCategoryService implements ISparePartCategoryService<Spare
 
     @Override
     public SparePartCategoryResponseDTO create(SparePartCategoryCreateDTO request) {
-        String simpleName = refactorText(request.getName());
-        String description = refactorText(request.getDescription());
+        String name = transformText(request.getName());
+        String description = transformText(request.getDescription());
 
-        repo.findByNameIgnoreCaseAndDescriptionIgnoreCase(simpleName, description)
-                .ifPresent(existing -> {
-                    throw new AlreadyExistsException("Spare part category already exists");
-                });
+        boolean exists = repo.findByNameIgnoreCaseAndDescriptionIgnoreCase(name, description).isPresent();
+
+        if (exists) {
+            throw new AlreadyExistsException("Spare part category already exists");
+        }
 
         SparePartCategoryEntity entity = mapper.toEntity(request);
-        entity.setName(simpleName);
+        entity.setName(name);
         entity.setDescription(description);
 
         return mapper.toResponse(repo.save(entity));
@@ -58,16 +59,16 @@ public class SparePartCategoryService implements ISparePartCategoryService<Spare
         entity = mapper.toEntityUpdate(request, entity);
 
         if (request.getName() != null) {
-            entity.setName(refactorText(request.getName()));
+            entity.setName(transformText(request.getName()));
         }
 
         if (request.getDescription() != null) {
-            entity.setDescription(refactorText(request.getDescription()));
+            entity.setDescription(transformText(request.getDescription()));
         }
 
         return mapper.toResponse(repo.save(entity));
     }
-    private String refactorText(String value) {
+    private String transformText(String value) {
         if (value == null || value.trim().isEmpty()) {
             return null;
         }
