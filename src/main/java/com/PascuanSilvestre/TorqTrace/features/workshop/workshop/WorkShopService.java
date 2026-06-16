@@ -1,5 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
+import com.PascuanSilvestre.TorqTrace.common.exception.ProhibitedOperationException;
 import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 
@@ -12,14 +14,12 @@ import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopCre
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopDetailedResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopUpdateDTO;
-import com.PascuanSilvestre.TorqTrace.common.exception.DuplicatedNameException;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.mapper.WorkShopMapper;
 
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
 
         boolean exists = repository.existsByName(request.getName());
         if (exists) {
-            throw new DuplicatedNameException("Workshop name already in use");
+            throw new AlreadyExistsException("Workshop name already in use");
         }
         WorkShopEntity entity = mapper.toEntity(request);
         entity.setStatus(true);
@@ -72,7 +72,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
     public WorkShopDetailedResponseDTO getWorkshopDetailsById(Long idWorkshop) {
 
         if (!permissionService.isManagerOrOwner(idWorkshop)) {
-            throw new AccessDeniedException("Only the workshop owner or manager can perform this action");
+            throw new ProhibitedOperationException("Only the workshop owner or manager can perform this action");
         }
 
         WorkShopDetailedResponseDTO response = repository.findById(idWorkshop).map(mapper::toDetailedResponse).
@@ -85,7 +85,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
     public WorkShopResponseDTO update(Long idWorkshop, WorkShopUpdateDTO request) {
 
         if (!permissionService.isOwner(idWorkshop)) {
-            throw new AccessDeniedException("Workshop does'nt exist or only the workshop owner or manager can perform this action");
+            throw new ProhibitedOperationException("Workshop does'nt exist or only the workshop owner or manager can perform this action");
         }
 
         WorkShopEntity entity = repository.findById(idWorkshop)
@@ -104,7 +104,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
                     .orElseThrow(() -> new EntityNotFoundException("workShop was not found for delete"));
 
             if (!permissionService.isOwner(idWorkshop)) {
-                throw new AccessDeniedException("Only the workshop owner can perform this action");
+                throw new ProhibitedOperationException("Only the workshop owner can perform this action");
             }
 
             WorkShopResponseDTO response = mapper.toResponse(entity);
@@ -120,7 +120,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
 
         // Verifica que quien hace la petición sea OWNER
         if (!permissionService.isOwner(request.getIdWorkshop())) {
-            throw new AccessDeniedException(
+            throw new ProhibitedOperationException(
                     "Only the workshop owner can change employee roles");
         }
 
@@ -138,7 +138,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
             throw new EntityNotFoundException("WorkShop not found");
         }
         if (!permissionService.isOwner(idWorkshop)) {
-            throw new AccessDeniedException("Only the workshop owner can perform this action");
+            throw new ProhibitedOperationException("Only the workshop owner can perform this action");
         }
 
         if(!userService.existUser(idEmployee)){
@@ -146,7 +146,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
         }
 
         if (workShopStaffService.existEmployeeWorkshopStaff(idEmployee,idWorkshop)){
-            throw new EntityNotFoundException("This user is already a staff member of this workshop");
+            throw new AlreadyExistsException("This user is already a staff member of this workshop");
         }
 
         WorkshopStaffCreateDTO owner = WorkshopStaffCreateDTO.builder().workshopId(idWorkshop)
@@ -167,7 +167,7 @@ public class WorkShopService implements ICrudServiceComplete<WorkShopCreateDTO, 
             throw new EntityNotFoundException("WorkShop not found");
         }
         if (!permissionService.isOwner(idWorkshop)) {
-            throw new AccessDeniedException("Only the workshop owner can perform this action");
+            throw new ProhibitedOperationException("Only the workshop owner can perform this action");
         }
         if(!userService.existUser(idEmployee)){
             throw new EntityNotFoundException("User not found");

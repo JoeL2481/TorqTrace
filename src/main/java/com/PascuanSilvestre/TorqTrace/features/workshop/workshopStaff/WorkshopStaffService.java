@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.IncoherentDataException;
 import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffResponseDTO;
@@ -48,17 +49,17 @@ public class WorkshopStaffService implements IWorkshopStaffService<WorkshopStaff
         workShopStaffRepository.save(employee);
 
         if (employee.getRole() == StaffRole.OWNER) {
-            throw new IllegalStateException(
+            throw new IncoherentDataException(
                     "The workshop owner role cannot be modified");
         }
 
         if (request.getRole()== StaffRole.OWNER) {
-            throw new IllegalArgumentException(
+            throw new IncoherentDataException(
                     "Owner role cannot be assigned");
         }
 
         if (employee.getRole() == request.getRole()) {
-            throw new IllegalArgumentException(
+            throw new IncoherentDataException(
                     "The employee already has this role");
         }
         employee.setRole(request.getRole());
