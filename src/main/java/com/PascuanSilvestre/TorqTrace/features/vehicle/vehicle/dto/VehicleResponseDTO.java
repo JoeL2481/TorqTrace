@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class VehicleResponseDTO {
 
-    private UUID publicId;
+    private String publicId;
 
     private UUID vehicleBrandId;
     private Long vehicleModelId;

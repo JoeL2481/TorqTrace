@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.auth.authProvider;
 
 import com.PascuanSilvestre.TorqTrace.auth.authProvider.dto.AuthProviderCreateDTO;
 import com.PascuanSilvestre.TorqTrace.auth.authProvider.dto.AuthProviderResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,29 +10,30 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestControllerAdvice
+@RestController
 @RequestMapping("api/authprovider")
 @AllArgsConstructor
-
+@Tag(name = "Authentication - Provider", description = "Auxiliary authentication provider endpoints")
 public class AuthProviderController {
+    private final AuthProviderService authProviderService;
 
-     private final AuthProviderService  authProviderService;
-
-     @PostMapping
+    @PostMapping
     public ResponseEntity<AuthProviderResponseDTO> create(@Valid @RequestBody AuthProviderCreateDTO request) {
-         return ResponseEntity.ok(authProviderService.create(request));
-     }
-     @GetMapping
-    public ResponseEntity<List<AuthProviderResponseDTO>> findAll() {
-         return ResponseEntity.ok(authProviderService.getAll());
-     }
-     @GetMapping("/{id}")
-    public ResponseEntity<AuthProviderResponseDTO> findById(@Valid @PathVariable("id") Long id) {
-         return ResponseEntity.ok(authProviderService.getById(id));
-     }
-     @DeleteMapping("/{id}")
-    public ResponseEntity<AuthProviderResponseDTO> delete(@Valid @PathVariable("id") Long id) {
-         return ResponseEntity.ok(authProviderService.delete(id));
-     }
+        return ResponseEntity.ok(authProviderService.create(request));
+    }
 
+    @GetMapping
+    public ResponseEntity<List<AuthProviderResponseDTO>> findAll() {
+        return ResponseEntity.ok(authProviderService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AuthProviderResponseDTO> findById(@Valid @PathVariable("id") Long id) {
+        return ResponseEntity.ok(authProviderService.getById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<AuthProviderResponseDTO> delete(@Valid @PathVariable("id") Long id) {
+        return ResponseEntity.ok(authProviderService.delete(id));
+    }
 }

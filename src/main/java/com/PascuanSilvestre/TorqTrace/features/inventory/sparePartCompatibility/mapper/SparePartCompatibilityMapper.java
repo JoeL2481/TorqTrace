@@ -1,6 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility.SparePartCompatibilityEntity;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility.dto.SparePartCompatibilityCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility.dto.SparePartCompatibilityResponseDTO;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SparePartCompatibilityMapper implements IMapper<SparePartCompatibilityEntity, SparePartCompatibilityCreateDTO, SparePartCompatibilityResponseDTO> {
+public class SparePartCompatibilityMapper implements ISparePartCompatibilityMapper<SparePartCompatibilityEntity, SparePartCompatibilityCreateDTO, SparePartCompatibilityUpdateDTO, SparePartCompatibilityResponseDTO> {
     private final ModelMapper mapper;
 
     @Override
@@ -27,7 +26,7 @@ public class SparePartCompatibilityMapper implements IMapper<SparePartCompatibil
             dto.setSparePartId(entity.getSparePart().getId());
         }
         if (entity.getVehicle() != null) {
-            dto.setVehicleId(entity.getVehicle().getId());
+            dto.setVehicleId(entity.getVehicle().getPublicId());
         }
         if (entity.getEngine() != null) {
             dto.setEngineId(entity.getEngine().getId());
@@ -39,9 +38,11 @@ public class SparePartCompatibilityMapper implements IMapper<SparePartCompatibil
         return dto;
     }
 
-    public void toEntityUpdate(SparePartCompatibilityUpdateDTO request, SparePartCompatibilityEntity entity) {
+    public SparePartCompatibilityEntity toEntityUpdate(SparePartCompatibilityUpdateDTO request, SparePartCompatibilityEntity entity) {
         if (request.getNotes() != null) {
             entity.setNotes(request.getNotes());
         }
+
+        return entity;
     }
 }

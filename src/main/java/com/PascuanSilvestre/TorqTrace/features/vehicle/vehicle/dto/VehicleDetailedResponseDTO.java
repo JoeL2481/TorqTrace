@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @Builder
@@ -17,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class VehicleDetailedResponseDTO {
 
-    private UUID publicId;
+    private String publicId;
 
     private String vehicleBrandName;
     private String vehicleModelName;

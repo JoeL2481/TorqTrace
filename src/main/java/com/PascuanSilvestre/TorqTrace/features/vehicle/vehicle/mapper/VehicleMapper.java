@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.mapper;
 
+import com.PascuanSilvestre.TorqTrace.common.utils.ShortPublicIdGenerator;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateCompleteDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateDTO;
@@ -7,25 +8,23 @@ import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleDetail
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleResponseDTO;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
-public class VehicleMapper {
+public class VehicleMapper implements IVehicleMapper<VehicleEntity, VehicleCreateDTO, VehicleCreateCompleteDTO, VehicleResponseDTO, VehicleDetailedResponseDTO> {
 
     public VehicleEntity toEntity(VehicleCreateDTO dto) {
         VehicleEntity entity = new VehicleEntity();
 
-        entity.setPublicId(UUID.randomUUID());
+        entity.setPublicId(ShortPublicIdGenerator.generate());
         entity.setVehicleBodyType(dto.getVehicleBodyType());
         entity.setVehicleCategory(dto.getVehicleCategory());
 
         return entity;
     }
 
-    public VehicleEntity toEntity(VehicleCreateCompleteDTO dto) {
+    public VehicleEntity toCompleteEntity(VehicleCreateCompleteDTO dto) {
         VehicleEntity entity = new VehicleEntity();
 
-        entity.setPublicId(UUID.randomUUID());
+        entity.setPublicId(ShortPublicIdGenerator.generate());
         entity.setVehicleBodyType(dto.getVehicleBodyType());
         entity.setVehicleCategory(dto.getVehicleCategory());
 

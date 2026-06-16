@@ -1,12 +1,12 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.WorkShopStaffEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.WorkShopStockEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.WorkshopClientEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.WorkshopStaffEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.WorkshopStockEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -31,9 +31,10 @@ public class WorkShopEntity  extends AuditableBase {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "address", column = @Column(name = "workshop_address")),
+            @AttributeOverride(name = "street", column = @Column(name = "workshop_street")),
             @AttributeOverride(name = "city", column = @Column(name = "workshop_city")),
             @AttributeOverride(name = "state", column = @Column(name = "workshop_state")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "workshop_zip_code")),
             @AttributeOverride(name = "country", column = @Column(name = "workshop_country"))
     })
     private AddressInfo workshopAddress;
@@ -46,13 +47,13 @@ public class WorkShopEntity  extends AuditableBase {
     private ContactInfo workshopContactInfo;
 
     @OneToMany(mappedBy = "workshop")
-    private List<WorkShopStaffEntity> workers;
+    private List<WorkshopStaffEntity> workers;
 
     @OneToMany(mappedBy = "workshop")
-    private List<WorkShopClientEntity> clients;
+    private List<WorkshopClientEntity> clients;
 
     @OneToMany(mappedBy = "workshop", fetch = FetchType.LAZY)
-    private List<WorkShopStockEntity> stockItems;
+    private List<WorkshopStockEntity> stockItems;
 
     @OneToMany(mappedBy = "workshop", fetch = FetchType.LAZY)
     private List<WorkOrderEntity> orderItems;

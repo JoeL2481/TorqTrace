@@ -3,7 +3,6 @@ package com.PascuanSilvestre.TorqTrace.features.user.user.mapper;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
 import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
-import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.user.user.dto.UserDetailedResponseDTO;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserMapper implements IMapper<UserEntity, UserCreateDTO, UserResponseDTO> {
+public class UserMapper implements IUserMapper<UserEntity, UserCreateDTO, UserUpdateDTO, UserResponseDTO, UserDetailedResponseDTO> {
     private final ModelMapper mapper;
     @Override
     public UserEntity toEntity(UserCreateDTO request) {
@@ -31,15 +30,12 @@ public class UserMapper implements IMapper<UserEntity, UserCreateDTO, UserRespon
     }
 
 
-    public void toEntityUpdate(UserUpdateDTO request, UserEntity entity) {
+    public UserEntity toEntityUpdate(UserUpdateDTO request, UserEntity entity) {
         if (request.getFirstName() != null) {
             entity.setFirstName(request.getFirstName());
         }
         if (request.getLastName() != null) {
             entity.setLastName(request.getLastName());
-        }
-        if (request.getPassword() != null) {
-            entity.setPasswordHash(request.getPassword());
         }
         if (request.getAvatarUrl() != null) {
             entity.setAvatarUrl(request.getAvatarUrl());
@@ -50,6 +46,8 @@ public class UserMapper implements IMapper<UserEntity, UserCreateDTO, UserRespon
         if (request.getUserContactInfo() != null) {
             entity.setUserContactInfo(mapper.map(request.getUserContactInfo(), ContactInfo.class));
         }
+
+        return entity;
     }
 
     public UserDetailedResponseDTO toDetailedResponse(UserEntity entity) {

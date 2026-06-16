@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEq
 
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.dto.VehicleEquipmentLevelRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.dto.VehicleEquipmentLevelResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/vehicle-equipment-level")
 @RequiredArgsConstructor
+@Tag(name = "Vehicle Catalog - Equipment Level", description = "Auxiliary vehicle equipment level catalog endpoints")
 public class VehicleEquipmentLevelController {
     private final VehicleEquipmentLevelService service;
 

@@ -12,14 +12,5 @@ public interface WorkShopRepository extends JpaRepositoryImplementation<WorkShop
     boolean existsById(Long id);
     boolean existsByName(String name);
 
-    @Query("""
-    SELECT wo
-    FROM WorkOrderEntity wo
-    LEFT JOIN FETCH wo.workshop
-    LEFT JOIN FETCH wo.client
-    LEFT JOIN FETCH wo.vehicle
-    WHERE wo.id = :id
-""")
-    Optional<WorkShopEntity> findDetailedById(Long id);
 
 }

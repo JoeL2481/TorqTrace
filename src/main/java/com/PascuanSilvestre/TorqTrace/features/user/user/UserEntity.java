@@ -1,9 +1,9 @@
 package com.PascuanSilvestre.TorqTrace.features.user.user;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
-import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.auth.userProvider.UserProviderEntity;
+import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import jakarta.persistence.*;
@@ -35,8 +35,7 @@ public class UserEntity  extends AuditableBase {
     private String firstName;
     @Column(name = "last_name", nullable = false, length = 100)
     private String lastName;
-    @Column(name = "password_hash", length = 255)
-    private String passwordHash;
+
     @Column(name="avatar_url", length = 255)
     private String avatarUrl;
 
@@ -46,9 +45,10 @@ public class UserEntity  extends AuditableBase {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "address", column = @Column(name = "user_address")),
+            @AttributeOverride(name = "street", column = @Column(name = "user_street")),
             @AttributeOverride(name = "city", column = @Column(name = "user_city")),
             @AttributeOverride(name = "state", column = @Column(name = "user_state")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "user_zip_code")),
             @AttributeOverride(name = "country", column = @Column(name = "user_country"))
     })
     private AddressInfo userAddress;
@@ -63,10 +63,7 @@ public class UserEntity  extends AuditableBase {
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<UserVehicleEntity> userVehicles;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-    List<UserProviderEntity> providers;
-
-
-
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<UserProviderEntity> providers;
 
 }

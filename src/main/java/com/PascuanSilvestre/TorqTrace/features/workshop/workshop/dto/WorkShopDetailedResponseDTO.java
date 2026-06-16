@@ -4,9 +4,9 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto;
 import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
 import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto.WorkShopClientResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto.WorkShopStockResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.dto.WorkshopClientResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockResponseDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -37,11 +37,11 @@ public class WorkShopDetailedResponseDTO {
 
     // Relaciones
 
-    private List<WorkShopStaffResponseDTO> workers;
+    private List<WorkshopStaffResponseDTO> workers;
 
-    private List<WorkShopClientResponseDTO> clients;
+    private List<WorkshopClientResponseDTO> clients;
 
-    private List<WorkShopStockResponseDTO> stockItems;
+    private List<WorkshopStockResponseDTO> stockItems;
 
     private List<WorkOrderResponseDTO> orderItems;
 }

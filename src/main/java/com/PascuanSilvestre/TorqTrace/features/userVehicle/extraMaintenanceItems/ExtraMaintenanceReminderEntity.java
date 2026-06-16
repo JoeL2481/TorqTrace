@@ -1,12 +1,20 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.extraMaintenanceItems;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.ExtraMaintenanceReminderType;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "extra_maintenance_reminder")
+@Getter
+@Setter
+@NoArgsConstructor
+@SuperBuilder
 public class ExtraMaintenanceReminderEntity  extends AuditableBase {
 
 

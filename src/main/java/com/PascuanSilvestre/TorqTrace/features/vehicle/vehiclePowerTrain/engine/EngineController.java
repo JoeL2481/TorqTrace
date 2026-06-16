@@ -3,6 +3,7 @@ package com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.dto.EngineCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.dto.EngineResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.engine.dto.EngineUpdateDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/engine")
 @RequiredArgsConstructor
+@Tag(name = "Vehicle Powertrain - Engine", description = "Auxiliary engine catalog endpoints")
 public class EngineController {
 
     private final EngineService service;

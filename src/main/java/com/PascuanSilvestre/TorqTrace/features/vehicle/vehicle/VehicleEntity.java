@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleBodyType;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.enums.VehicleCategory;
@@ -17,11 +17,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name= "vehicle")
@@ -32,9 +29,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class VehicleEntity extends AuditableBase {
 
-    @JdbcTypeCode(SqlTypes.VARCHAR)
-    @Column(name = "public_id", nullable = false, unique = true, updatable = false, length = 36)
-    private UUID publicId;
+    @Column(name = "public_id", nullable = false, unique = true, updatable = false, length = 16)
+    private String publicId;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name="vehicle_brand_id", nullable = false)
@@ -74,7 +70,7 @@ public class VehicleEntity extends AuditableBase {
     private VehicleCategory vehicleCategory;
 
 
-    @OneToMany(mappedBy = "vehicleConfiguration",fetch= FetchType.LAZY)
+    @OneToMany(mappedBy = "particularVehicle",fetch= FetchType.LAZY)
     private List<UserVehicleEntity> userVehicles;
 
 }

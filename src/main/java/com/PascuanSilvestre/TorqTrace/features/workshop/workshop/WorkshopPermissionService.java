@@ -1,8 +1,8 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
-import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.WorkShopStaffRepository;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.enums.StaffRole;
+import com.PascuanSilvestre.TorqTrace.config.SecurityUtils;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.WorkshopStaffRepository;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.enums.StaffRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WorkshopPermissionService {
 
-    private final WorkShopStaffRepository repository;
+    private final WorkshopStaffRepository repository;
     private final SecurityUtils securityUtils;
 
     public boolean isOwner(Long workshopId) {
@@ -34,4 +34,18 @@ public class WorkshopPermissionService {
                                 staff.getRole() == StaffRole.MANAGER)
                 .orElse(false);
     }
+
+    public boolean isManagerOrOwnerOrMechanic(Long workshopId) {
+
+        Long userId = securityUtils.getCurrentUserId();
+
+        return repository
+                .findByUserIdAndWorkshopId(userId, workshopId)
+                .map(staff ->
+                        staff.getRole() == StaffRole.OWNER ||
+                                staff.getRole() == StaffRole.MANAGER ||staff.getRole() == StaffRole.MECHANIC)
+                .orElse(false);
+    }
+
+
 }

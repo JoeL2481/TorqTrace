@@ -1,6 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.WorkOrderItemEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto.WorkOrderItemCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto.WorkOrderItemResponseDTO;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class WorkOrderItemMapper implements IMapper<WorkOrderItemEntity, WorkOrderItemCreateDTO, WorkOrderItemResponseDTO> {
+public class WorkOrderItemMapper implements IWorkOrderItemMapper<WorkOrderItemEntity, WorkOrderItemCreateDTO, WorkOrderItemResponseDTO> {
 
     private final ModelMapper modelMapper;
     @Override

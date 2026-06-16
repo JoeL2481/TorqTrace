@@ -1,5 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem;
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
 import jakarta.persistence.*;
@@ -29,9 +29,8 @@ public class WorkOrderItemEntity  extends AuditableBase {
     private Integer quantityRequested;
 
     @Column(name = "unit_price_at_time")
-    private Double unitPriceAtTime;
-    @Column(name = "price_at_execution")
-    private Double priceAtExecution;
+    private Double unitPrice;
+
     @Column(name = "subtotal")
     private Double subtotal;
 

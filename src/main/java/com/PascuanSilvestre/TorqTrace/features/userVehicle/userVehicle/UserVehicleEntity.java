@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.extraMaintenanceItems.ExtraMaintenanceReminderEntity;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.MaintenanceEntity;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
@@ -16,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "user_vehicle")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -23,6 +24,8 @@ import java.util.List;
 
 public class UserVehicleEntity extends AuditableBase {
 
+    @Column(name = "public_id", nullable = false, unique = true, updatable = false, length = 16)
+    private String publicId;
 
     @Column(name = "licence_plate", length = 20, nullable = false, unique = true)
     private String licencePlate;
@@ -48,6 +51,6 @@ public class UserVehicleEntity extends AuditableBase {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "vehicle_configuration_id", nullable = false)
-    private VehicleEntity vehicleConfiguration;
+    private VehicleEntity particularVehicle;
 
 }

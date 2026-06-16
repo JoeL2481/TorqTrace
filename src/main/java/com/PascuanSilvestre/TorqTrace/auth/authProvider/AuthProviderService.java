@@ -17,14 +17,10 @@ public class AuthProviderService implements ICrudService<AuthProviderCreateDTO, 
 
     private final AuthProviderRepository authRepository;
     private final AuthProviderMapper authMapper;
+
     @Override
     public AuthProviderResponseDTO create(AuthProviderCreateDTO request) {
         AuthProviderEntity authProviderEntity = authMapper.toEntity(request);
-
-        authProviderEntity.setName(authProviderEntity.getName());
-        authProviderEntity.setDisplayName(authProviderEntity.getDisplayName());
-
-        authProviderEntity.setUsers(authProviderEntity.getUsers());
 
         AuthProviderEntity savedEntity = authRepository.save(authProviderEntity);
         return authMapper.toResponse(savedEntity);

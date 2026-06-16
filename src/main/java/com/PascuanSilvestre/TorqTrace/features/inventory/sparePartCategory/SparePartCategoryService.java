@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.dto.SparePartCategoryCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.dto.SparePartCategoryResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.dto.SparePartCategoryUpdateDTO;
@@ -13,27 +13,35 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SparePartCategoryService implements ICrudServiceComplete<SparePartCategoryCreateDTO, SparePartCategoryUpdateDTO, SparePartCategoryResponseDTO, Long> {
+public class SparePartCategoryService implements ISparePartCategoryService<SparePartCategoryCreateDTO, SparePartCategoryUpdateDTO, SparePartCategoryResponseDTO, Long> {
     private final SparePartCategoryRepository repo;
     private final SparePartCategoryMapper mapper;
 
     @Override
     public SparePartCategoryResponseDTO create(SparePartCategoryCreateDTO request) {
-        String normalizedName = normalizeWords(request.getName());
-        String normalizedDescription = normalizeWords(request.getDescription());
+        String name = transformText(request.getName());
+        String description = transformText(request.getDescription());
 
-        repo.findByNameIgnoreCaseAndDescriptionIgnoreCase(normalizedName, normalizedDescription)
-                .ifPresent(existing -> {
-                    throw new IllegalArgumentException("Spare part category already exists");
-                });
+        if (repo.findByNameIgnoreCaseAndDescriptionIgnoreCase(name, description).isPresent()) {
+            throw new AlreadyExistsException("Spare part category already exists");
+        }
 
         SparePartCategoryEntity entity = mapper.toEntity(request);
-        entity.setName(normalizedName);
-        entity.setDescription(normalizedDescription);
+        entity.setName(name);
+        entity.setDescription(description);
 
         return mapper.toResponse(repo.save(entity));
     }
 
+    private SparePartCategoryEntity getEntityById(Long id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Spare part category not found for id: " + id));
+    }
+
+    @Override
+    public SparePartCategoryResponseDTO getById(Long id) {
+        return mapper.toResponse(getEntityById(id));
+    }
     @Override
     public List<SparePartCategoryResponseDTO> getAll() {
         return repo.findAll()
@@ -42,78 +50,43 @@ public class SparePartCategoryService implements ICrudServiceComplete<SparePartC
                 .toList();
     }
 
-    @Override
-    public SparePartCategoryResponseDTO getById(Long id) {
-        return mapper.toResponse(getEntityById(id));
-    }
 
     @Override
     public SparePartCategoryResponseDTO update(Long id, SparePartCategoryUpdateDTO request) {
         SparePartCategoryEntity entity = getEntityById(id);
-        mapper.toEntityUpdate(request, entity);
+        entity = mapper.toEntityUpdate(request, entity);
 
         if (request.getName() != null) {
-            entity.setName(normalizeWords(request.getName()));
+            entity.setName(transformText(request.getName()));
         }
 
         if (request.getDescription() != null) {
-            entity.setDescription(normalizeWords(request.getDescription()));
+            entity.setDescription(transformText(request.getDescription()));
         }
 
         return mapper.toResponse(repo.save(entity));
     }
-
-    @Override
-    public SparePartCategoryResponseDTO delete(Long id) {
-        SparePartCategoryEntity entity = getEntityById(id);
-        SparePartCategoryResponseDTO dto = mapper.toResponse(entity);
-        repo.delete(entity);
-        return dto;
-    }
-
-    private SparePartCategoryEntity getEntityById(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Spare part category not found for id: " + id));
-    }
-
-    public List<SparePartCategoryResponseDTO> search(String query) {
-        String normalizedQuery = query.trim().toLowerCase();
-
-        return repo.findAll()
-                .stream()
-                .filter(category -> {
-                    String name = category.getName() == null ? "" : category.getName().toLowerCase();
-                    String description = category.getDescription() == null ? "" : category.getDescription().toLowerCase();
-                    String combined = (name + " " + description).trim();
-                    String reverseCombined = (description + " " + name).trim();
-
-                    return combined.contains(normalizedQuery) || reverseCombined.contains(normalizedQuery);
-                })
-                .map(mapper::toResponse)
-                .toList();
-    }
-
-    private String normalizeWords(String value) {
-        if (value == null) {
+    private String transformText(String value) {
+        if (value == null || value.trim().isEmpty()) {
             return null;
         }
 
-        String trimmed = value.trim();
-        if (trimmed.isEmpty()) {
-            return null;
-        }
-
-        String[] words = trimmed.toLowerCase().split("\\s+");
-        StringBuilder result = new StringBuilder();
+        String[] words = value.trim().toLowerCase().split("\\s+");
+        String result = "";
 
         for (String word : words) {
-            if (!result.isEmpty()) {
-                result.append(" ");
-            }
-            result.append(Character.toUpperCase(word.charAt(0)))
-                    .append(word.substring(1));
+            result += Character.toUpperCase(word.charAt(0)) + word.substring(1) + " ";
         }
 
-        return result.toString();
+        return result.trim();
     }
+
+    @Override
+    public void delete(Long id) {
+        SparePartCategoryEntity entity = getEntityById(id);
+        repo.delete(entity);
+    }
+
+
+
 }

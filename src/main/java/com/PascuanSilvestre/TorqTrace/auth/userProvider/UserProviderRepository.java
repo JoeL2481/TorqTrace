@@ -8,9 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserProviderRepository extends JpaRepository<UserProviderEntity, Long> {
-    Optional<UserProviderEntity>
-    findByProviderAndExternalId(
-            AuthProviderEntity provider,
-            String externalId
-    );
+
+    Optional<UserProviderEntity> findByProviderAndExternalId(AuthProviderEntity provider, String externalId);
 }

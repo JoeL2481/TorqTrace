@@ -1,13 +1,12 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.mapper.WorkOrderMapper;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto.WorkShopClientResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.mapper.WorkShopClientMapper;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.dto.WorkShopStaffResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStaff.mapper.WorkShopStaffMapper;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.dto.WorkShopStockResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopStock.mapper.WorkShopStockMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.dto.WorkshopClientResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.mapper.WorkshopClientMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.mapper.WorkShopStaffMapper;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.mapper.WorkshopStockMapper;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.dto.WorkShopDetailedResponseDTO;
@@ -19,12 +18,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class WorkShopMapper implements IMapper<WorkShopEntity, WorkShopCreateDTO, WorkShopResponseDTO> {
+public class WorkShopMapper implements IWorkShopMapper<WorkShopEntity, WorkShopCreateDTO, WorkShopUpdateDTO, WorkShopResponseDTO, WorkShopDetailedResponseDTO> {
 
     private final ModelMapper modelMapper;
     private final WorkShopStaffMapper staffMapper;
-    private final WorkShopClientMapper clientMapper;
-    private final WorkShopStockMapper stockMapper;
+    private final WorkshopClientMapper clientMapper;
+    private final WorkshopStockMapper stockMapper;
     private final WorkOrderMapper workOrderMapper;
     @Override
     public WorkShopEntity toEntity(WorkShopCreateDTO request) {
@@ -42,17 +41,17 @@ public class WorkShopMapper implements IMapper<WorkShopEntity, WorkShopCreateDTO
                 modelMapper.map(entity, WorkShopDetailedResponseDTO.class);
         dto.setWorkers(
                 entity.getWorkers().stream()
-                        .map(worker -> modelMapper.map(worker, WorkShopStaffResponseDTO.class))
+                        .map(worker -> modelMapper.map(worker, WorkshopStaffResponseDTO.class))
                         .toList()
         );
         dto.setClients(
                 entity.getClients().stream()
-                        .map(client -> modelMapper.map(client, WorkShopClientResponseDTO.class))
+                        .map(client -> modelMapper.map(client, WorkshopClientResponseDTO.class))
                         .toList()
         );
         dto.setStockItems(
                 entity.getStockItems().stream()
-                        .map(stock -> modelMapper.map(stock, WorkShopStockResponseDTO.class))
+                        .map(stock -> modelMapper.map(stock, WorkshopStockResponseDTO.class))
                         .toList()
         );
         return dto;

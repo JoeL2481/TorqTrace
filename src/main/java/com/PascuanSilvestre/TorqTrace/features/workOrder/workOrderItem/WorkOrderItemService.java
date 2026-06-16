@@ -1,6 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.ICrudService;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto.WorkOrderItemCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto.WorkOrderItemResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.mapper.WorkOrderItemMapper;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class WorkOrderItemService implements ICrudService<WorkOrderItemCreateDTO, WorkOrderItemResponseDTO,Long> {
+public class WorkOrderItemService implements IWorkOrderItemService<WorkOrderItemCreateDTO, WorkOrderItemResponseDTO, Long> {
 
     private final WorkOrderItemRepository workOrderItemRepository;
     private final WorkOrderItemMapper workOrderItemMapper;

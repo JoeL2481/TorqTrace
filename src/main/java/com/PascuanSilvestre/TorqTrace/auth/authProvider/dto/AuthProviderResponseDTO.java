@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.auth.authProvider.dto;
 
-import com.PascuanSilvestre.TorqTrace.auth.userProvider.UserProviderEntity;
+import com.PascuanSilvestre.TorqTrace.auth.userProvider.dto.UserProviderResponseDTO;
 import lombok.*;
 
 
@@ -17,7 +17,7 @@ public class AuthProviderResponseDTO {
     private Long id;
     private String name;
     private String displayName;
-    List<UserProviderEntity> users;
+    List<UserProviderResponseDTO> users;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
