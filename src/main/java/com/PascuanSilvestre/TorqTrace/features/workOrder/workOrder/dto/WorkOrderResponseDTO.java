@@ -3,7 +3,7 @@ package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.enums.WorkOrderStatus;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.dto.WorkOrderItemResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderType.dto.WorkOrderTypeResponseDTO;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.dto.WorkShopClientResponseDTO;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.dto.WorkshopClientResponseDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ public class WorkOrderResponseDTO {
 
     private Long id;
 
-    private WorkShopClientResponseDTO client;
+    private WorkshopClientResponseDTO client;
 
     //private VehicleResponseDTO vehicle;
 

@@ -88,4 +88,11 @@ public class SparePartService implements ISparePartService<SparePartCreateDTO, S
         response.setCompatibilities(compatibleList);
         return response;
     }
+
+    public boolean existSparePart(Long id) {
+        if (!repo.existsById(id)){
+            throw new EntityNotFoundException("SparePart not found");
+        }
+        return true;
+    }
 }

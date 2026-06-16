@@ -6,7 +6,7 @@ import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.VehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.enums.WorkOrderStatus;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderItem.WorkOrderItemEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrderType.WorkOrderTypeEntity;
-import com.PascuanSilvestre.TorqTrace.features.workshop.workShopClient.WorkShopClientEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.WorkshopClientEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,7 +31,7 @@ public class WorkOrderEntity  extends AuditableBase {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="client_id",nullable = false)
-    private WorkShopClientEntity client;
+    private WorkshopClientEntity client;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="vehicle_id",nullable = false)
