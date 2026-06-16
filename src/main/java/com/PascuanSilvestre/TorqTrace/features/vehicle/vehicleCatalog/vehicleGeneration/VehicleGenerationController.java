@@ -4,6 +4,7 @@ import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBra
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.dto.VehicleBrandResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.dto.VehicleGenerationRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleGeneration.dto.VehicleGenerationResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/vehicle-generation")
 @RequiredArgsConstructor
+@Tag(name = "Vehicle Catalog - Generation", description = "Auxiliary vehicle generation catalog endpoints")
 public class VehicleGenerationController {
     private final VehicleGenerationService vehicleGenerationService;
 

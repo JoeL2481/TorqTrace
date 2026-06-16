@@ -3,6 +3,7 @@ package com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transm
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission.dto.TransmissionCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission.dto.TransmissionResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehiclePowerTrain.transmission.dto.TransmissionUpdateDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/transmission")
 @RequiredArgsConstructor
+@Tag(name = "Vehicle Powertrain - Transmission", description = "Auxiliary transmission catalog endpoints")
 public class TransmissionController {
 
     private final TransmissionService service;

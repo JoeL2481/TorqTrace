@@ -3,6 +3,7 @@ package com.PascuanSilvestre.TorqTrace.features.inventory.sparePart;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartUpdateDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import java.util.List;
 @RequestMapping("api/spare-part")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+@Tag(name = "Spare Part", description = "Inventory spare part management endpoints")
 public class SparePartController {
     private final ISparePartService<SparePartCreateDTO, SparePartUpdateDTO, SparePartResponseDTO, Long> service;
 

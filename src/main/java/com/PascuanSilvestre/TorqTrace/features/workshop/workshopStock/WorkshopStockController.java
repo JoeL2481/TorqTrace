@@ -3,6 +3,7 @@ package com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockUpdateDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/workshopStock")
 @AllArgsConstructor
+@Tag(name = "Workshop Stock", description = "Workshop inventory stock endpoints")
 public class WorkshopStockController {
 
     private final WorkshopStockService workShopStockService;

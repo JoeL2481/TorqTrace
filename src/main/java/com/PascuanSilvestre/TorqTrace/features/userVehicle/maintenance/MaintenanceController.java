@@ -3,6 +3,7 @@ package com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto.MaintenanceCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto.MaintenanceDTO;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto.MaintenanceUpdateDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/user-vehicle")
 @RequiredArgsConstructor
+@Tag(name = "Maintenance", description = "Vehicle maintenance history endpoints")
 public class MaintenanceController {
 
     private final MaintenanceService service;

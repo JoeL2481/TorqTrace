@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVa
 
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.dto.VehicleVariantRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.dto.VehicleVariantResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/vehicle-variant")
+@Tag(name = "Vehicle Catalog - Variant", description = "Auxiliary vehicle variant catalog endpoints")
 public class VehicleVariantController {
 
     private final VehicleVariantService service;
