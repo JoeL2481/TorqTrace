@@ -1,7 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
 import com.PascuanSilvestre.TorqTrace.common.utils.AddressInfo;
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.WorkshopClientEntity;

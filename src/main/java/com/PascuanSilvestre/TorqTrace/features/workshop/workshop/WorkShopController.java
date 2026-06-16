@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,10 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("api/workshop")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
 @Tag(name = "Workshop", description = "Workshop management endpoints")
 public class WorkShopController {
 
-    private final WorkShopService service;
+    private final IWorkShopService<WorkShopCreateDTO, WorkShopUpdateDTO, WorkShopResponseDTO, Long> service;
 
     @PostMapping
     public ResponseEntity<WorkShopResponseDTO> create(@Valid @RequestBody WorkShopCreateDTO request) {

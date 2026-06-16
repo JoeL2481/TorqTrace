@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +14,10 @@ import java.util.List;
 @RestController
 @RequestMapping("api/workshopclient")
 @AllArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
 @Tag(name = "Workshop Client", description = "Workshop client endpoints")
 public class WorkshopClientController {
-    private final WorkshopClientService workShopClientService;
+    private final IWorkshopClientService<?, WorkshopClientUpdateDTO, WorkshopClientResponseDTO, Long> workShopClientService;
 
     @GetMapping("/workshops/{workshopId}/clients")
     public ResponseEntity<List<WorkshopClientResponseDTO>>findAllByWorkshop(@PathVariable("workshopId") Long id){

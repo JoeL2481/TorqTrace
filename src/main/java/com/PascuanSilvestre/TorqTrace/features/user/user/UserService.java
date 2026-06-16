@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.user.user;
 
-import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
+import com.PascuanSilvestre.TorqTrace.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsEntity;
 import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsRepository;
 import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleRepository;

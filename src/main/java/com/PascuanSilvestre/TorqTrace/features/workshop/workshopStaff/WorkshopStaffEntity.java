@@ -1,7 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff;
 
 
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.enums.StaffRole;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;

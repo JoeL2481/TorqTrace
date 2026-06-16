@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.auth.config;
+package com.PascuanSilvestre.TorqTrace.config;
 
 import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleEntity;
 import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleRepository;
@@ -30,9 +30,9 @@ public class RoleInitializer implements CommandLineRunner {
                     .build();
 
             roleRepository.save(roleEntity);
-            System.out.println("Rol creado: " + role);
+            System.out.println("Role created: " + role);
         } else {
-            System.out.println("El rol ya existe: " + role);
+            System.out.println("Role already exist: " + role);
         }
         }
 }

@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshop;
 
-import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
+import com.PascuanSilvestre.TorqTrace.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.WorkshopStaffRepository;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.enums.StaffRole;
 import lombok.RequiredArgsConstructor;

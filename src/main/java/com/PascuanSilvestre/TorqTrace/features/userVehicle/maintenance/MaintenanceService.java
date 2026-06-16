@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance;
 
-import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
+import com.PascuanSilvestre.TorqTrace.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.Roles;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto.MaintenanceCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto.MaintenanceDTO;
@@ -14,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -48,6 +49,7 @@ public class MaintenanceService implements IMaintenanceService<MaintenanceCreate
         if (canEditMaintenance()) {
             return repository.findAll()
                     .stream()
+                    .sorted(Comparator.comparing(MaintenanceEntity::getCreatedAt).reversed())
                     .map(mapper::toResponse)
                     .toList();
         }

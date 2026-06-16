@@ -1,6 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.WorkshopStockEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockResponseDTO;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class WorkshopStockMapper implements IMapper<WorkshopStockEntity, WorkshopStockCreateDTO, WorkshopStockResponseDTO> {
+public class WorkshopStockMapper implements IWorkshopStockMapper<WorkshopStockEntity, WorkshopStockCreateDTO, WorkshopStockUpdateDTO, WorkshopStockResponseDTO> {
 
     @Autowired
     private final ModelMapper modelMapper;

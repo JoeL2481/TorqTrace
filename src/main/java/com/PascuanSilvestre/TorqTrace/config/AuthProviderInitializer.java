@@ -1,4 +1,4 @@
-package com.PascuanSilvestre.TorqTrace.auth.config;
+package com.PascuanSilvestre.TorqTrace.config;
 
 import com.PascuanSilvestre.TorqTrace.auth.authProvider.AuthProviderEntity;
 import com.PascuanSilvestre.TorqTrace.auth.authProvider.AuthProviderRepository;

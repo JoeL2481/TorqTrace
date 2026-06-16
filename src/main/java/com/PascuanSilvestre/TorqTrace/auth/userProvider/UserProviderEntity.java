@@ -1,7 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.auth.userProvider;
 
 import com.PascuanSilvestre.TorqTrace.auth.authProvider.AuthProviderEntity;
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -2,7 +2,7 @@ package com.PascuanSilvestre.TorqTrace.auth.authProvider;
 
 import com.PascuanSilvestre.TorqTrace.auth.authProvider.enums.EAuthProviders;
 import com.PascuanSilvestre.TorqTrace.auth.userProvider.UserProviderEntity;
-import com.PascuanSilvestre.TorqTrace.common.utils.AuditableBase;
+import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

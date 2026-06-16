@@ -1,6 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle;
 
-import com.PascuanSilvestre.TorqTrace.auth.config.SecurityUtils;
+import com.PascuanSilvestre.TorqTrace.config.SecurityUtils;
 import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.common.exception.IncoherentDataException;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.extraMaintenanceItems.ExtraMaintenanceReminderRepository;

@@ -1,6 +1,5 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.mapper;
 
-import com.PascuanSilvestre.TorqTrace.common.utils.IMapper;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.WorkshopClientEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.dto.WorkshopClientCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.dto.WorkshopClientResponseDTO;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class WorkshopClientMapper implements IMapper<WorkshopClientEntity, WorkshopClientCreateDTO, WorkshopClientResponseDTO> {
+public class WorkshopClientMapper implements IWorkshopClientMapper<WorkshopClientEntity, WorkshopClientCreateDTO, WorkshopClientUpdateDTO, WorkshopClientResponseDTO> {
 
     private final ModelMapper modelMapper;
 

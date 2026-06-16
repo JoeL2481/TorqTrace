@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.IncoherentDataException;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudServiceComplete;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartService;
@@ -65,7 +66,7 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
                 WorkshopStockResponseDTO stock = workshopStockService.findWorkshopStockByWorkShopAndSparePart(request.getWorkshopId(), itemDTO.getSparePartId());
 
                 if (stock.getStockQuantity() < itemDTO.getQuantityRequested()) {
-                    throw new IllegalArgumentException("Not enough stock for spare part: " + sparePart.getName());
+                    throw new IncoherentDataException("Not enough stock for spare part: " + sparePart.getName());
                 }
 
                 double unitPrice = stock.getUnitprice();
@@ -105,7 +106,12 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
 
         MaintenanceCreateDTO maintenanceCreateDTO =  MaintenanceCreateDTO.builder().
                 workOrderId(workOrder.getId()).
-                description(request.getDescription()).build();
+                maintenanceType(request.getMaintenanceType()).
+                description(request.getDescription()).
+                serviceKm(request.getServiceKm()).
+                nextServiceKm(request.getNextServiceKm()).
+                nextServiceDate(request.getNextServiceDate()).
+                build();
         maintenanceService.create(workOrder.getUserVehicle().getPublicId(),maintenanceCreateDTO);
         return workOrderMapper.toResponse(workOrder);
     }
