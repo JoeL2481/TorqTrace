@@ -1,6 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder;
 
 import com.PascuanSilvestre.TorqTrace.common.exception.IncoherentDataException;
+import com.PascuanSilvestre.TorqTrace.common.exception.ProhibitedOperationException;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartService;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.MaintenanceService;
@@ -51,7 +52,9 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
     @Override
     public WorkOrderResponseDTO create(WorkOrderCreateDTO request) {
 
-        workshopPermissionService.isManagerOrOwnerOrMechanic(request.getWorkshopId());
+        if(!workshopPermissionService.isManagerOrOwnerOrMechanic(request.getWorkshopId())){
+            throw new ProhibitedOperationException("Workshop does'nt exist or only the workshop owner or manager can perform this action");
+        }
         workShopService.existWorkshop(request.getWorkshopId());
         userVehicleService.existByUserVehiclePublicId(request.getUserVehicleId());
 
@@ -124,9 +127,16 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
     }
 
     public WorkOrderResponseDTO completeWorkOrder(Long workOrderId, CompleteWorkOrderDTO request){
-        workshopPermissionService.isManagerOrOwnerOrMechanic(workOrderId);
+
+
+
+
         WorkOrderEntity workOrder = workOrderRepository.findById(workOrderId).
                 orElseThrow(()->new EntityNotFoundException("Work Order Not Found"));
+
+        if(!workshopPermissionService.isManagerOrOwnerOrMechanic(workOrder.getWorkshop().getId())){
+            throw new ProhibitedOperationException("Workshop does'nt exist or only the workshop owner or manager can perform this action");
+        }
 
         MaintenanceCreateDTO maintenanceCreateDTO =  MaintenanceCreateDTO.builder().
                 workOrderId(workOrder.getId()).
@@ -148,7 +158,9 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
     }
 
     public List<WorkOrderResponseDTO> getAllByWorkshop(Long workshopId) {
-        workshopPermissionService.isManagerOrOwnerOrMechanic(workshopId);
+        if(!workshopPermissionService.isManagerOrOwnerOrMechanic(workshopId)){
+            throw new ProhibitedOperationException("Workshop does'nt exist or only the workshop owner or manager can perform this action");
+        }
         return workOrderRepository.findByWorkshopIdOrderByCreatedAtDesc(workshopId).stream().
                 map(workOrderMapper::toResponse)
                 .sorted()
@@ -163,7 +175,9 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
     }
 
     public WorkOrderResponseDTO getByIdforWorkshop(Long id, Long workshopId) {
-        workshopPermissionService.isManagerOrOwnerOrMechanic(workshopId);
+        if(!workshopPermissionService.isManagerOrOwnerOrMechanic(workshopId)){
+            throw new ProhibitedOperationException("Workshop does'nt exist or only the workshop owner or manager can perform this action");
+        }
         return workOrderRepository.findByIdAndWorkshopId(id,workshopId).
                 map(workOrderMapper::toResponse).
                 orElseThrow(() -> new EntityNotFoundException("workOrder was not found"));
@@ -173,7 +187,9 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
     public WorkOrderResponseDTO update(Long id, WorkOrderUpdateDTO request) {
         WorkOrderEntity workOrder = workOrderRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("workOrder was not found"));
-        workshopPermissionService.isManagerOrOwnerOrMechanic(workOrder.getWorkshop().getId());
+        if(!workshopPermissionService.isManagerOrOwnerOrMechanic(workOrder.getWorkshop().getId())){
+            throw new ProhibitedOperationException("Workshop does'nt exist or only the workshop owner or manager can perform this action");
+        }
         workOrderMapper.toEntityUpdate(request,workOrder);
         return workOrderMapper.toResponse(workOrderRepository.save(workOrder));
     }
@@ -183,7 +199,9 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
         
         WorkOrderEntity workOrder = workOrderRepository.findById(id).
                 orElseThrow(() -> new EntityNotFoundException("workOrder was not found"));
-        workshopPermissionService.isManagerOrOwnerOrMechanic(workOrder.getWorkshop().getId());
+        if(!workshopPermissionService.isManagerOrOwnerOrMechanic(workOrder.getWorkshop().getId())){
+            throw new ProhibitedOperationException("Workshop does'nt exist or only the workshop owner or manager can perform this action");
+        }
         WorkOrderResponseDTO response =  workOrderMapper.toResponse(workOrder);
         workOrderRepository.delete(workOrder);
 
