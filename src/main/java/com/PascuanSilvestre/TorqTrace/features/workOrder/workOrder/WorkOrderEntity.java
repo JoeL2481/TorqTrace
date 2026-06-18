@@ -42,7 +42,7 @@ public class WorkOrderEntity  extends AuditableBase {
 
 
     @Column(name="entry_km",nullable = false)
-    private Double entryKm;
+    private Integer entryKm;
 
     @Column(name="description", columnDefinition = "TEXT")
     private String description;

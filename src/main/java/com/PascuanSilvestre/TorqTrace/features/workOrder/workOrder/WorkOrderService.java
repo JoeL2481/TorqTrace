@@ -8,7 +8,6 @@ import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.Maintenan
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto.MaintenanceCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleService;
-import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.CompleteWorkOrderDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderUpdateDTO;
@@ -126,30 +125,6 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
                         .build()));
     }
 
-    public WorkOrderResponseDTO completeWorkOrder(Long workOrderId, CompleteWorkOrderDTO request){
-
-
-
-
-        WorkOrderEntity workOrder = workOrderRepository.findById(workOrderId).
-                orElseThrow(()->new EntityNotFoundException("Work Order Not Found"));
-
-        if(!workshopPermissionService.isManagerOrOwnerOrMechanic(workOrder.getWorkshop().getId())){
-            throw new ProhibitedOperationException("Workshop does'nt exist or only the workshop owner or manager can perform this action");
-        }
-
-        MaintenanceCreateDTO maintenanceCreateDTO =  MaintenanceCreateDTO.builder().
-                workOrderId(workOrder.getId()).
-                maintenanceType(request.getMaintenanceType()).
-                description(request.getDescription()).
-                serviceKm(request.getServiceKm()).
-                nextServiceKm(request.getNextServiceKm()).
-                nextServiceDate(request.getNextServiceDate()).
-                build();
-        maintenanceService.create(workOrder.getUserVehicle().getPublicId(),maintenanceCreateDTO);
-        return workOrderMapper.toResponse(workOrder);
-    }
-
     @Override
     public List<WorkOrderResponseDTO> getAll() {
         return workOrderRepository.findAllByOrderByCreatedAtDesc().stream().
@@ -184,14 +159,37 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
     }
 
     @Override
+    @Transactional
     public WorkOrderResponseDTO update(Long id, WorkOrderUpdateDTO request) {
+
         WorkOrderEntity workOrder = workOrderRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("workOrder was not found"));
-        if(!workshopPermissionService.isManagerOrOwnerOrMechanic(workOrder.getWorkshop().getId())){
-            throw new ProhibitedOperationException("Workshop does'nt exist or only the workshop owner or manager can perform this action");
+                .orElseThrow(() -> new EntityNotFoundException("WorkOrder was not found"));
+
+        if (!workshopPermissionService.isManagerOrOwnerOrMechanic(workOrder.getWorkshop().getId())) {
+            throw new ProhibitedOperationException(
+                    "Workshop doesn't exist or only the workshop owner, manager or mechanic can perform this action");
         }
-        workOrderMapper.toEntityUpdate(request,workOrder);
-        return workOrderMapper.toResponse(workOrderRepository.save(workOrder));
+        EWorkOrderStatus previousStatus = workOrder.getStatus();
+        workOrderMapper.toEntityUpdate(request, workOrder);
+
+        if (previousStatus != EWorkOrderStatus.COMPLETED && workOrder.getStatus() == EWorkOrderStatus.COMPLETED && workOrder.getMaitenance() == null) {
+
+            MaintenanceCreateDTO newMaitenance =  MaintenanceCreateDTO.builder()
+                    .workOrderId(workOrder.getId())
+                    .serviceKm(workOrder.getEntryKm())
+                    .nextServiceKm(request.getNextServiceKm())
+                    .EMaintenanceType(request.getMaintenanceType())
+                    .description(workOrder.getDescription())
+                    .nextServiceDate(request.getNextServiceDate())
+                    .build();
+
+            maintenanceService.create(workOrder.getUserVehicle().getPublicId(),newMaitenance);
+
+        }
+
+        return workOrderMapper.toResponse(
+                workOrderRepository.save(workOrder)
+        );
     }
 
     @Override
