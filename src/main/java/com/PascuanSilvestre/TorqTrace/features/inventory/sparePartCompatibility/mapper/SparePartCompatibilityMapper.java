@@ -4,23 +4,24 @@ import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility.
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility.dto.SparePartCompatibilityCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility.dto.SparePartCompatibilityResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility.dto.SparePartCompatibilityUpdateDTO;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class SparePartCompatibilityMapper implements ISparePartCompatibilityMapper<SparePartCompatibilityEntity, SparePartCompatibilityCreateDTO, SparePartCompatibilityUpdateDTO, SparePartCompatibilityResponseDTO> {
-    private final ModelMapper mapper;
 
     @Override
     public SparePartCompatibilityEntity toEntity(SparePartCompatibilityCreateDTO request) {
-        return mapper.map(request, SparePartCompatibilityEntity.class);
+        SparePartCompatibilityEntity entity = new SparePartCompatibilityEntity();
+        entity.setNotes(request.getNotes());
+        return entity;
     }
 
     @Override
     public SparePartCompatibilityResponseDTO toResponse(SparePartCompatibilityEntity entity) {
-        SparePartCompatibilityResponseDTO dto = mapper.map(entity, SparePartCompatibilityResponseDTO.class);
+        SparePartCompatibilityResponseDTO dto = new SparePartCompatibilityResponseDTO();
+
+        dto.setId(entity.getId());
+        dto.setNotes(entity.getNotes());
 
         if (entity.getSparePart() != null) {
             dto.setSparePartId(entity.getSparePart().getId());

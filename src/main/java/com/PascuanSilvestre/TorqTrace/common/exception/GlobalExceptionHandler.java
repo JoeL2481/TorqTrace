@@ -2,6 +2,7 @@ package com.PascuanSilvestre.TorqTrace.common.exception;
 
 import com.PascuanSilvestre.TorqTrace.common.DTO.ErrorResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -40,6 +41,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<ErrorResponseDTO> handleAlreadyExistsException(AlreadyExistsException ex) {
         return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponseDTO> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        return buildResponse(HttpStatus.CONFLICT, "Operation cannot be completed because this resource is being used by another record");
     }
 
     @ExceptionHandler(IncoherentDataException.class)

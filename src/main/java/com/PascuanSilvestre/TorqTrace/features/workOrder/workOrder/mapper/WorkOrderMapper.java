@@ -4,24 +4,37 @@ import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrder
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderUpdateDTO;
 
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class WorkOrderMapper implements IWorkOrderMapper<WorkOrderEntity, WorkOrderCreateDTO, WorkOrderUpdateDTO, WorkOrderResponseDTO> {
-
-    private final ModelMapper mapper;
 
     @Override
     public WorkOrderEntity toEntity(WorkOrderCreateDTO request) {
-        return mapper.map(request, WorkOrderEntity.class);
+        WorkOrderEntity entity = new WorkOrderEntity();
+        entity.setEntryKm(request.getEntryKm());
+        entity.setDescription(request.getDescription());
+        entity.setStatus(request.getStatus());
+        entity.setWorkshopOrderType(request.getWorkOrderType());
+        entity.setCurrency(request.getCurrency().name());
+        entity.setLaborCharge(request.getLaborCharge());
+        return entity;
     }
 
     @Override
     public WorkOrderResponseDTO toResponse(WorkOrderEntity entity) {
-        return mapper.map(entity, WorkOrderResponseDTO.class);
+        WorkOrderResponseDTO response = new WorkOrderResponseDTO();
+        response.setId(entity.getId());
+        response.setEntryKm(entity.getEntryKm());
+        response.setDescription(entity.getDescription());
+        response.setStatus(entity.getStatus());
+        response.setWorkOrderType(entity.getWorkshopOrderType());
+        response.setCurrency(entity.getCurrency());
+        response.setLaborCharge(entity.getLaborCharge());
+        response.setTotalCost(entity.getTotalCost());
+        response.setCreatedAt(entity.getCreatedAt());
+        response.setUpdatedAt(entity.getUpdatedAt());
+        return response;
     }
 
     public void toEntityUpdate(WorkOrderUpdateDTO request, WorkOrderEntity entity) {

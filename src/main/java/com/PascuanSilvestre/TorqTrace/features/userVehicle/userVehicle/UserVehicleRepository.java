@@ -23,4 +23,6 @@ public interface UserVehicleRepository extends JpaRepository<UserVehicleEntity, 
     boolean existsByLicencePlateAndIdNot(String licencePlate, Long id);
 
     boolean existsByVinAndIdNot(String vin, Long id);
+
+    boolean existsByParticularVehicleId(Long particularVehicleId);
 }
