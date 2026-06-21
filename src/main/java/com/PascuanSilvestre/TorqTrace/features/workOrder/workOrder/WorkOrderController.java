@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/workorder")
 @AllArgsConstructor
-@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE','USER')")
 @Tag(name = "Work Order", description = "Workshop work order endpoints")
 public class WorkOrderController {
     private final IWorkOrderService<WorkOrderCreateDTO, WorkOrderUpdateDTO, WorkOrderResponseDTO, Long> workOrderService;

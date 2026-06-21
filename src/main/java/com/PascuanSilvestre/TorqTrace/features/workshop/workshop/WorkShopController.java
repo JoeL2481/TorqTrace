@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/workshop")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE','USER')")
 @Tag(name = "Workshop", description = "Workshop management endpoints")
 public class WorkShopController {
 

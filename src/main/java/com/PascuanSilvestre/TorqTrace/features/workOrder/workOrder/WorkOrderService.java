@@ -174,6 +174,7 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
 
         if (previousStatus != EWorkOrderStatus.COMPLETED && workOrder.getStatus() == EWorkOrderStatus.COMPLETED && workOrder.getMaitenance() == null) {
 
+            System.out.println("llegue hasta aca");
             MaintenanceCreateDTO newMaitenance =  MaintenanceCreateDTO.builder()
                     .workOrderId(workOrder.getId())
                     .serviceKm(workOrder.getEntryKm())
