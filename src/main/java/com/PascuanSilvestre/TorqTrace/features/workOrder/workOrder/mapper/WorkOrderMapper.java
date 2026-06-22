@@ -80,8 +80,10 @@ public class WorkOrderMapper implements IWorkOrderMapper<WorkOrderEntity, WorkOr
             userVehicle.setVin(entity.getUserVehicle().getVin());
 
             if (entity.getUserVehicle().getUser() != null) {
-                userVehicle.setUserId(entity.getUserVehicle().getUser().getId());
-                userVehicle.setUserPublicId(entity.getUserVehicle().getUser().getPublicId());
+                userVehicle.setUserId(entity.getUserVehicle().getUser().getPublicId());
+                if (entity.getUserVehicle().getUser().getUserContactInfo() != null) {
+                    userVehicle.setUserEmail(entity.getUserVehicle().getUser().getUserContactInfo().getEmail());
+                }
             }
 
             if (entity.getUserVehicle().getParticularVehicle() != null) {

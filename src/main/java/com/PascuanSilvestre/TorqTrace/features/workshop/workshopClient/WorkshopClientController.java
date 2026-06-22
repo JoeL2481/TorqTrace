@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient;
 
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.dto.WorkshopClientCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.dto.WorkshopClientResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.dto.WorkshopClientUpdateDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,24 +18,29 @@ import java.util.List;
 @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
 @Tag(name = "Workshop Client", description = "Workshop client endpoints")
 public class WorkshopClientController {
-    private final IWorkshopClientService<?, WorkshopClientUpdateDTO, WorkshopClientResponseDTO, Long> workShopClientService;
+    private final IWorkshopClientService<WorkshopClientCreateDTO, WorkshopClientUpdateDTO, WorkshopClientResponseDTO, Long> workShopClientService;
+
+    @PostMapping
+    public ResponseEntity<WorkshopClientResponseDTO> create(@Valid @RequestBody WorkshopClientCreateDTO request) {
+        return ResponseEntity.ok(workShopClientService.create(request));
+    }
 
     @GetMapping("/workshops/{workshopId}/clients")
     public ResponseEntity<List<WorkshopClientResponseDTO>>findAllByWorkshop(@PathVariable("workshopId") Long id){
         return ResponseEntity.ok(workShopClientService.getAll(id));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<WorkshopClientResponseDTO> findById(@PathVariable("id") Long id){
         return ResponseEntity.ok(workShopClientService.getById(id));
     }
 
-    @PostMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<WorkshopClientResponseDTO>update(@Valid @RequestBody WorkshopClientUpdateDTO workShopClientUpdateDTO, @PathVariable("id") Long id){
         return ResponseEntity.ok(workShopClientService.update(id,workShopClientUpdateDTO));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<WorkshopClientResponseDTO>delete(@PathVariable("id") Long id){
         return ResponseEntity.ok(workShopClientService.delete(id));
     }

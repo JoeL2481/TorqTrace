@@ -46,6 +46,11 @@ public class WorkOrderController {
         return ResponseEntity.status(HttpStatus.OK).body(workOrderService.getByIdforWorkshop(id, workshopId));
     }
 
+    @PostMapping("{id}/complete")
+    public ResponseEntity<WorkOrderResponseDTO> complete(@PathVariable Long id, @Valid @RequestBody CompleteWorkOrderDTO request) {
+        return ResponseEntity.status(HttpStatus.OK).body(workOrderService.complete(id, request));
+    }
+
     @PutMapping("{id}")
     public ResponseEntity<WorkOrderResponseDTO>update(@PathVariable Long id, @Valid @RequestBody WorkOrderUpdateDTO workOrderUpdateDTO){
         return ResponseEntity.status(HttpStatus.OK).body(workOrderService.update(id, workOrderUpdateDTO));

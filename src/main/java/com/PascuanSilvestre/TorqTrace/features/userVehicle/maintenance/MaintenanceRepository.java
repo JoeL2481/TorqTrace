@@ -16,5 +16,7 @@ public interface MaintenanceRepository extends JpaRepository<MaintenanceEntity, 
 
     Optional<MaintenanceEntity> findByIdAndUserVehicleUserId(Long id, Long userId);
 
+    Optional<MaintenanceEntity> findByWorkshopOrderId(Long workOrderId);
+
     void deleteByUserVehicleId(Long userVehicleId);
 }

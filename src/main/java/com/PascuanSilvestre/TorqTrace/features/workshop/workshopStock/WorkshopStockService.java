@@ -1,7 +1,11 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.common.exception.ProhibitedOperationException;
+import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartService;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopRepository;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockUpdateDTO;
@@ -20,6 +24,7 @@ public class WorkshopStockService implements IWorkshopStockService<WorkshopStock
     private final WorkshopStockMapper workShopStockMapper;
     private final WorkshopPermissionService permissionService;
     private final SparePartService sparePartService;
+    private final WorkShopRepository workShopRepository;
 
     @Override
     public WorkshopStockResponseDTO create(WorkshopStockCreateDTO request) {
@@ -29,11 +34,19 @@ public class WorkshopStockService implements IWorkshopStockService<WorkshopStock
             throw new ProhibitedOperationException("Not permissions enough");
         }
 
-        sparePartService.existSparePart(request.getSparePartId());
+        if (workShopStockRepository.findByWorkshopIdAndSparePartId(request.getWorkshopId(), request.getSparePartId()).isPresent()) {
+            throw new AlreadyExistsException("This spare part already exists in the workshop stock");
+        }
+
+        WorkShopEntity workshop = workShopRepository.findById(request.getWorkshopId())
+                .orElseThrow(() -> new EntityNotFoundException("Workshop not found"));
+        SparePartEntity sparePart = sparePartService.getEntityById(request.getSparePartId());
 
         WorkshopStockEntity workShopStock = workShopStockMapper.toEntity(request);
+        workShopStock.setWorkshop(workshop);
+        workShopStock.setSparePart(sparePart);
 
-        workShopStockRepository.save(workShopStock);
+        workShopStock = workShopStockRepository.save(workShopStock);
 
         return workShopStockMapper.toResponse(workShopStock);
     }
