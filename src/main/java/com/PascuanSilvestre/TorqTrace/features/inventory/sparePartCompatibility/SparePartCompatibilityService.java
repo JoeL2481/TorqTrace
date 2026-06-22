@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.IncoherentDataException;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEntity;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartRepository;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility.dto.SparePartCompatibilityCreateDTO;
@@ -30,9 +31,20 @@ public class SparePartCompatibilityService implements ISparePartCompatibilitySer
 
     @Override
     public SparePartCompatibilityResponseDTO create(SparePartCompatibilityCreateDTO request) {
+        validateCompatibilityTarget(request.getVehicleId(), request.getEngineId(), request.getTransmissionId());
         SparePartCompatibilityEntity spare = mapper.toEntity(request);
         addCompatibility(spare, request.getSparePartId(), request.getVehicleId(), request.getEngineId(), request.getTransmissionId());
         return mapper.toResponse(repo.save(spare));
+    }
+
+    private void validateCompatibilityTarget(String vehicleId, Long engineId, Long transmissionId) {
+        boolean hasVehicle = vehicleId != null && !vehicleId.isBlank();
+        boolean hasEngine = engineId != null;
+        boolean hasTransmission = transmissionId != null;
+
+        if (!hasVehicle && !hasEngine && !hasTransmission) {
+            throw new IncoherentDataException("At least one compatibility target is required: vehicle, engine, or transmission");
+        }
     }
 
     private SparePartCompatibilityEntity getEntityById(Long id) {

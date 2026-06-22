@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/spare-part-compatibility")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE','USER')")
 @Tag(name = "Spare Part Compatibility", description = "Compatibility rules between spare parts and vehicles")
 public class SparePartCompatibilityController {
     private final ISparePartCompatibilityService<SparePartCompatibilityCreateDTO, SparePartCompatibilityUpdateDTO, SparePartCompatibilityResponseDTO, Long> service;

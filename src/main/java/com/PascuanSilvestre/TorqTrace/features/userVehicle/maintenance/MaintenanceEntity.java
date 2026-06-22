@@ -1,7 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance;
 
 import com.PascuanSilvestre.TorqTrace.common.aspects.AuditableBase;
-import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.MaintenanceType;
+import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.EMaintenanceType;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.WorkOrderEntity;
 import jakarta.persistence.*;
@@ -30,16 +30,16 @@ public class MaintenanceEntity extends AuditableBase {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "maintenance_type", nullable = false, length = 50)
-    private MaintenanceType maintenanceType;
+    private EMaintenanceType EMaintenanceType;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "service_km")
-    private int serviceKm;
+    private Integer serviceKm;
 
     @Column(name = "next_service_km")
-    private int nextServiceKm;
+    private Integer nextServiceKm;
 
     @Column(name = "next_service_date")
     private Date next_service_date;

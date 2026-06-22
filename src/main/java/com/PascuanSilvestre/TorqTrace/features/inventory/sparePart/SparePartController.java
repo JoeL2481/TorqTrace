@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/spare-part")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE','USER')")
 @Tag(name = "Spare Part", description = "Inventory spare part management endpoints")
 public class SparePartController {
     private final ISparePartService<SparePartCreateDTO, SparePartUpdateDTO, SparePartResponseDTO, Long> service;

@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/workorder")
 @AllArgsConstructor
-@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+@PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE','USER')")
 @Tag(name = "Work Order", description = "Workshop work order endpoints")
 public class WorkOrderController {
     private final IWorkOrderService<WorkOrderCreateDTO, WorkOrderUpdateDTO, WorkOrderResponseDTO, Long> workOrderService;
@@ -44,11 +44,6 @@ public class WorkOrderController {
     @GetMapping("/workshops/{workshopId}/{id}")
     public ResponseEntity<WorkOrderResponseDTO> getByIdForWorkshop(@PathVariable Long workshopId, @PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(workOrderService.getByIdforWorkshop(id, workshopId));
-    }
-
-    @PostMapping("/{id}/complete")
-    public ResponseEntity<WorkOrderResponseDTO> complete(@PathVariable Long id, @Valid @RequestBody CompleteWorkOrderDTO request) {
-        return ResponseEntity.status(HttpStatus.OK).body(workOrderService.completeWorkOrder(id, request));
     }
 
     @PutMapping("{id}")

@@ -25,13 +25,13 @@ public class VehicleController {
 
     private final VehicleService service;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PostMapping
     public ResponseEntity<VehicleResponseDTO> create(@Valid @RequestBody VehicleCreateDTO request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PostMapping("/complete")
     public ResponseEntity<VehicleResponseDTO> createComplete(@Valid @RequestBody VehicleCreateCompleteDTO request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createComplete(request));

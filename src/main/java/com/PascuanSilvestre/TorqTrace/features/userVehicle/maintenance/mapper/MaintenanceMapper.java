@@ -11,7 +11,7 @@ public class MaintenanceMapper implements IMaintenanceMapper<MaintenanceEntity, 
 
     public MaintenanceEntity toEntity(MaintenanceCreateDTO request) {
         MaintenanceEntity entity = new MaintenanceEntity();
-        entity.setMaintenanceType(request.getMaintenanceType());
+        entity.setEMaintenanceType(request.getEMaintenanceType());
         entity.setDescription(request.getDescription());
         entity.setServiceKm(request.getServiceKm());
         entity.setNextServiceKm(request.getNextServiceKm());
@@ -20,8 +20,8 @@ public class MaintenanceMapper implements IMaintenanceMapper<MaintenanceEntity, 
     }
 
     public MaintenanceEntity toEntityUpdate(MaintenanceUpdateDTO request, MaintenanceEntity entity) {
-        if (request.getMaintenanceType() != null) {
-            entity.setMaintenanceType(request.getMaintenanceType());
+        if (request.getEMaintenanceType() != null) {
+            entity.setEMaintenanceType(request.getEMaintenanceType());
         }
 
         if (request.getDescription() != null) {
@@ -48,7 +48,7 @@ public class MaintenanceMapper implements IMaintenanceMapper<MaintenanceEntity, 
         response.setId(entity.getId());
         response.setUserVehicleId(entity.getUserVehicle().getPublicId());
         response.setWorkOrderId(entity.getWorkshopOrder().getId());
-        response.setMaintenanceType(entity.getMaintenanceType());
+        response.setEMaintenanceType(entity.getEMaintenanceType());
         response.setDescription(entity.getDescription());
         response.setServiceKm(entity.getServiceKm());
         response.setNextServiceKm(entity.getNextServiceKm());

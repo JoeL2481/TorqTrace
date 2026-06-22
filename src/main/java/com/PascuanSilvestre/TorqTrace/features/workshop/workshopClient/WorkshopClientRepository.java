@@ -19,6 +19,7 @@ public interface WorkshopClientRepository
 
     Optional<WorkshopClientEntity> findByUserId(Long userId);
 
+    Optional<WorkshopClientEntity> findByUserIdAndWorkshopId(Long userId, Long workshopId);
 
     boolean existsByUserIdAndWorkshopId(Long userId, Long workshopId);
 }

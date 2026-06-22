@@ -24,7 +24,7 @@ public class WorkOrderCreateDTO {
 
     @NotNull
     @Min(0)
-    private Double entryKm;
+    private Integer entryKm;
 
 
     @NotBlank(message = "Description is required")
