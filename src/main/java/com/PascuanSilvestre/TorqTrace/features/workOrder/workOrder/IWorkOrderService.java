@@ -10,7 +10,7 @@ public interface IWorkOrderService <CreateDTO, UpdateDTO, ResponseDTO, ID> {
     List<ResponseDTO> getAllByWorkshop(ID workshopId);
     ResponseDTO getById(ID id);
     ResponseDTO getByIdforWorkshop(ID id, ID workshopId);
-    ResponseDTO completeWorkOrder(ID workOrderId, CompleteWorkOrderDTO request);
+    ResponseDTO complete(ID id, CompleteWorkOrderDTO request);
     ResponseDTO update(ID id, UpdateDTO request);
     ResponseDTO delete(ID id);
 }

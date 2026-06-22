@@ -148,7 +148,7 @@ public class WorkShopService implements IWorkShopService<WorkShopCreateDTO, Work
         }
 
         WorkshopStaffCreateDTO owner = WorkshopStaffCreateDTO.builder().workshopId(idWorkshop)
-                .userId(securityUtils.getCurrentUserId())
+                .userId(idEmployee)
                 .role(role)
                 .build();
         workShopStaffService.create(owner);

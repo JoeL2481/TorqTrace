@@ -13,6 +13,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 
 @Table(name="work_order")
 @Entity
@@ -40,7 +42,7 @@ public class WorkOrderEntity  extends AuditableBase {
 
 
     @Column(name="entry_km",nullable = false)
-    private Double entryKm;
+    private Integer entryKm;
 
     @Column(name="description", columnDefinition = "TEXT")
     private String description;
@@ -60,9 +62,8 @@ public class WorkOrderEntity  extends AuditableBase {
     private EWorkOrderType workshopOrderType;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="item_work_order_id",nullable = false)
-    private WorkOrderItemEntity workOrderItem;
+    @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WorkOrderItemEntity> workOrderItems;
 
     @Column(name="currency",length = 20)
     private String currency;

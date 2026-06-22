@@ -32,7 +32,15 @@ public class WorkShopMapper implements IWorkShopMapper<WorkShopEntity, WorkShopC
 
     @Override
     public WorkShopResponseDTO toResponse(WorkShopEntity entity) {
-        return  modelMapper.map(entity, WorkShopResponseDTO.class);
+        return WorkShopResponseDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .workshopAddress(entity.getWorkshopAddress())
+                .workshopContactInfo(entity.getWorkshopContactInfo())
+                .status(entity.isStatus())
+                .createdAt(entity.getCreatedAt())
+                .build();
     }
 
     public WorkShopDetailedResponseDTO toDetailResponse(WorkShopEntity entity) {

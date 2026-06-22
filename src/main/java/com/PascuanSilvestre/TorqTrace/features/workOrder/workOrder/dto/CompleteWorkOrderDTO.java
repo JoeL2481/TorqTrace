@@ -1,11 +1,11 @@
 package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto;
 
-import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.MaintenanceType;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.EMaintenanceType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Date;
@@ -22,7 +22,8 @@ public class CompleteWorkOrderDTO {
     private String description;
 
     @NotNull
-    private MaintenanceType maintenanceType;
+    @JsonAlias("maintenanceType")
+    private EMaintenanceType EMaintenanceType;
 
     @Positive
     private int serviceKm;

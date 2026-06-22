@@ -14,6 +14,7 @@ import com.PascuanSilvestre.TorqTrace.common.utils.ContactInfo;
 import com.PascuanSilvestre.TorqTrace.features.user.enums.UserStatus;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
 import com.PascuanSilvestre.TorqTrace.features.user.user.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -51,8 +52,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 credentials
         );
     }
-
-    private CredentialsEntity processOAuthUser(OAuth2User oauthUser) {
+    @Transactional
+    public CredentialsEntity processOAuthUser(OAuth2User oauthUser) {
+        System.out.println("Entrando a processOAuthUser");
         String googleId = oauthUser.getAttribute("sub");
         String email = oauthUser.getAttribute("email");
         String firstName = oauthUser.getAttribute("given_name");
@@ -70,7 +72,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 userProviderRepository.findByProviderAndExternalId(googleProvider, googleId);
 
         if (providerLink.isPresent()) {
+            System.out.println("Usuario Google ya vinculado");
             UserEntity user = providerLink.get().getUser();
+            System.out.println(user.getId());
+            System.out.println(user.getFirstName());
 
             updateDefaultProfileData(user, firstName, lastName, picture);
 

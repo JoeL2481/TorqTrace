@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface SparePartCompatibilityRepository extends JpaRepository<SparePartCompatibilityEntity, Long> {
     List<SparePartCompatibilityEntity> findBySparePartId(Long sparePartId);
+
+    boolean existsByVehicleId(Long vehicleId);
 }

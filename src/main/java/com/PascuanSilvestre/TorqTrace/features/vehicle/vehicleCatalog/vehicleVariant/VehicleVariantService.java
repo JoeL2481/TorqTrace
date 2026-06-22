@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.dto.VehicleVariantRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleVariant.dto.VehicleVariantResponseDTO;
@@ -19,6 +20,9 @@ public class VehicleVariantService implements ICrudService<VehicleVariantRequest
 
     @Override
     public VehicleVariantResponseDTO create(VehicleVariantRequestDTO request) {
+        if (repository.existsByNameIgnoreCase(request.getName())) {
+            throw new AlreadyExistsException("Vehicle variant already exists");
+        }
         VehicleVariantEntity entity = mapper.toEntity(request);
         return mapper.toResponse(repository.save(entity));
     }

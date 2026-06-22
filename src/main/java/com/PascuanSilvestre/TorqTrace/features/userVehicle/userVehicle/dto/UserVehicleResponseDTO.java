@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 @Setter
 public class UserVehicleResponseDTO {
     private String publicId;
-    private Long userId;
-    private java.util.UUID userPublicId;
+    private java.util.UUID userId;
+    private String userEmail;
     private String particularVehicleId;
     private String vehicleBrandName;
     private String vehicleModelName;

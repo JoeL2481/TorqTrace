@@ -2,7 +2,7 @@ package com.PascuanSilvestre.TorqTrace.features.userVehicle.enums;
 
 
 
-public enum MaintenanceType {
+public enum EMaintenanceType {
     OIL_CHANGE,
     FILTER_CHANGE,
     BRAKE_SERVICE,

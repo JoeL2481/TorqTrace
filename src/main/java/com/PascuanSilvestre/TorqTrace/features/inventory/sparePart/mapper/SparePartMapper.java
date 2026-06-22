@@ -4,23 +4,36 @@ import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEnti
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.dto.SparePartUpdateDTO;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
+import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCategory.dto.SparePartCategoryResponseDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class SparePartMapper implements ISparePartMapper<SparePartEntity, SparePartCreateDTO, SparePartUpdateDTO, SparePartResponseDTO> {
-    private final ModelMapper mapper;
 
     @Override
     public SparePartEntity toEntity(SparePartCreateDTO request) {
-        return mapper.map(request, SparePartEntity.class);
+        SparePartEntity entity = new SparePartEntity();
+        entity.setName(request.getName());
+        entity.setDescription(request.getDescription());
+        return entity;
     }
 
     @Override
     public SparePartResponseDTO toResponse(SparePartEntity entity) {
-        return mapper.map(entity, SparePartResponseDTO.class);
+        SparePartResponseDTO response = new SparePartResponseDTO();
+        response.setId(entity.getId());
+        response.setName(entity.getName());
+        response.setDescription(entity.getDescription());
+
+        if (entity.getCategory() != null) {
+            response.setCategory(SparePartCategoryResponseDTO.builder()
+                    .id(entity.getCategory().getId())
+                    .name(entity.getCategory().getName())
+                    .description(entity.getCategory().getDescription())
+                    .build());
+        }
+
+        return response;
     }
 
     public SparePartEntity toEntityUpdate(SparePartUpdateDTO request, SparePartEntity entity) {

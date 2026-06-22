@@ -1,7 +1,17 @@
 package com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff;
 
+import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsEntity;
+import com.PascuanSilvestre.TorqTrace.auth.credentials.CredentialsRepository;
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleEntity;
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.RoleRepository;
+import com.PascuanSilvestre.TorqTrace.auth.permissions.Role.Roles;
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.common.exception.IncoherentDataException;
 import com.PascuanSilvestre.TorqTrace.config.SecurityUtils;
+import com.PascuanSilvestre.TorqTrace.features.user.user.UserEntity;
+import com.PascuanSilvestre.TorqTrace.features.user.user.UserRepository;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopEntity;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopRepository;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStaff.dto.WorkshopStaffUpdateDTO;
@@ -20,10 +30,26 @@ public class WorkshopStaffService implements IWorkshopStaffService<WorkshopStaff
     private final WorkshopStaffRepository workShopStaffRepository;
     private final WorkShopStaffMapper workShopStaffMapper;
     private final SecurityUtils securityUtils;
+    private final UserRepository userRepository;
+    private final WorkShopRepository workShopRepository;
+    private final CredentialsRepository credentialsRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public WorkshopStaffResponseDTO create(WorkshopStaffCreateDTO request) {
+        if (workShopStaffRepository.existsByUserIdAndWorkshopId(request.getUserId(), request.getWorkshopId())) {
+            throw new AlreadyExistsException("This user is already a staff member of this workshop");
+        }
+
         WorkshopStaffEntity workShopStaffEntity = workShopStaffMapper.toEntity(request);
+        WorkShopEntity workshop = workShopRepository.findById(request.getWorkshopId())
+                .orElseThrow(() -> new EntityNotFoundException("Workshop not found"));
+        UserEntity user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        workShopStaffEntity.setWorkshop(workshop);
+        workShopStaffEntity.setUser(user);
+        ensureEmployeeRole(user);
         workShopStaffEntity = workShopStaffRepository.save(workShopStaffEntity);
         return workShopStaffMapper.toResponse(workShopStaffEntity);
     }
@@ -85,10 +111,7 @@ public class WorkshopStaffService implements IWorkshopStaffService<WorkshopStaff
     }
 
     public boolean existEmployeeWorkshopStaff(Long idEmployee, Long  idWorkshop) {
-        if (!workShopStaffRepository.existsByUserIdAndWorkshopId(idEmployee,idWorkshop)){
-            throw new EntityNotFoundException("WorkshopStaff not found");
-        }
-        return true;
+        return workShopStaffRepository.existsByUserIdAndWorkshopId(idEmployee,idWorkshop);
     }
 
     public WorkshopStaffEntity getByEmployeeWorkshopStaff(Long idEmployee, Long  idWorkshop) {
@@ -105,5 +128,19 @@ public class WorkshopStaffService implements IWorkshopStaffService<WorkshopStaff
         return response;
     }
 
+    private void ensureEmployeeRole(UserEntity user) {
+        CredentialsEntity credentials = credentialsRepository.findByUsuario(user)
+                .orElseThrow(() -> new EntityNotFoundException("Credentials not found for user"));
+
+        boolean hasEmployeeRole = credentials.getRoles().stream()
+                .anyMatch(role -> role.getRole() == Roles.ROLE_EMPLOYEE);
+
+        if (!hasEmployeeRole) {
+            RoleEntity employeeRole = roleRepository.findByRole(Roles.ROLE_EMPLOYEE)
+                    .orElseThrow(() -> new EntityNotFoundException("ROLE_EMPLOYEE not found"));
+            credentials.getRoles().add(employeeRole);
+            credentialsRepository.save(credentials);
+        }
+    }
 
 }

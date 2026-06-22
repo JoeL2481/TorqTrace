@@ -1,6 +1,10 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
+import com.PascuanSilvestre.TorqTrace.common.exception.DeletionAttemptException;
 import com.PascuanSilvestre.TorqTrace.common.utils.ValidationDTO;
+import com.PascuanSilvestre.TorqTrace.features.inventory.sparePartCompatibility.SparePartCompatibilityRepository;
+import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleRepository;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateCompleteDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicle.dto.VehicleDetailedResponseDTO;
@@ -41,13 +45,20 @@ public class VehicleService implements IVehicleService<VehicleCreateDTO, Vehicle
     private final VehicleEquipmentLevelService equipmentLevelService;
     private final EngineService engineService;
     private final TransmissionService transmissionService;
+    private final UserVehicleRepository userVehicleRepository;
+    private final SparePartCompatibilityRepository sparePartCompatibilityRepository;
     private final VehicleMapper mapper;
 
     @Override
     public VehicleResponseDTO create(VehicleCreateDTO request) {
+
         VehicleEntity entity = mapper.toEntity(request);
+        System.out.println("hasta aca llego 1");
         entity.setVehicleBrand(brandService.getEntityByIdOrName(request.getVehicleBrandId(), request.getVehicleBrandName()));
+        System.out.println("hasta aca llego 2");
         entity.setVehicleModel(modelService.getEntityByIdOrName(request.getVehicleModelId(), request.getVehicleModelName()));
+        System.out.println("hasta aca llego 3");
+        validateUniqueConfiguration(entity);
 
         return mapper.toResponse(repo.save(entity));
     }
@@ -62,7 +73,27 @@ public class VehicleService implements IVehicleService<VehicleCreateDTO, Vehicle
         entity.setEngine(engineService.getEntityByIdOrName(request.getEngineId(), request.getEngineCode()));
         entity.setTransmission(transmissionService.getEntityByIdOrName(request.getTransmissionId(), request.getTransmissionName()));
 
+        validateUniqueConfiguration(entity);
+
         return mapper.toResponse(repo.save(entity));
+    }
+
+    private void validateUniqueConfiguration(VehicleEntity entity) {
+        boolean exists = repo.existsSameConfiguration(
+                entity.getVehicleBrand().getId(),
+                entity.getVehicleModel().getId(),
+                entity.getVehicleGeneration() == null ? null : entity.getVehicleGeneration().getId(),
+                entity.getVehicleVariant() == null ? null : entity.getVehicleVariant().getId(),
+                entity.getVehicleEquipmentLevel() == null ? null : entity.getVehicleEquipmentLevel().getId(),
+                entity.getEngine() == null ? null : entity.getEngine().getId(),
+                entity.getTransmission() == null ? null : entity.getTransmission().getId(),
+                entity.getVehicleBodyType(),
+                entity.getVehicleCategory()
+        );
+
+        if (exists) {
+            throw new AlreadyExistsException("Vehicle already exists with the same configuration");
+        }
     }
 
     private VehicleEntity getEntityByPublicId(String id) {
@@ -156,9 +187,22 @@ public class VehicleService implements IVehicleService<VehicleCreateDTO, Vehicle
     @Override
     public VehicleResponseDTO delete(String id) {
         VehicleEntity entity = getEntityByPublicId(id);
+
+        validateDeletionAllowed(entity);
+
         VehicleResponseDTO dto = mapper.toResponse(entity);
         repo.delete(entity);
         return dto;
+    }
+
+    private void validateDeletionAllowed(VehicleEntity entity) {
+        if (userVehicleRepository.existsByParticularVehicleId(entity.getId())) {
+            throw new DeletionAttemptException("Vehicle cannot be deleted because it is assigned to a user vehicle");
+        }
+
+        if (sparePartCompatibilityRepository.existsByVehicleId(entity.getId())) {
+            throw new DeletionAttemptException("Vehicle cannot be deleted because it is used in spare part compatibility");
+        }
     }
 
     public List<VehicleResponseDTO> search(

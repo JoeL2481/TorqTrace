@@ -27,7 +27,7 @@ public class WorkOrderResponseDTO {
 
     private UserVehicleResponseDTO userVehicle;
 
-    private Double entryKm;
+    private Integer entryKm;
 
     private String description;
 

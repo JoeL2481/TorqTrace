@@ -1,6 +1,7 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto;
 
-import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.MaintenanceType;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.EMaintenanceType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,16 +19,18 @@ public class MaintenanceCreateDTO {
     private Long workOrderId;
 
     @NotNull(message = "Maintenance type is required")
-    private MaintenanceType maintenanceType;
+    @JsonAlias("maintenanceType")
+    private EMaintenanceType EMaintenanceType;
 
     @Size(max = 500, message = "Description can have at most 500 characters")
     private String description;
 
     @Min(value = 1, message = "Service km must be greater than zero")
-    private int serviceKm;
+    private Integer serviceKm;
 
     @Min(value = 0, message = "Next service km cannot be negative")
-    private int nextServiceKm;
+    private Integer nextServiceKm;
+
 
     private Date nextServiceDate;
 }

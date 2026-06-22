@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.dto.VehicleEquipmentLevelRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.dto.VehicleEquipmentLevelResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleEquipmentLevel.mapper.VehicleEquipmentLevelMapper;
@@ -19,6 +20,9 @@ public class VehicleEquipmentLevelService {
 
 
     public VehicleEquipmentLevelResponseDTO create(VehicleEquipmentLevelRequestDTO request) {
+        if (repository.existsByNameIgnoreCase(request.getName())) {
+            throw new AlreadyExistsException("Vehicle equipment level already exists");
+        }
         VehicleEquipmentLevelEntity entity = mapper.toEntity(request);
 
         return mapper.toResponse(repository.save(entity));

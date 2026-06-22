@@ -1,6 +1,9 @@
 package com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel;
 
+import com.PascuanSilvestre.TorqTrace.common.exception.AlreadyExistsException;
+import com.PascuanSilvestre.TorqTrace.common.exception.InvalidRelationshipException;
 import com.PascuanSilvestre.TorqTrace.common.utils.ICrudService;
+import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleBrand.VehicleBrandService;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.dto.VehicleModelRequestDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.dto.VehicleModelResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.vehicle.vehicleCatalog.vehicleModel.mapper.VehicleModelMapper;
@@ -16,10 +19,18 @@ import java.util.List;
 public class VehicleModelService implements ICrudService<VehicleModelRequestDTO, VehicleModelResponseDTO,Long>  {
     private final VehicleModelRepository repository;
     private final VehicleModelMapper mapper;
+    private final VehicleBrandService vehicleBrandService;
     @Override
     public VehicleModelResponseDTO create(VehicleModelRequestDTO request) {
+        if (request.getVehicleBrandId() == null) {
+            throw new InvalidRelationshipException("Vehicle brand is required for vehicle model");
+        }
+        if (repository.existsByNameIgnoreCase(request.getName())) {
+            throw new AlreadyExistsException("Vehicle model already exists");
+        }
 
         VehicleModelEntity modelEntity = mapper.toEntity(request);
+        modelEntity.setVehicleBrand(vehicleBrandService.getEntityByIdOrName(request.getVehicleBrandId(), null));
 
 
         return mapper.toResponse(repository.save(modelEntity));
@@ -51,6 +62,9 @@ public class VehicleModelService implements ICrudService<VehicleModelRequestDTO,
                         .orElseThrow(()-> new EntityNotFoundException("Vehicle Model does not exist for update, id: " + id));
         if (request.getName() != null) {
             entity.setName(request.getName());
+        }
+        if (request.getVehicleBrandId() != null) {
+            entity.setVehicleBrand(vehicleBrandService.getEntityByIdOrName(request.getVehicleBrandId(), null));
         }
         return mapper.toResponse(repository.save(entity));
     }
