@@ -83,7 +83,7 @@ public class WorkShopService implements IWorkShopService<WorkShopCreateDTO, Work
     public WorkShopResponseDTO update(Long idWorkshop, WorkShopUpdateDTO request) {
 
         if (!permissionService.isOwner(idWorkshop)) {
-            throw new ProhibitedOperationException("Workshop does'nt exist or only the workshop owner or manager can perform this action");
+            throw new ProhibitedOperationException("Workshop doesn't exist or only the workshop owner or manager can perform this action");
         }
 
         WorkShopEntity entity = repository.findById(idWorkshop)

@@ -55,19 +55,25 @@ public class WorkOrderMapper implements IWorkOrderMapper<WorkOrderEntity, WorkOr
         }
 
         if (entity.getClient() != null) {
+            UserResponseDTO userResponse = null;
+
+            if (entity.getClient().getUser() != null) {
+                userResponse = UserResponseDTO.builder()
+                        .publicId(entity.getClient().getUser().getPublicId())
+                        .firstName(entity.getClient().getUser().getFirstName())
+                        .lastName(entity.getClient().getUser().getLastName())
+                        .userAddress(entity.getClient().getUser().getUserAddress())
+                        .userContactInfo(entity.getClient().getUser().getUserContactInfo())
+                        .userStatus(entity.getClient().getUser().getStatus())
+                        .build();
+            }
+
             response.setClient(WorkshopClientResponseDTO.builder()
                     .id(entity.getClient().getId())
                     .description(entity.getClient().getDescription())
                     .createdAt(entity.getClient().getCreatedAt())
                     .updatedAt(entity.getClient().getUpdatedAt())
-                    .user(entity.getClient().getUser() == null ? null : UserResponseDTO.builder()
-                            .publicId(entity.getClient().getUser().getPublicId())
-                            .firstName(entity.getClient().getUser().getFirstName())
-                            .lastName(entity.getClient().getUser().getLastName())
-                            .userAddress(entity.getClient().getUser().getUserAddress())
-                            .userContactInfo(entity.getClient().getUser().getUserContactInfo())
-                            .userStatus(entity.getClient().getUser().getStatus())
-                            .build())
+                    .user(userResponse)
                     .build());
         }
 
@@ -113,6 +119,16 @@ public class WorkOrderMapper implements IWorkOrderMapper<WorkOrderEntity, WorkOr
 
         if (entity.getWorkOrderItems() != null && !entity.getWorkOrderItems().isEmpty()) {
             WorkOrderItemEntity item = entity.getWorkOrderItems().get(0);
+            SparePartResponseDTO sparePartResponse = null;
+
+            if (item.getSparePart() != null) {
+                sparePartResponse = SparePartResponseDTO.builder()
+                        .id(item.getSparePart().getId())
+                        .name(item.getSparePart().getName())
+                        .description(item.getSparePart().getDescription())
+                        .build();
+            }
+
             response.setWorkOrderItem(WorkOrderItemResponseDTO.builder()
                     .id(item.getId())
                     .quantityRequested(item.getQuantityRequested())
@@ -120,11 +136,7 @@ public class WorkOrderMapper implements IWorkOrderMapper<WorkOrderEntity, WorkOr
                     .subtotal(item.getSubtotal())
                     .createdAt(item.getCreatedAt())
                     .updatedAt(item.getUpdatedAt())
-                    .sparePart(item.getSparePart() == null ? null : SparePartResponseDTO.builder()
-                            .id(item.getSparePart().getId())
-                            .name(item.getSparePart().getName())
-                            .description(item.getSparePart().getDescription())
-                            .build())
+                    .sparePart(sparePartResponse)
                     .build());
         }
 

@@ -53,11 +53,8 @@ public class VehicleService implements IVehicleService<VehicleCreateDTO, Vehicle
     public VehicleResponseDTO create(VehicleCreateDTO request) {
 
         VehicleEntity entity = mapper.toEntity(request);
-        System.out.println("hasta aca llego 1");
         entity.setVehicleBrand(brandService.getEntityByIdOrName(request.getVehicleBrandId(), request.getVehicleBrandName()));
-        System.out.println("hasta aca llego 2");
         entity.setVehicleModel(modelService.getEntityByIdOrName(request.getVehicleModelId(), request.getVehicleModelName()));
-        System.out.println("hasta aca llego 3");
         validateUniqueConfiguration(entity);
 
         return mapper.toResponse(repo.save(entity));
@@ -79,7 +76,7 @@ public class VehicleService implements IVehicleService<VehicleCreateDTO, Vehicle
     }
 
     private void validateUniqueConfiguration(VehicleEntity entity) {
-        boolean exists = repo.existsSameConfiguration(
+        boolean exists = repo.existsDuplicateConfiguration(
                 entity.getVehicleBrand().getId(),
                 entity.getVehicleModel().getId(),
                 entity.getVehicleGeneration() == null ? null : entity.getVehicleGeneration().getId(),

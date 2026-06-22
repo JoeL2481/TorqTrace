@@ -74,14 +74,37 @@ public class SparePartService implements ISparePartService<SparePartCreateDTO, S
     private SparePartResponseDTO buildResponse(SparePartEntity entity) {
         List<SparePartCompatibilityResponseDTO> compatibleList = compatibilityRepo.findBySparePartId(entity.getId())
                 .stream()
-                .map(compatible -> SparePartCompatibilityResponseDTO.builder()
-                        .id(compatible.getId())
-                        .sparePartId(compatible.getSparePart() != null ? compatible.getSparePart().getId() : null)
-                        .vehicleId(compatible.getVehicle() != null ? compatible.getVehicle().getPublicId() : null)
-                        .engineId(compatible.getEngine() != null ? compatible.getEngine().getId() : null)
-                        .transmissionId(compatible.getTransmission() != null ? compatible.getTransmission().getId() : null)
-                        .notes(compatible.getNotes())
-                        .build())
+                .map(compatible -> {
+                    Long sparePartId = null;
+                    String vehicleId = null;
+                    Long engineId = null;
+                    Long transmissionId = null;
+
+                    if (compatible.getSparePart() != null) {
+                        sparePartId = compatible.getSparePart().getId();
+                    }
+
+                    if (compatible.getVehicle() != null) {
+                        vehicleId = compatible.getVehicle().getPublicId();
+                    }
+
+                    if (compatible.getEngine() != null) {
+                        engineId = compatible.getEngine().getId();
+                    }
+
+                    if (compatible.getTransmission() != null) {
+                        transmissionId = compatible.getTransmission().getId();
+                    }
+
+                    return SparePartCompatibilityResponseDTO.builder()
+                            .id(compatible.getId())
+                            .sparePartId(sparePartId)
+                            .vehicleId(vehicleId)
+                            .engineId(engineId)
+                            .transmissionId(transmissionId)
+                            .notes(compatible.getNotes())
+                            .build();
+                })
                 .toList();
 
         SparePartResponseDTO response = mapper.toResponse(entity);

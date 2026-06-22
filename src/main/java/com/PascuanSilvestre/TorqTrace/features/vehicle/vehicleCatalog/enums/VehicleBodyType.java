@@ -4,5 +4,6 @@ public enum  VehicleBodyType {
     SUV,
     HATCHBACK,
     SEDAN,
-    WAGON
+    WAGON,
+    COUPE
 }

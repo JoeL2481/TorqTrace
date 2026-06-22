@@ -17,7 +17,13 @@ public class WorkShopStaffMapper implements IWorkshopStaffMapper<WorkshopStaffEn
     @Override
     public WorkshopStaffEntity toEntity(WorkshopStaffCreateDTO request) {
         WorkshopStaffEntity entity = new WorkshopStaffEntity();
-        entity.setRole(request.getRole() != null ? request.getRole() : StaffRole.MECHANIC);
+
+        if (request.getRole() == null) {
+            entity.setRole(StaffRole.MECHANIC);
+        } else {
+            entity.setRole(request.getRole());
+        }
+
         return entity;
     }
 
