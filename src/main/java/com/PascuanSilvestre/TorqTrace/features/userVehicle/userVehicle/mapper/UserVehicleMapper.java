@@ -43,8 +43,10 @@ public class UserVehicleMapper implements IUserVehicleMapper<UserVehicleEntity, 
     public UserVehicleResponseDTO toResponse(UserVehicleEntity entity) {
         UserVehicleResponseDTO response = new UserVehicleResponseDTO();
         response.setPublicId(entity.getPublicId());
-        response.setUserId(entity.getUser().getId());
-        response.setUserPublicId(entity.getUser().getPublicId());
+        response.setUserId(entity.getUser().getPublicId());
+        if (entity.getUser().getUserContactInfo() != null) {
+            response.setUserEmail(entity.getUser().getUserContactInfo().getEmail());
+        }
         response.setLicencePlate(entity.getLicencePlate());
         response.setYear(entity.getYear());
         response.setCurrentKm(entity.getCurrentKm());

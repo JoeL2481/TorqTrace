@@ -18,7 +18,11 @@ public class WorkshopStockMapper implements IWorkshopStockMapper<WorkshopStockEn
 
     @Override
     public WorkshopStockEntity toEntity(WorkshopStockCreateDTO request) {
-        return  modelMapper.map(request, WorkshopStockEntity.class);
+        WorkshopStockEntity entity = new WorkshopStockEntity();
+        entity.setUnitprice(request.getUnitPrice());
+        entity.setStockQuantity(request.getStockQuantity());
+        entity.setMinStockAlert(request.getMinStockAlert());
+        return entity;
     }
 
     @Override
@@ -31,7 +35,10 @@ public class WorkshopStockMapper implements IWorkshopStockMapper<WorkshopStockEn
             entity.setMinStockAlert(request.getMinStockAlert());
         }
         if (request.getStockQuantity() != null) {
-            entity.setMinStockAlert(request.getMinStockAlert());
+            entity.setStockQuantity(request.getStockQuantity());
+        }
+        if (request.getUnitPrice() != null) {
+            entity.setUnitprice(request.getUnitPrice());
         }
     }
 }

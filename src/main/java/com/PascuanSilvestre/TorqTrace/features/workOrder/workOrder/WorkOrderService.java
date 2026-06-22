@@ -6,8 +6,10 @@ import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartEnti
 import com.PascuanSilvestre.TorqTrace.features.inventory.sparePart.SparePartService;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.MaintenanceService;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto.MaintenanceCreateDTO;
+import com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.MaintenanceRepository;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleEntity;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.userVehicle.UserVehicleService;
+import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.CompleteWorkOrderDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderCreateDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.dto.WorkOrderUpdateDTO;
@@ -22,6 +24,7 @@ import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkShopService
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshop.WorkshopPermissionService;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.WorkshopClientEntity;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.WorkshopClientRepository;
+import com.PascuanSilvestre.TorqTrace.features.workshop.workshopClient.WorkshopClientService;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.WorkshopStockService;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockResponseDTO;
 import com.PascuanSilvestre.TorqTrace.features.workshop.workshopStock.dto.WorkshopStockUpdateDTO;
@@ -41,11 +44,13 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
     private final WorkShopService workShopService;
     private final WorkShopRepository workShopRepository;
     private final WorkshopClientRepository workshopClientRepository;
+    private final WorkshopClientService workshopClientService;
     private final UserVehicleService userVehicleService;
     private final SparePartService sparePartService;
     private final WorkshopStockService workshopStockService;
     private final WorkOrderItemRepository workOrderItemRepository;
     private final MaintenanceService maintenanceService;
+    private final MaintenanceRepository maintenanceRepository;
 
     @Transactional
     @Override
@@ -117,6 +122,11 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
     }
 
     private WorkshopClientEntity getOrCreateWorkshopClient(WorkShopEntity workshop, UserVehicleEntity userVehicle) {
+        if (workshopClientService.existClientByWorkshopAndUser(userVehicle.getUser().getId(), workshop.getId())) {
+            return workshopClientRepository.findByUserIdAndWorkshopId(userVehicle.getUser().getId(), workshop.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Workshop client not found"));
+        }
+
         return workshopClientRepository.findByUserIdAndWorkshopId(userVehicle.getUser().getId(), workshop.getId())
                 .orElseGet(() -> workshopClientRepository.save(WorkshopClientEntity.builder()
                         .workshop(workshop)
@@ -172,9 +182,10 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
         EWorkOrderStatus previousStatus = workOrder.getStatus();
         workOrderMapper.toEntityUpdate(request, workOrder);
 
-        if (previousStatus != EWorkOrderStatus.COMPLETED && workOrder.getStatus() == EWorkOrderStatus.COMPLETED && workOrder.getMaitenance() == null) {
+        if (previousStatus != EWorkOrderStatus.COMPLETED
+                && workOrder.getStatus() == EWorkOrderStatus.COMPLETED
+                && maintenanceRepository.findByWorkshopOrderId(workOrder.getId()).isEmpty()) {
 
-            System.out.println("llegue hasta aca");
             MaintenanceCreateDTO newMaitenance =  MaintenanceCreateDTO.builder()
                     .workOrderId(workOrder.getId())
                     .serviceKm(workOrder.getEntryKm())
@@ -191,6 +202,36 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
         return workOrderMapper.toResponse(
                 workOrderRepository.save(workOrder)
         );
+    }
+
+    @Override
+    @Transactional
+    public WorkOrderResponseDTO complete(Long id, CompleteWorkOrderDTO request) {
+        WorkOrderEntity workOrder = workOrderRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("WorkOrder was not found"));
+
+        if (!workshopPermissionService.isManagerOrOwnerOrMechanic(workOrder.getWorkshop().getId())) {
+            throw new ProhibitedOperationException(
+                    "Workshop doesn't exist or only the workshop owner, manager or mechanic can perform this action");
+        }
+
+        workOrder.setDescription(request.getDescription());
+        workOrder.setStatus(EWorkOrderStatus.COMPLETED);
+
+        if (maintenanceRepository.findByWorkshopOrderId(workOrder.getId()).isEmpty()) {
+            MaintenanceCreateDTO maintenanceRequest = MaintenanceCreateDTO.builder()
+                    .workOrderId(workOrder.getId())
+                    .EMaintenanceType(request.getEMaintenanceType())
+                    .description(request.getDescription())
+                    .serviceKm(request.getServiceKm())
+                    .nextServiceKm(request.getNextServiceKm())
+                    .nextServiceDate(request.getNextServiceDate())
+                    .build();
+
+            maintenanceService.create(workOrder.getUserVehicle().getPublicId(), maintenanceRequest);
+        }
+
+        return workOrderMapper.toResponse(workOrderRepository.save(workOrder));
     }
 
     @Override

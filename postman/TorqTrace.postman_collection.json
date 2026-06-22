@@ -1,962 +1,1791 @@
 {
-  "info": {
-    "_postman_id": "d6bca6bb-013f-4b1c-95b5-c42cc6f0b0fb",
-    "name": "TorqTrace API",
-    "description": "Main TorqTrace API requests for testing core system flows.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "auth": {
-    "type": "bearer",
-    "bearer": [
-      {
-        "key": "token",
-        "value": "{{token}}",
-        "type": "string"
-      }
-    ]
-  },
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "exec": []
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "exec": []
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:8080"
-    },
-    {
-      "key": "token",
-      "value": ""
-    },
-    {
-      "key": "vehiclePublicId",
-      "value": "A1B2C3D4E5F6G7H8"
-    },
-    {
-      "key": "userVehicleId",
-      "value": "U1V2W3X4Y5Z6A7B8"
-    },
-    {
-      "key": "workshopId",
-      "value": "1"
-    },
-    {
-      "key": "workOrderId",
-      "value": "1"
-    },
-    {
-      "key": "categoryId",
-      "value": "1"
-    },
-    {
-      "key": "sparePartId",
-      "value": "1"
-    },
-    {
-      "key": "compatibilityId",
-      "value": "1"
-    },
-    {
-      "key": "stockId",
-      "value": "1"
-    }
-  ],
-  "item": [
-    {
-      "name": "Authentication",
-      "item": [
-        {
-          "name": "Register",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"username\": \"joel248\",\n  \"password\": \"clave1234\",\n  \"email\": \"joel248@gmail.com\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/auth/register",
-              "host": [
-                "{{baseUrl}}"
+    "info":  {
+                 "_postman_id":  "d6bca6bb-013f-4b1c-95b5-c42cc6f0b0fb",
+                 "name":  "TorqTrace API",
+                 "description":  "Main TorqTrace API requests for testing core system flows.",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+             },
+    "auth":  {
+                 "type":  "bearer",
+                 "bearer":  [
+                                {
+                                    "key":  "token",
+                                    "value":  "{{token}}",
+                                    "type":  "string"
+                                }
+                            ]
+             },
+    "event":  [
+                  {
+                      "listen":  "prerequest",
+                      "script":  {
+                                     "type":  "text/javascript",
+                                     "exec":  [
+
+                                              ]
+                                 }
+                  },
+                  {
+                      "listen":  "test",
+                      "script":  {
+                                     "type":  "text/javascript",
+                                     "exec":  [
+
+                                              ]
+                                 }
+                  }
               ],
-              "path": [
-                "api",
-                "auth",
-                "register"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Login",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "const data = pm.response.json();",
-                  "if (data.token) {",
-                  "    pm.collectionVariables.set('token', data.token);",
-                  "}"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"username\": \"joel248\",\n  \"password\": \"clave1234\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/auth/login",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "login"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Google OAuth Start",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/oauth2/authorization/google",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "oauth2",
-                "authorization",
-                "google"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "User",
-      "item": [
-        {
-          "name": "Get Profile",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/user/profile",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "user",
-                "profile"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Update Profile",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"firstName\": \"Joel\",\n  \"lastName\": \"Pascuan\",\n  \"avatarUrl\": \"https://example.com/avatar.jpg\",\n  \"userAddress\": {\n    \"street\": \"Calle 123\",\n    \"city\": \"Cordoba\",\n    \"state\": \"Cordoba\",\n    \"zipCode\": \"5000\",\n    \"country\": \"Argentina\"\n  },\n  \"userContactInfo\": {\n    \"email\": \"joel248@gmail.com\",\n    \"phoneNumber\": \"3511234567\"\n  }\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/user/profile",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "user",
-                "profile"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Vehicle",
-      "item": [
-        {
-          "name": "Create Vehicle Brand",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Toyota\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/vehicle-brand",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "vehicle-brand"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Vehicle Model",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"vehicleBrandId\": 1,\n  \"name\": \"Corolla\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/vehicle-model",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "vehicle-model"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Vehicle Generation",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"vehicleModelId\": 1,\n  \"name\": \"E210\",\n  \"alias\": \"12th Gen\",\n  \"yearsFrom\": 2018,\n  \"monthFrom\": 1,\n  \"yearsTo\": 2024,\n  \"monthTo\": 12\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/vehicle-generation",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "vehicle-generation"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Vehicle Variant",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"XEi\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/vehicle-variant",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "vehicle-variant"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Vehicle Equipment Level",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Full\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/vehicle-equipment-level",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "vehicle-equipment-level"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Engine",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"code\": \"M20A-FKS\",\n  \"name\": \"2.0 Dynamic Force\",\n  \"displacementCc\": 1987,\n  \"powerHp\": 170,\n  \"torqueNm\": 200,\n  \"amountCylinders\": 4,\n  \"engineLayout\": \"INLINE\",\n  \"aspirationType\": \"NATURALLY_ASPIRATED\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/engine",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "engine"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Transmission",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"CVT\",\n  \"code\": 1,\n  \"transmissionType\": \"AUTOMATIC\",\n  \"gears\": 7,\n  \"manufacturer\": \"Aisin\",\n  \"description\": \"Continuously variable transmission\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/transmission",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "transmission"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get All Vehicles",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/vehicle",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "vehicle"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Search Vehicles",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/vehicle/search?keyword=corolla",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "vehicle",
-                "search"
-              ],
-              "query": [
-                {
-                  "key": "keyword",
-                  "value": "corolla"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get Vehicle By Public Id",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/vehicle/{{vehiclePublicId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "vehicle",
-                "{{vehiclePublicId}}"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get Vehicle Detailed",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/vehicle/{{vehiclePublicId}}/detailed",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "vehicle",
-                "{{vehiclePublicId}}",
-                "detailed"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Vehicle Complete",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"vehicleBrandName\": \"Toyota\",\n  \"vehicleModelName\": \"Corolla\",\n  \"vehicleGenerationName\": \"E210\",\n  \"vehicleVariantName\": \"XEi\",\n  \"vehicleEquipmentLevelName\": \"Full\",\n  \"engineCode\": \"M20A-FKS\",\n  \"transmissionName\": \"CVT\",\n  \"vehicleBodyType\": \"SEDAN\",\n  \"vehicleCategory\": \"CAR\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/vehicle/complete",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "vehicle",
-                "complete"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "User Vehicle",
-      "item": [
-        {
-          "name": "Create User Vehicle",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"particularVehicleId\": \"{{vehiclePublicId}}\",\n  \"licencePlate\": \"AB123CD\",\n  \"year\": 2020,\n  \"currentKm\": 84500,\n  \"vin\": \"JTDBR32E720123456\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/user-vehicle",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "user-vehicle"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get My User Vehicles",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/user-vehicle",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "user-vehicle"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get User Vehicle By Public Id",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/user-vehicle/{{userVehicleId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "user-vehicle",
-                "{{userVehicleId}}"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Maintenance",
-      "item": [
-        {
-          "name": "Get All Maintenance",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/user-vehicle/maintenance",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "user-vehicle",
-                "maintenance"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get Maintenance By User Vehicle",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/user-vehicle/{{userVehicleId}}/maintenance",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "user-vehicle",
-                "{{userVehicleId}}",
-                "maintenance"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Maintenance",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"workOrderId\": {{workOrderId}},\n  \"maintenanceType\": \"OIL_CHANGE\",\n  \"description\": \"Oil and filter service\",\n  \"serviceKm\": 85000,\n  \"nextServiceKm\": 95000,\n  \"nextServiceDate\": \"2026-12-16T10:30:00.000Z\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/user-vehicle/{{userVehicleId}}/maintenance",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "user-vehicle",
-                "{{userVehicleId}}",
-                "maintenance"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Inventory",
-      "item": [
-        {
-          "name": "Create Spare Part Category",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Filters\",\n  \"description\": \"Filters for scheduled maintenance\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/spare-part-category",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "spare-part-category"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get All Spare Part Categories",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/spare-part-category",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "spare-part-category"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Spare Part",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Bosch Oil Filter\",\n  \"categoryId\": {{categoryId}},\n  \"description\": \"Oil filter for periodic maintenance\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/spare-part",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "spare-part"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get All Spare Parts",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/spare-part",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "spare-part"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Spare Part Compatibility",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"sparePartId\": {{sparePartId}},\n  \"vehicleId\": \"{{vehiclePublicId}}\",\n  \"engineId\": 1,\n  \"transmissionId\": 1,\n  \"notes\": \"Compatible with Toyota Corolla 2.0 CVT\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/spare-part-compatibility",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "spare-part-compatibility"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get All Spare Part Compatibilities",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/spare-part-compatibility",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "spare-part-compatibility"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Workshop",
-      "item": [
-        {
-          "name": "Create Workshop",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"TorqTrace Garage\",\n  \"description\": \"Specialized maintenance workshop\",\n  \"workshopAddress\": {\n    \"street\": \"Av. Siempre Viva 742\",\n    \"city\": \"Cordoba\",\n    \"state\": \"Cordoba\",\n    \"zipCode\": \"5000\",\n    \"country\": \"Argentina\"\n  },\n  \"workshopContactInfo\": {\n    \"email\": \"garage@example.com\",\n    \"phoneNumber\": \"3515550101\"\n  },\n  \"status\": true\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/workshop",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "workshop"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get All Workshops",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/workshop",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "workshop"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Workshop Stock",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"sparePartId\": {{sparePartId}},\n  \"workshopId\": {{workshopId}},\n  \"unitPrice\": 12000.0,\n  \"stockQuantity\": 10,\n  \"minStockAlert\": 2\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/workshopStock",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "workshopStock"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get Workshop Stocks",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/workshopStock/workshops/{{workshopId}}/stocks",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "workshopStock",
-                "workshops",
-                "{{workshopId}}",
-                "stocks"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Work Order",
-      "item": [
-        {
-          "name": "Create Work Order",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"workshopId\": {{workshopId}},\n  \"userVehicleId\": \"{{userVehicleId}}\",\n  \"entryKm\": 84500,\n  \"description\": \"Scheduled service and general inspection\",\n  \"workOrderType\": \"PREVENTIVE_MAINTENANCE\",\n  \"currency\": \"ARS\",\n  \"workOrderitems\": [\n    {\n      \"sparePartId\": {{sparePartId}},\n      \"quantityRequested\": 1\n    }\n  ],\n  \"laborCharge\": 25000.0\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/workorder",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "workorder"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get All Work Orders",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/workorder",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "workorder"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get Work Orders By Workshop",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/api/workorder/workshops/{{workshopId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "workorder",
-                "workshops",
-                "{{workshopId}}"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Complete Work Order",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"description\": \"Preventive maintenance completed\",\n  \"maintenanceType\": \"OIL_CHANGE\",\n  \"serviceKm\": 85000,\n  \"nextServiceKm\": 95000,\n  \"nextServiceDate\": \"2026-12-16T10:30:00.000Z\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/workorder/{{workOrderId}}/complete",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "workorder",
-                "{{workOrderId}}",
-                "complete"
-              ]
-            }
-          }
-        }
-      ]
-    }
-  ]
+    "variable":  [
+                     {
+                         "key":  "baseUrl",
+                         "value":  "http://localhost:8080"
+                     },
+                     {
+                         "key":  "token",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "vehiclePublicId",
+                         "value":  "A1B2C3D4E5F6G7H8"
+                     },
+                     {
+                         "key":  "userVehicleId",
+                         "value":  "U1V2W3X4Y5Z6A7B8"
+                     },
+                     {
+                         "key":  "workshopId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "workOrderId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "categoryId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "sparePartId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "compatibilityId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "stockId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "clientId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "maintenanceId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "staffId",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "userPublicId",
+                         "value":  "00000000-0000-0000-0000-000000000000"
+                     },
+                     {
+                         "key":  "workOrderItemId",
+                         "value":  "1"
+                     }
+                 ],
+    "item":  [
+                 {
+                     "name":  "Authentication",
+                     "item":  [
+                                  {
+                                      "name":  "Register",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"username\": \"joel248\",\n  \"password\": \"clave1234\",\n  \"email\": \"joel248@gmail.com\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/auth/register",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "auth",
+                                                                               "register"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Login",
+                                      "event":  [
+                                                    {
+                                                        "listen":  "test",
+                                                        "script":  {
+                                                                       "type":  "text/javascript",
+                                                                       "exec":  [
+                                                                                    "const data = pm.response.json();",
+                                                                                    "if (data.token) {",
+                                                                                    "    pm.collectionVariables.set(\u0027token\u0027, data.token);",
+                                                                                    "}"
+                                                                                ]
+                                                                   }
+                                                    }
+                                                ],
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"username\": \"joel248\",\n  \"password\": \"clave1234\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/auth/login",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "auth",
+                                                                               "login"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Google OAuth Start",
+                                      "request":  {
+                                                      "auth":  {
+                                                                   "type":  "noauth"
+                                                               },
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/oauth2/authorization/google",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "oauth2",
+                                                                               "authorization",
+                                                                               "google"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "User",
+                     "item":  [
+                                  {
+                                      "name":  "Get Profile",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user/profile",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user",
+                                                                               "profile"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Profile",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"firstName\": \"Joel\",\n  \"lastName\": \"Pascuan\",\n  \"avatarUrl\": \"https://example.com/avatar.jpg\",\n  \"userAddress\": {\n    \"street\": \"Calle 123\",\n    \"city\": \"Cordoba\",\n    \"state\": \"Cordoba\",\n    \"zipCode\": \"5000\",\n    \"country\": \"Argentina\"\n  },\n  \"userContactInfo\": {\n    \"email\": \"joel248@gmail.com\",\n    \"phoneNumber\": \"3511234567\"\n  }\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user/profile",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user",
+                                                                               "profile"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Profile Details",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user/profile/details",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user",
+                                                                               "profile",
+                                                                               "details"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get User By Public Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user/{{userPublicId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user",
+                                                                               "{{userPublicId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get User Details By Public Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user/{{userPublicId}}/details",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user",
+                                                                               "{{userPublicId}}",
+                                                                               "details"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Vehicle",
+                     "item":  [
+                                  {
+                                      "name":  "Create Vehicle Brand",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"Toyota\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/vehicle-brand",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicle-brand"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Vehicle Model",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"vehicleBrandId\": 1,\n  \"name\": \"Corolla\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/vehicle-model",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicle-model"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Vehicle Generation",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"vehicleModelId\": 1,\n  \"name\": \"E210\",\n  \"alias\": \"12th Gen\",\n  \"yearsFrom\": 2018,\n  \"monthFrom\": 1,\n  \"yearsTo\": 2024,\n  \"monthTo\": 12\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/vehicle-generation",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicle-generation"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Vehicle Variant",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"XEi\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/vehicle-variant",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicle-variant"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Vehicle Equipment Level",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"Full\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/vehicle-equipment-level",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicle-equipment-level"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Engine",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"code\": \"M20A-FKS\",\n  \"name\": \"2.0 Dynamic Force\",\n  \"displacementCc\": 1987,\n  \"powerHp\": 170,\n  \"torqueNm\": 200,\n  \"amountCylinders\": 4,\n  \"engineLayout\": \"INLINE\",\n  \"aspirationType\": \"NATURALLY_ASPIRATED\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/engine",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "engine"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Transmission",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"CVT\",\n  \"code\": 1,\n  \"transmissionType\": \"AUTOMATIC\",\n  \"gears\": 7,\n  \"manufacturer\": \"Aisin\",\n  \"description\": \"Continuously variable transmission\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/transmission",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "transmission"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get All Vehicles",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/vehicle",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicle"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Search Vehicles",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/vehicle/search?keyword=corolla",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicle",
+                                                                               "search"
+                                                                           ],
+                                                                  "query":  [
+                                                                                {
+                                                                                    "key":  "keyword",
+                                                                                    "value":  "corolla"
+                                                                                }
+                                                                            ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Vehicle By Public Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/vehicle/{{vehiclePublicId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicle",
+                                                                               "{{vehiclePublicId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Vehicle Detailed",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/vehicle/{{vehiclePublicId}}/detailed",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicle",
+                                                                               "{{vehiclePublicId}}",
+                                                                               "detailed"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Vehicle Complete",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"vehicleBrandName\": \"Toyota\",\n  \"vehicleModelName\": \"Corolla\",\n  \"vehicleGenerationName\": \"E210\",\n  \"vehicleVariantName\": \"XEi\",\n  \"vehicleEquipmentLevelName\": \"Full\",\n  \"engineCode\": \"M20A-FKS\",\n  \"transmissionName\": \"CVT\",\n  \"vehicleBodyType\": \"SEDAN\",\n  \"vehicleCategory\": \"CAR\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/vehicle/complete",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "vehicle",
+                                                                               "complete"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "User Vehicle",
+                     "item":  [
+                                  {
+                                      "name":  "Create User Vehicle",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"particularVehicleId\": \"{{vehiclePublicId}}\",\n  \"licencePlate\": \"AB123CD\",\n  \"year\": 2020,\n  \"currentKm\": 84500,\n  \"vin\": \"JTDBR32E720123456\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user-vehicle",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user-vehicle"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get My User Vehicles",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user-vehicle",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user-vehicle"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get User Vehicle By Public Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user-vehicle/{{userVehicleId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user-vehicle",
+                                                                               "{{userVehicleId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update User Vehicle",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user-vehicle/{{userVehicleId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user-vehicle",
+                                                                               "{{userVehicleId}}"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\"licencePlate\":\"AB123CD\",\"year\":2021,\"currentKm\":90000,\"vin\":\"JTDBR32E720123456\"}"
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete User Vehicle",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user-vehicle/{{userVehicleId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user-vehicle",
+                                                                               "{{userVehicleId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Maintenance",
+                     "item":  [
+                                  {
+                                      "name":  "Get All Maintenance",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user-vehicle/maintenance",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user-vehicle",
+                                                                               "maintenance"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Maintenance By User Vehicle",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user-vehicle/{{userVehicleId}}/maintenance",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user-vehicle",
+                                                                               "{{userVehicleId}}",
+                                                                               "maintenance"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Maintenance",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"workOrderId\": {{workOrderId}},\n  \"maintenanceType\": \"OIL_CHANGE\",\n  \"description\": \"Oil and filter service\",\n  \"serviceKm\": 85000,\n  \"nextServiceKm\": 95000,\n  \"nextServiceDate\": \"2026-12-16T10:30:00.000Z\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user-vehicle/{{userVehicleId}}/maintenance",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user-vehicle",
+                                                                               "{{userVehicleId}}",
+                                                                               "maintenance"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Maintenance By Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user-vehicle/maintenance/{{maintenanceId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user-vehicle",
+                                                                               "maintenance",
+                                                                               "{{maintenanceId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Maintenance",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user-vehicle/maintenance/{{maintenanceId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user-vehicle",
+                                                                               "maintenance",
+                                                                               "{{maintenanceId}}"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\"workOrderId\":1,\"eMaintenanceType\":\"OIL_CHANGE\",\"description\":\"Updated maintenance\",\"serviceKm\":86000,\"nextServiceKm\":96000,\"nextServiceDate\":\"2026-12-20T10:30:00.000Z\"}"
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Maintenance",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/user-vehicle/maintenance/{{maintenanceId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "user-vehicle",
+                                                                               "maintenance",
+                                                                               "{{maintenanceId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Inventory",
+                     "item":  [
+                                  {
+                                      "name":  "Create Spare Part Category",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"Filters\",\n  \"description\": \"Filters for scheduled maintenance\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part-category",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part-category"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get All Spare Part Categories",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part-category",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part-category"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Spare Part",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"Bosch Oil Filter\",\n  \"categoryId\": {{categoryId}},\n  \"description\": \"Oil filter for periodic maintenance\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get All Spare Parts",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Spare Part Compatibility",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"sparePartId\": {{sparePartId}},\n  \"vehicleId\": \"{{vehiclePublicId}}\",\n  \"engineId\": 1,\n  \"transmissionId\": 1,\n  \"notes\": \"Compatible with Toyota Corolla 2.0 CVT\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part-compatibility",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part-compatibility"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get All Spare Part Compatibilities",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part-compatibility",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part-compatibility"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Spare Part Category By Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part-category/{{categoryId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part-category",
+                                                                               "{{categoryId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Spare Part Category",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part-category/{{categoryId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part-category",
+                                                                               "{{categoryId}}"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\"name\":\"Filters\",\"description\":\"Updated filters category\"}"
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Spare Part Category",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part-category/{{categoryId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part-category",
+                                                                               "{{categoryId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Spare Part By Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part/{{sparePartId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part",
+                                                                               "{{sparePartId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Spare Part",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part/{{sparePartId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part",
+                                                                               "{{sparePartId}}"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\"name\":\"Bosch Oil Filter\",\"categoryId\":1,\"description\":\"Updated oil filter description\"}"
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Spare Part",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part/{{sparePartId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part",
+                                                                               "{{sparePartId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Spare Part Compatibility By Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part-compatibility/{{compatibilityId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part-compatibility",
+                                                                               "{{compatibilityId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Spare Part Compatibility",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part-compatibility/{{compatibilityId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part-compatibility",
+                                                                               "{{compatibilityId}}"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\"sparePartId\":1,\"vehicleId\":\"{{vehiclePublicId}}\",\"engineId\":1,\"transmissionId\":1,\"notes\":\"Updated compatibility note\"}"
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Spare Part Compatibility",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/spare-part-compatibility/{{compatibilityId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "spare-part-compatibility",
+                                                                               "{{compatibilityId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Workshop",
+                     "item":  [
+                                  {
+                                      "name":  "Create Workshop",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"TorqTrace Garage\",\n  \"description\": \"Specialized maintenance workshop\",\n  \"workshopAddress\": {\n    \"street\": \"Av. Siempre Viva 742\",\n    \"city\": \"Cordoba\",\n    \"state\": \"Cordoba\",\n    \"zipCode\": \"5000\",\n    \"country\": \"Argentina\"\n  },\n  \"workshopContactInfo\": {\n    \"email\": \"garage@example.com\",\n    \"phoneNumber\": \"3515550101\"\n  },\n  \"status\": true\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshop",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshop"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get All Workshops",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshop",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshop"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Workshop Stock",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"sparePartId\": {{sparePartId}},\n  \"workshopId\": {{workshopId}},\n  \"unitPrice\": 12000.0,\n  \"stockQuantity\": 10,\n  \"minStockAlert\": 2\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopStock",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopStock"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Workshop Stocks",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopStock/workshops/{{workshopId}}/stocks",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopStock",
+                                                                               "workshops",
+                                                                               "{{workshopId}}",
+                                                                               "stocks"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Workshop Client",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"workshopId\": {{workshopId}},\n  \"userId\": 1,\n  \"description\": \"Frequent customer of the workshop\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopclient",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopclient"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Workshop Clients",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopclient/workshops/{{workshopId}}/clients",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopclient",
+                                                                               "workshops",
+                                                                               "{{workshopId}}",
+                                                                               "clients"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Workshop Client By Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopclient/{{clientId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopclient",
+                                                                               "{{clientId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Workshop Client",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"description\": \"Updated workshop client note\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopclient/{{clientId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopclient",
+                                                                               "{{clientId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Workshop Client",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopclient/{{clientId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopclient",
+                                                                               "{{clientId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Workshop By Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshop/{{workshopId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshop",
+                                                                               "{{workshopId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Workshop",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshop/{{workshopId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshop",
+                                                                               "{{workshopId}}"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\"name\":\"TorqTrace Garage Updated\",\"description\":\"Updated workshop description\",\"workshopAddress\":{\"street\":\"Av. Siempre Viva 742\",\"city\":\"Cordoba\",\"state\":\"Cordoba\",\"zipCode\":\"5000\",\"country\":\"Argentina\"},\"workshopContactInfo\":{\"email\":\"garage@example.com\",\"phoneNumber\":\"3515550101\"},\"status\":true}"
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Workshop",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshop/{{workshopId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshop",
+                                                                               "{{workshopId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Workshop Stock By Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopStock/stock/{{stockId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopStock",
+                                                                               "stock",
+                                                                               "{{stockId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Workshop Stock",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopStock/{{stockId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopStock",
+                                                                               "{{stockId}}"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\"unitPrice\":13500.0,\"stockQuantity\":12,\"minStockAlert\":3}"
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Workshop Stock",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopStock/{{stockId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopStock",
+                                                                               "{{stockId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Workshop Staff",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopstaff",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopstaff"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\"workshopId\":1,\"userId\":1,\"role\":\"MECHANIC\"}"
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get All Workshop Staff",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopstaff",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopstaff"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Workshop Staff By Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopstaff/{{staffId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopstaff",
+                                                                               "{{staffId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Workshop Staff",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workshopstaff/{{staffId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workshopstaff",
+                                                                               "{{staffId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Work Order",
+                     "item":  [
+                                  {
+                                      "name":  "Create Work Order",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"workshopId\": {{workshopId}},\n  \"userVehicleId\": \"{{userVehicleId}}\",\n  \"entryKm\": 84500,\n  \"description\": \"Scheduled service and general inspection\",\n  \"workOrderType\": \"PREVENTIVE_MAINTENANCE\",\n  \"currency\": \"ARS\",\n  \"workOrderitems\": [\n    {\n      \"sparePartId\": {{sparePartId}},\n      \"quantityRequested\": 1\n    }\n  ],\n  \"laborCharge\": 25000.0\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorder",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorder"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get All Work Orders",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorder",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorder"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Work Orders By Workshop",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorder/workshops/{{workshopId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorder",
+                                                                               "workshops",
+                                                                               "{{workshopId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Complete Work Order",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"description\": \"Preventive maintenance completed\",\n  \"maintenanceType\": \"OIL_CHANGE\",\n  \"serviceKm\": 85000,\n  \"nextServiceKm\": 95000,\n  \"nextServiceDate\": \"2026-12-16T10:30:00.000Z\"\n}"
+                                                               },
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorder/{{workOrderId}}/complete",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorder",
+                                                                               "{{workOrderId}}",
+                                                                               "complete"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Work Order By Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorder/{{workOrderId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorder",
+                                                                               "{{workOrderId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Work Order By Workshop And Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorder/workshops/{{workshopId}}/{{workOrderId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorder",
+                                                                               "workshops",
+                                                                               "{{workshopId}}",
+                                                                               "{{workOrderId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Work Order",
+                                      "request":  {
+                                                      "method":  "PUT",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorder/{{workOrderId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorder",
+                                                                               "{{workOrderId}}"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\"description\":\"Updated work order\",\"status\":\"IN_PROGRESS\",\"workshopOrderType\":\"PREVENTIVE_MAINTENANCE\",\"currency\":\"ARS\",\"laborCharge\":30000.0,\"totalCost\":30000.0}"
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Work Order",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorder/{{workOrderId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorder",
+                                                                               "{{workOrderId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Work Order Item",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorderitem",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorderitem"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\"workOrderId\":1,\"sparePartId\":1,\"quantityRequested\":1}"
+                                                               }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get All Work Order Items",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorderitem",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorderitem"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Work Order Item By Id",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorderitem/{{workOrderItemId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorderitem",
+                                                                               "{{workOrderItemId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Work Order Item",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/workorderitem/{{workOrderItemId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "workorderitem",
+                                                                               "{{workOrderItemId}}"
+                                                                           ]
+                                                              }
+                                                  }
+                                  }
+                              ]
+                 }
+             ]
 }

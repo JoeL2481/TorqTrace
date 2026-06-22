@@ -26,7 +26,7 @@ public class SparePartService implements ISparePartService<SparePartCreateDTO, S
     public SparePartResponseDTO create(SparePartCreateDTO request) {
         SparePartEntity entity = mapper.toEntity(request);
         entity.setCategory(getCategoryById(request.getCategoryId()));
-        return mapper.toResponse(repo.save(entity));
+        return buildResponse(repo.save(entity));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class SparePartService implements ISparePartService<SparePartCreateDTO, S
     public List<SparePartResponseDTO> getAll() {
         return repo.findAll()
                 .stream()
-                .map(mapper::toResponse)
+                .map(this::buildResponse)
                 .toList();
     }
 

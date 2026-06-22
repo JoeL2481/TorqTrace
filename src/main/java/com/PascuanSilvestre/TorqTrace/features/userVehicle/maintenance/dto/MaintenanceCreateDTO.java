@@ -1,5 +1,6 @@
 package com.PascuanSilvestre.TorqTrace.features.userVehicle.maintenance.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.PascuanSilvestre.TorqTrace.features.userVehicle.enums.EMaintenanceType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ public class MaintenanceCreateDTO {
     private Long workOrderId;
 
     @NotNull(message = "Maintenance type is required")
+    @JsonAlias("maintenanceType")
     private EMaintenanceType EMaintenanceType;
 
     @Size(max = 500, message = "Description can have at most 500 characters")
