@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.Year;
 import java.util.List;
 
 @Service
@@ -31,6 +32,7 @@ public class UserVehicleService implements IUserVehicleService<UserVehicleCreate
     private final ExtraMaintenanceReminderRepository extraMaintenanceReminderRepository;
 
     public UserVehicleResponseDTO create(UserVehicleCreateDTO request) {
+        validateYear(request.getYear());
 
         validateUnique(request.getLicencePlate(), request.getVin(), null);
 
@@ -46,9 +48,9 @@ public class UserVehicleService implements IUserVehicleService<UserVehicleCreate
     private void validateUnique(String licencePlate, String vin, Long currentId) {
         boolean duplicatedPlate;
         if (currentId == null) {
-            duplicatedPlate = repository.existsByLicencePlate(licencePlate);
+            duplicatedPlate = repository.existsByLicencePlateAndDeletedFalse(licencePlate);
         } else {
-            duplicatedPlate = repository.existsByLicencePlateAndIdNot(licencePlate, currentId);
+            duplicatedPlate = repository.existsByLicencePlateAndIdNotAndDeletedFalse(licencePlate, currentId);
         }
 
         if (duplicatedPlate) {
@@ -57,9 +59,9 @@ public class UserVehicleService implements IUserVehicleService<UserVehicleCreate
 
         boolean duplicatedVin;
         if (currentId == null) {
-            duplicatedVin = repository.existsByVin(vin);
+            duplicatedVin = repository.existsByVinAndDeletedFalse(vin);
         } else {
-            duplicatedVin = repository.existsByVinAndIdNot(vin, currentId);
+            duplicatedVin = repository.existsByVinAndIdNotAndDeletedFalse(vin, currentId);
         }
 
         if (duplicatedVin) {
@@ -73,12 +75,12 @@ public class UserVehicleService implements IUserVehicleService<UserVehicleCreate
     }
 
     public UserVehicleEntity getOwnedVehicleOnly(String publicId) {
-        return repository.findByPublicIdAndUserId(publicId, securityUtils.getCurrentUserId())
+        return repository.findByPublicIdAndUserIdAndDeletedFalse(publicId, securityUtils.getCurrentUserId())
                 .orElseThrow(() -> new EntityNotFoundException("User vehicle not found for current user"));
     }
 
     public UserVehicleEntity getAnyVehicleById(String publicId) {
-        return repository.findByPublicId(publicId)
+        return repository.findByPublicIdAndDeletedFalse(publicId)
                 .orElseThrow(() -> new EntityNotFoundException("User vehicle not found"));
     }
 
@@ -103,7 +105,7 @@ public class UserVehicleService implements IUserVehicleService<UserVehicleCreate
     }
 
     public List<UserVehicleResponseDTO> getAll() {
-        return repository.findByUserId(securityUtils.getCurrentUserId())
+        return repository.findByUserIdAndDeletedFalse(securityUtils.getCurrentUserId())
                 .stream()
                 .map(mapper::toResponse)
                 .toList();
@@ -115,6 +117,10 @@ public class UserVehicleService implements IUserVehicleService<UserVehicleCreate
 
     public UserVehicleResponseDTO update(String id, UserVehicleUpdateDTO request) {
         UserVehicleEntity entity = getOwnedVehicleOnly(id);
+
+        if (request.getYear() != null) {
+            validateYear(request.getYear());
+        }
 
         String licencePlate = entity.getLicencePlate();
         String vin = entity.getVin();
@@ -142,14 +148,23 @@ public class UserVehicleService implements IUserVehicleService<UserVehicleCreate
 
         maintenanceRepository.deleteByUserVehicleId(entity.getId());
         extraMaintenanceReminderRepository.deleteByUserVehicleId(entity.getId());
-        repository.delete(entity);
+        entity.setDeleted(true);
+        entity.setLicencePlate("DELETED-" + entity.getId());
+        entity.setVin("DELETED-" + entity.getId());
+        repository.save(entity);
     }
 
     public boolean existByUserVehiclePublicId(String userVehiclePublicId) {
-        if (!repository.existsByPublicId(userVehiclePublicId)) {
+        if (!repository.existsByPublicIdAndDeletedFalse(userVehiclePublicId)) {
             throw new EntityNotFoundException("User vehicle not found");
         }
         return true;
+    }
+
+    private void validateYear(Integer year) {
+        if (year > Year.now().getValue()) {
+            throw new IncoherentDataException("Year cannot be greater than current year");
+        }
     }
 
 }

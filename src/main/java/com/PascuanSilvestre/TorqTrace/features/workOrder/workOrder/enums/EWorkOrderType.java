@@ -2,33 +2,33 @@ package com.PascuanSilvestre.TorqTrace.features.workOrder.workOrder.enums;
 
 public enum EWorkOrderType {
 
-        // Maintenance
+        // Maintenance Mantenimiento
         OIL_CHANGE("Engine oil change"),
         FILTER_REPLACEMENT("Vehicle filter replacement"),
         TUNE_UP("General engine tune-up"),
         PREVENTIVE_MAINTENANCE("Scheduled preventive maintenance"),
 
-        // Engine
+        // Engine Motor
         ENGINE_DIAGNOSIS("Engine fault diagnosis"),
         ENGINE_REPAIR("Engine repair service"),
         ENGINE_REBUILD("Complete engine rebuild"),
         TIMING_BELT_REPLACEMENT("Timing belt replacement"),
         HEAD_GASKET_REPLACEMENT("Cylinder head gasket replacement"),
 
-        // Brakes
+        // Brakes frenos
         BRAKE_INSPECTION("Brake system inspection"),
         BRAKE_PAD_REPLACEMENT("Brake pad replacement"),
         BRAKE_DISC_REPLACEMENT("Brake disc replacement"),
         BRAKE_FLUID_CHANGE("Brake fluid replacement"),
 
-        // Suspension and Steering
+        // Suspension and Steering , Suspension y Direccion
         SUSPENSION_REPAIR("Suspension system repair"),
         SHOCK_ABSORBER_REPLACEMENT("Shock absorber replacement"),
         STEERING_REPAIR("Steering system repair"),
         WHEEL_ALIGNMENT("Wheel alignment service"),
         WHEEL_BALANCING("Wheel balancing service"),
 
-        // Tires
+        // Tires Cubiertas
         TIRE_REPLACEMENT("Tire replacement"),
         TIRE_REPAIR("Tire repair service"),
         TIRE_ROTATION("Tire rotation service"),
@@ -45,24 +45,24 @@ public enum EWorkOrderType {
         STARTER_MOTOR_REPAIR("Starter motor repair"),
         LIGHTING_REPAIR("Vehicle lighting repair"),
 
-        // Cooling System
+        // Cooling System , Sistema de Refrigeracion
         COOLING_SYSTEM_REPAIR("Cooling system repair"),
         RADIATOR_REPLACEMENT("Radiator replacement"),
         COOLANT_CHANGE("Coolant replacement"),
 
-        // Air Conditioning
+        // Air Conditioning, Aire acondicionado
         AIR_CONDITIONING_SERVICE("Air conditioning maintenance"),
         AIR_CONDITIONING_REPAIR("Air conditioning repair"),
 
-        // Exhaust
+        // Exhaust Escape
         EXHAUST_SYSTEM_REPAIR("Exhaust system repair"),
         CATALYTIC_CONVERTER_REPLACEMENT("Catalytic converter replacement"),
 
-        // Diagnostics
+        // Diagnostics Diagnostico
         COMPUTER_DIAGNOSTIC("Computerized vehicle diagnostic"),
         VEHICLE_INSPECTION("General vehicle inspection"),
 
-        // Bodywork and Paint
+        // Bodywork and Paint Chapa y pintura
         BODYWORK_REPAIR("Bodywork repair"),
         PAINT_JOB("Automotive painting service"),
 

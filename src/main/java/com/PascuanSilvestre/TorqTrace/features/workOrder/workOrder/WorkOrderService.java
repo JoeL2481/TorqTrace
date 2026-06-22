@@ -33,6 +33,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Service
 @AllArgsConstructor
@@ -215,8 +216,13 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
                     "Workshop doesn't exist or only the workshop owner, manager or mechanic can perform this action");
         }
 
+        validateCompletionWindow(workOrder);
+
         workOrder.setDescription(request.getDescription());
         workOrder.setStatus(EWorkOrderStatus.COMPLETED);
+        if (workOrder.getCompletedAt() == null) {
+            workOrder.setCompletedAt(LocalDateTime.now());
+        }
 
         if (maintenanceRepository.findByWorkshopOrderId(workOrder.getId()).isEmpty()) {
             MaintenanceCreateDTO maintenanceRequest = MaintenanceCreateDTO.builder()
@@ -229,6 +235,15 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
                     .build();
 
             maintenanceService.create(workOrder.getUserVehicle().getPublicId(), maintenanceRequest);
+        } else {
+            maintenanceRepository.findByWorkshopOrderId(workOrder.getId()).ifPresent(maintenance -> {
+                maintenance.setEMaintenanceType(request.getEMaintenanceType());
+                maintenance.setDescription(request.getDescription());
+                maintenance.setServiceKm(request.getServiceKm());
+                maintenance.setNextServiceKm(request.getNextServiceKm());
+                maintenance.setNext_service_date(request.getNextServiceDate());
+                maintenanceRepository.save(maintenance);
+            });
         }
 
         return workOrderMapper.toResponse(workOrderRepository.save(workOrder));
@@ -246,5 +261,21 @@ public class WorkOrderService implements IWorkOrderService<WorkOrderCreateDTO, W
         workOrderRepository.delete(workOrder);
 
         return response;
+    }
+
+    private void validateCompletionWindow(WorkOrderEntity workOrder) {
+        if (workOrder.getStatus() != EWorkOrderStatus.COMPLETED) {
+            return;
+        }
+
+        LocalDateTime completedAt = workOrder.getCompletedAt();
+        if (completedAt == null) {
+            workOrder.setCompletedAt(LocalDateTime.now());
+            return;
+        }
+
+        if (completedAt.plusHours(24).isBefore(LocalDateTime.now())) {
+            throw new ProhibitedOperationException("Completed work order can only be modified within 24 hours");
+        }
     }
 }

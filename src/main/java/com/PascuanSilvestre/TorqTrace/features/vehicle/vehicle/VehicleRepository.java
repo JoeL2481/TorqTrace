@@ -14,7 +14,7 @@ public interface VehicleRepository extends JpaRepository<VehicleEntity, Long> {
     Optional<VehicleEntity> findByPublicId(String publicId);
 
     boolean existsByPublicId(String publicId);
-
+//query larga para validar que pueda o no venir null sin obligacion pero que no este repetido en caso de que si exista toda la config en particular
     @Query("""
             select count(v) > 0
             from VehicleEntity v
@@ -28,7 +28,7 @@ public interface VehicleRepository extends JpaRepository<VehicleEntity, Long> {
               and v.vehicleBodyType = :vehicleBodyType
               and v.vehicleCategory = :vehicleCategory
             """)
-    boolean existsSameConfiguration(
+    boolean existsDuplicateConfiguration(
             @Param("brandId") Long brandId,
             @Param("modelId") Long modelId,
             @Param("generationId") Long generationId,
@@ -38,17 +38,5 @@ public interface VehicleRepository extends JpaRepository<VehicleEntity, Long> {
             @Param("transmissionId") Long transmissionId,
             @Param("vehicleBodyType") VehicleBodyType vehicleBodyType,
             @Param("vehicleCategory") VehicleCategory vehicleCategory
-    );
-
-    boolean existsByVehicleBrand_IdAndVehicleModel_IdAndVehicleGeneration_IdAndVehicleVariant_IdAndVehicleEquipmentLevel_IdAndEngine_IdAndTransmission_IdAndVehicleBodyTypeAndVehicleCategory(
-            Long vehicleBrandId,
-            Long vehicleModelId,
-            Long vehicleGenerationId,
-            Long vehicleVariantId,
-            Long vehicleEquipmentLevelId,
-            Long engineId,
-            Long transmissionId,
-            VehicleBodyType vehicleBodyType,
-            VehicleCategory vehicleCategory
     );
 }

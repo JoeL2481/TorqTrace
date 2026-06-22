@@ -13,6 +13,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -71,6 +72,9 @@ public class WorkOrderEntity  extends AuditableBase {
     private Double laborCharge;
     @Column(name="total_cost")
     private Double totalCost;
+
+    @Column(name = "completed_at")
+    private LocalDateTime completedAt;
 
 
 }

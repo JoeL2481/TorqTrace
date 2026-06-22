@@ -39,6 +39,9 @@ public class UserVehicleEntity extends AuditableBase {
     @Column(name="vin", nullable = false, length = 50, unique = true)
     private String vin;
 
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user", nullable = false)
     private UserEntity user;
